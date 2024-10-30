@@ -27,7 +27,12 @@ import { FadeIn } from "@/components/fade-in";
   <main class="max-w-screen-sm px-4 pt-8 mx-auto">
     <div class="flex items-center justify-between">
       <div class="flex items-center gap-x-6">
-        <Image src={ProfilePic} alt="Profile" class="size-20 rounded-xl" />
+        <Image
+          src={ProfilePic}
+          alt="Profile"
+          class="size-20 grayscale rounded-xl"
+          loading="eager"
+        />
         <div>
           <FadeIn client:load>
             <h1 class="text-3xl font-semibold font-sans">daniel pallares</h1>
