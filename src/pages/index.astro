@@ -5,29 +5,36 @@ import {
   AcademicCapIcon,
   BriefcaseIcon,
 } from "@heroicons/react/20/solid";
-import Layout from "@/layouts/Layout.astro";
-import { Button } from "@/components/Button";
+import Layout from "@/layouts/layout.astro";
 import ProfilePic from "/public/me.jpg";
-import Logo from "@/components/Logo.astro";
-import { ContactButton } from "@/components/ContactButton";
+import { Star } from "@/components/logo/logo";
+import { ContactButton } from "@/components/contact-button";
+import { FadeIn } from "@/components/fade-in";
 ---
 
-<Layout title="Welcome to Astro.">
-  <main class="max-w-screen-sm pt-24 mx-auto">
+<Layout>
+  <nav
+    class="max-w-screen-sm px-4 mx-auto h-16 flex items-center justify-between"
+  >
+    <Star client:load className="h-6 fill-foreground" />
+    <a
+      href="/"
+      class="underline decoration-dashed underline-offset-2 decoration-foreground decoration-1"
+    >
+      home
+    </a>
+  </nav>
+  <main class="max-w-screen-sm px-4 pt-8 mx-auto">
     <div class="flex items-center justify-between">
       <div class="flex items-center gap-x-6">
-        <div
-          class="relative after:bg-primary after:absolute after:size-4 after:-right-1 after:-bottom-1 after:rounded-full after:ring-8 after:ring-background"
-        >
-          <Image
-            src={ProfilePic}
-            alt="Profile picture"
-            class="size-20 rounded-xl"
-          />
-        </div>
+        <Image src={ProfilePic} alt="Profile" class="size-20 rounded-xl" />
         <div>
-          <h1 class="text-3xl font-semibold font-sans">daniel pallares</h1>
-          <p class="text-muted">fullstack web developer</p>
+          <FadeIn client:load>
+            <h1 class="text-3xl font-semibold font-sans">daniel pallares</h1>
+          </FadeIn>
+          <FadeIn client:load delay={0.2}>
+            <p class="text-muted">fullstack web developer</p>
+          </FadeIn>
         </div>
       </div>
       <ContactButton client:idle />
@@ -43,7 +50,7 @@ import { ContactButton } from "@/components/ContactButton";
       </div>
       <div class="flex items-center">
         <BriefcaseIcon className="size-5 mr-2" />
-        web developer @ brandcloud.pro
+        brandcloud.pro
       </div>
     </div>
 

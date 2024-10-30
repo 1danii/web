@@ -10,7 +10,7 @@ export default {
         foreground: "#ffffff",
         background: "#0f0f0f",
         primary: "#baff29",
-        muted: colors.gray[300],
+        muted: colors.neutral[300],
       },
       fontFamily: {
         sans: ["SF Pro Display", ...defaultTheme.fontFamily.sans],

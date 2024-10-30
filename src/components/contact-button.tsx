@@ -1,5 +1,5 @@
+import { buttonVariants } from "@/components/button";
 import { motion, type Variants } from "framer-motion";
-import { buttonVariants } from "./Button";
 
 const textVariants: Variants = {
   initial: {
