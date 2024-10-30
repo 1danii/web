@@ -1,9 +1,4 @@
-import {
-  motion,
-  MotionConfig,
-  MotionConfigContext,
-  type AnimationProps,
-} from "framer-motion";
+import { motion } from "framer-motion";
 import type { PropsWithChildren } from "react";
 
 export function FadeIn(props: PropsWithChildren<{ delay?: number }>) {
