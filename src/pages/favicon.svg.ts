@@ -1,7 +1,7 @@
 import { Star } from "@/components/logo/logo";
 import type { APIRoute } from "astro";
 import { renderToString } from "react-dom/server";
-import tailwindConfig from "tailwind.config.mjs";
+import tailwindConfig from "tailwind.config.js";
 import resolveConfig from "tailwindcss/resolveConfig";
 
 // @ts-ignore
