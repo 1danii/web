@@ -7,10 +7,10 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        foreground: "#ffffff",
+        foreground: colors.neutral[50],
         background: "#0f0f0f",
         primary: "#baff29",
-        muted: colors.neutral[300],
+        muted: colors.neutral[400],
       },
       fontFamily: {
         sans: ["SF Pro Display", ...defaultTheme.fontFamily.sans],
