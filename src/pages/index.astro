@@ -19,7 +19,7 @@ import { FadeIn } from "@/components/fade-in";
     <Star client:load className="h-6 fill-foreground" />
     <a
       href="/"
-      class="underline decoration-dashed underline-offset-2 decoration-foreground decoration-1"
+      class="underline decoration-dashed decoration-muted underline-offset-2 decoration-1"
     >
       home
     </a>
@@ -35,18 +35,16 @@ import { FadeIn } from "@/components/fade-in";
           class="size-20 grayscale rounded-xl"
           loading="eager"
         />
-        <div>
-          <FadeIn client:load>
-            <h1 class="text-3xl font-semibold font-sans">daniel pallares</h1>
-          </FadeIn>
-          <FadeIn client:load delay={0.2}>
-            <p class="text-muted">fullstack web developer</p>
-          </FadeIn>
-        </div>
+
+        <FadeIn client:load>
+          <h1 class="text-3xl font-semibold">daniel pallares</h1>
+
+          <p class="text-muted font-mono">fullstack web developer</p>
+        </FadeIn>
       </div>
       <ContactButton client:idle />
     </div>
-    <div class="flex pt-6 flex-col gap-y-4 text-muted">
+    <div class="flex pt-6 flex-col gap-y-2 text-muted font-mono">
       <div class="flex items-center">
         <MapPinIcon className="size-5 mr-2" />
         prague, cz
