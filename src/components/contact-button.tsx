@@ -23,7 +23,7 @@ export function ContactButton() {
         className="w-full flex flex-col *:h-1/2 *:flex *:items-center *:justify-center relative h-[200%] self-start"
       >
         <span>contact</span>
-        <span>→</span>
+        <span aria-hidden>→</span>
       </motion.span>
     </motion.a>
   );

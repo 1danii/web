@@ -1,4 +1,6 @@
 ---
+import "@/globals.css";
+
 const ogUrl = new URL("/og.png", Astro.url);
 ---
 
@@ -21,45 +23,3 @@ const ogUrl = new URL("/og.png", Astro.url);
     <slot />
   </body>
 </html>
-
-<style is:global>
-  @font-face {
-    font-family: "SF Pro Display";
-    src: url("/fonts/SF-Pro-Display-Light.otf") format("opentype");
-    font-weight: 300;
-    font-style: normal;
-    font-display: swap;
-  }
-
-  @font-face {
-    font-family: "SF Pro Display";
-    src: url("/fonts/SF-Pro-Display-Regular.otf") format("opentype");
-    font-weight: 400;
-    font-style: normal;
-    font-display: swap;
-  }
-
-  @font-face {
-    font-family: "SF Pro Display";
-    src: url("/fonts/SF-Pro-Display-Medium.otf") format("opentype");
-    font-weight: 500;
-    font-style: normal;
-    font-display: swap;
-  }
-
-  @font-face {
-    font-family: "SF Pro Display";
-    src: url("/fonts/SF-Pro-Display-Semibold.otf") format("opentype");
-    font-weight: 600;
-    font-style: normal;
-    font-display: swap;
-  }
-
-  @font-face {
-    font-family: "SF Pro Display";
-    src: url("/fonts/SF-Pro-Display-Bold.otf") format("opentype");
-    font-weight: 700;
-    font-style: normal;
-    font-display: swap;
-  }
-</style>
