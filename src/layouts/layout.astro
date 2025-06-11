@@ -1,4 +1,5 @@
 ---
+import Posthog from "@/components/posthog.astro";
 import "@/globals.css";
 
 const ogUrl = new URL("/og.png", Astro.url);
@@ -14,10 +15,11 @@ const ogUrl = new URL("/og.png", Astro.url);
     <meta property="og:image" content={ogUrl} />
     <meta name="generator" content={Astro.generator} />
     <title>daniel pallares</title>
-    <script
+    <!-- <script
       defer
       data-domain="dani.pw"
-      src="https://plausible.dani.pw/js/script.js"></script>
+      src="https://plausible.dani.pw/js/script.js"></script> -->
+    <Posthog />
   </head>
   <body class="bg-background text-foreground">
     <slot />
