@@ -14,14 +14,23 @@
     "@astrojs/react": "4.1.2",
     "@astrojs/tailwind": "5.1.4",
     "@heroicons/react": "^2.1.5",
-    "@types/react": "^18.3.12",
-    "@types/react-dom": "^18.3.1",
+    "@nanostores/react": "^1.0.0",
     "@vercel/og": "^0.6.3",
     "astro": "5.1.1",
+    "caniuse-lite": "^1.0.30001722",
     "framer-motion": "^11.13.1",
+    "nanostores": "^1.0.1",
+    "radix-ui": "^1.4.2",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "react-hotkeys-hook": "^5.1.0",
     "tailwindcss": "^3.4.16",
     "typescript": "^5.6.3"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "prettier": "^3.5.3",
+    "prettier-plugin-tailwindcss": "^0.6.12"
   }
 }

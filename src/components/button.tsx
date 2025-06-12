@@ -10,7 +10,7 @@ export const Button = forwardRef<HTMLButtonElement, ComponentProps<"button">>(
         {children}
       </button>
     );
-  }
+  },
 );
 
 Button.displayName = "Button";

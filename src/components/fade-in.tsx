@@ -6,7 +6,7 @@ export function FadeIn(props: PropsWithChildren<{ delay?: number }>) {
     <motion.div
       transition={{
         duration: 0.4,
-        ease: "easeInOut",
+        ease: "easeOut",
         delay: props.delay,
       }}
       initial={{ y: -4, opacity: 0 }}

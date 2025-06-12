@@ -10,21 +10,39 @@ import ProfilePic from "/public/me.jpg";
 import { Star } from "@/components/logo/logo";
 import { ContactButton } from "@/components/contact-button";
 import { FadeIn } from "@/components/fade-in";
+import { ImageGallery } from "@/components/image-preview";
+import { Tool } from "@/components/tool";
 ---
 
 <Layout>
   <nav
     class="max-w-screen-sm px-4 mx-auto h-16 flex items-center justify-between"
   >
-    <Star client:load className="h-6 fill-foreground" />
-    <a
-      href="/"
-      class="underline decoration-dashed underline-offset-2 decoration-muted decoration-1"
-    >
-      home
-    </a>
+    <Star className="h-6 fill-foreground" />
+    <div class="flex items-center gap-x-2">
+      <a
+        href="https://github.com/1danii"
+        target="_blank"
+        class="underline decoration-dashed underline-offset-2 decoration-muted decoration-1"
+      >
+        github
+      </a>
+      <a
+        href="https://www.linkedin.com/in/dani-pallares/"
+        target="_blank"
+        class="underline decoration-dashed underline-offset-2 decoration-muted decoration-1"
+      >
+        linkedin
+      </a>
+      <!-- <a
+        href="/"
+        class="underline decoration-dashed underline-offset-2 decoration-muted decoration-1"
+      >
+        home
+      </a> -->
+    </div>
   </nav>
-  <main class="max-w-screen-sm px-4 pt-8 mx-auto">
+  <main class="max-w-screen-sm px-4 py-8 mx-auto">
     <div
       class="flex sm:flex-row flex-col gap-y-4 sm:items-center justify-between"
     >
@@ -38,7 +56,7 @@ import { FadeIn } from "@/components/fade-in";
         />
         <div>
           <FadeIn client:load>
-            <h1 class="text-3xl font-semibold font-sans">daniel pallares</h1>
+            <h1 class="text-3xl font-semibold">Daniel Pallares</h1>
             <p class="text-muted">fullstack web developer</p>
           </FadeIn>
         </div>
@@ -60,7 +78,205 @@ import { FadeIn } from "@/components/fade-in";
       </div>
     </div>
 
-    <h2 class="text-2xl font-medium pt-6">projects</h2>
-    🚧
+    <h2 class="text-2xl pt-6 pb-4 font-medium">tools</h2>
+    <div class="flex flex-wrap gap-1">
+      <Tool>
+        <img src="/tools/react.svg" />
+        React
+      </Tool>
+      <Tool>
+        <img src="/tools/typescript.svg" />
+        TypeScript
+      </Tool>
+      <Tool>
+        <img src="/tools/tailwind.svg" />
+        Tailwind CSS
+      </Tool>
+      <Tool>
+        <img src="/tools/nextjs.svg" />
+        Next.js
+      </Tool>
+      <Tool>
+        <img src="/tools/tanstack.svg" />
+        TanStack
+      </Tool>
+      <Tool>
+        <img src="/tools/astro.svg" />
+        Astro
+      </Tool>
+      <Tool>
+        <img src="/tools/payload.svg" />
+        Payload CMS
+      </Tool>
+      <Tool>
+        <img src="/tools/motion.svg" />
+        Motion
+      </Tool>
+      <Tool>
+        <img src="/tools/drizzle.svg" />
+        Drizzle ORM
+      </Tool>
+      <Tool>
+        <img src="/tools/figma.svg" />
+        Figma
+      </Tool>
+    </div>
+
+    <h2 class="text-2xl pt-6 pb-4 font-medium">projects</h2>
+    <ul class="space-y-12">
+      <li>
+        <h3 class="text-lg">
+          <a
+            class="flex items-center gap-x-1"
+            href="https://brandcloud.pro/"
+            target="_blank"
+            >BrandCloud.pro <span class="text-muted text-sm">↗</span>
+          </a>
+        </h3>
+        <p class="text-muted text-sm">
+          Developed a new fully localized marketing website with a blog and
+          documentation hub integrated with an existing REST API. Built with
+          Next.js (App Router) and Payload CMS. Leveraged server-side rendering
+          and incremental static regeneration. Implemented email sending on
+          forms, CAPTCHA validation, and end-to-end testing.
+        </p>
+        <ImageGallery
+          project="brandcloud"
+          images={[
+            {
+              src: "/projects/brandcloud/homepage.png",
+              type: "image",
+              colSpan: 2,
+              rowSpan: 2,
+            },
+            {
+              src: "/projects/brandcloud/reseni.png",
+              type: "image",
+            },
+            {
+              src: "/projects/brandcloud/sections.mp4",
+              type: "video",
+            },
+            {
+              src: "/projects/brandcloud/docs.png",
+              type: "image",
+            },
+            {
+              src: "/projects/brandcloud/blog.png",
+              type: "image",
+            },
+            {
+              src: "/projects/brandcloud/form.png",
+              type: "image",
+            },
+          ]}
+          client:idle
+        />
+      </li>
+
+      <li>
+        <h3 class="text-lg">
+          <a
+            class="flex items-center gap-x-1"
+            href="https://csas-devops.vercel.app/"
+            target="_blank"
+            >Česká spořitelna DevOps hackathon portal
+            <span class="text-muted text-sm">↗</span>
+          </a>
+        </h3>
+        <p class="text-muted text-sm">
+          Dashboard built for the 2024 Česká spořitelna DevOps Hackathon that
+          consumes a provided REST API to visualize the data. Built with
+          TanStack query and router.
+        </p>
+        <ImageGallery
+          project="csas-devops"
+          images={[
+            {
+              src: "/projects/csas-devops/job.png",
+              type: "image",
+            },
+            {
+              src: "/projects/csas-devops/automations.png",
+              type: "image",
+            },
+            {
+              src: "/projects/csas-devops/runner.png",
+              type: "image",
+            },
+          ]}
+          client:idle
+        />
+      </li>
+
+      <li>
+        <h3 class="text-lg">
+          <a
+            class="flex items-center gap-x-1"
+            href="https://rezervace.kampapark.com/"
+            target="_blank"
+            >Restaurant reservation system
+            <span class="text-muted text-sm">↗</span>
+          </a>
+        </h3>
+        <p class="text-muted text-sm">
+          Restaurant reservation system built for a Prague restaurant and used
+          by hundreds of people each month, complete with a custom admin
+          dashboard allowing reservation window management and email
+          notifications. Built with Next.js with Drizzle ORM.
+        </p>
+        <ImageGallery
+          project="restaurant-form"
+          images={[
+            {
+              src: "/projects/restaurant-form/date.png",
+              type: "image",
+            },
+            {
+              src: "/projects/restaurant-form/contacts.png",
+              type: "image",
+            },
+          ]}
+          client:idle
+        />
+      </li>
+    </ul>
   </main>
+  <footer
+    class="max-w-screen-sm px-4 mx-auto h-16 flex items-center justify-between"
+  >
+    <div class="flex items-center gap-x-2">
+      <a href="https://github.com/1danii" target="_blank">
+        <svg
+          class="size-4"
+          width="1024"
+          height="1024"
+          viewBox="0 0 1024 1024"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            class="fill-foreground"
+            fill-rule="evenodd"
+            clip-rule="evenodd"
+            d="M8 0C3.58 0 0 3.58 0 8C0 11.54 2.29 14.53 5.47 15.59C5.87 15.66 6.02 15.42 6.02 15.21C6.02 15.02 6.01 14.39 6.01 13.72C4 14.09 3.48 13.23 3.32 12.78C3.23 12.55 2.84 11.84 2.5 11.65C2.22 11.5 1.82 11.13 2.49 11.12C3.12 11.11 3.57 11.7 3.72 11.94C4.44 13.15 5.59 12.81 6.05 12.6C6.12 12.08 6.33 11.73 6.56 11.53C4.78 11.33 2.92 10.64 2.92 7.58C2.92 6.71 3.23 5.99 3.74 5.43C3.66 5.23 3.38 4.41 3.82 3.31C3.82 3.31 4.49 3.1 6.02 4.13C6.66 3.95 7.34 3.86 8.02 3.86C8.7 3.86 9.38 3.95 10.02 4.13C11.55 3.09 12.22 3.31 12.22 3.31C12.66 4.41 12.38 5.23 12.3 5.43C12.81 5.99 13.12 6.7 13.12 7.58C13.12 10.65 11.25 11.33 9.47 11.53C9.76 11.78 10.01 12.26 10.01 13.01C10.01 14.08 10 14.94 10 15.21C10 15.42 10.15 15.67 10.55 15.59C13.71 14.53 16 11.53 16 8C16 3.58 12.42 0 8 0Z"
+            transform="scale(64)"></path>
+        </svg>
+      </a>
+      <a href="https://www.linkedin.com/in/dani-pallares/" target="_blank">
+        <svg
+          class="size-4"
+          width="256"
+          height="256"
+          xmlns="http://www.w3.org/2000/svg"
+          preserveAspectRatio="xMidYMid"
+          viewBox="0 0 256 256"
+          ><path
+            class="fill-foreground"
+            d="M218.123 218.127h-37.931v-59.403c0-14.165-.253-32.4-19.728-32.4-19.756 0-22.779 15.434-22.779 31.369v60.43h-37.93V95.967h36.413v16.694h.51a39.907 39.907 0 0 1 35.928-19.733c38.445 0 45.533 25.288 45.533 58.186l-.016 67.013ZM56.955 79.27c-12.157.002-22.014-9.852-22.016-22.009-.002-12.157 9.851-22.014 22.008-22.016 12.157-.003 22.014 9.851 22.016 22.008A22.013 22.013 0 0 1 56.955 79.27m18.966 138.858H37.95V95.967h37.97v122.16ZM237.033.018H18.89C8.58-.098.125 8.161-.001 18.471v219.053c.122 10.315 8.576 18.582 18.89 18.474h218.144c10.336.128 18.823-8.139 18.966-18.474V18.454c-.147-10.33-8.635-18.588-18.966-18.453"
+          ></path></svg
+        >
+      </a>
+    </div>
+  </footer>
 </Layout>

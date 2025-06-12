@@ -20,7 +20,7 @@ export function ContactButton() {
     >
       <motion.span
         variants={textVariants}
-        className="w-full flex flex-col *:h-1/2 *:flex *:items-center *:justify-center relative h-[200%] self-start"
+        className="relative flex h-[200%] w-full flex-col self-start *:flex *:h-1/2 *:items-center *:justify-center"
       >
         <span>contact</span>
         <span aria-hidden>→</span>
