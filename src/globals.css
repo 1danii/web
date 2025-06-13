@@ -14,9 +14,6 @@
     margin: 0;
     padding-block: 3rem;
   }
-  /* @page :first {
-    padding: 0;
-  } */
 }
 
 :root {
@@ -25,11 +22,13 @@
 
   --foreground: var(--dark);
   --background: var(--light);
+  --gray: var(--color-neutral-600);
 }
 @media not print {
   .dark {
     --foreground: var(--light);
     --background: var(--dark);
+    --gray: var(--color-neutral-400);
   }
 }
 
@@ -39,7 +38,7 @@
   --color-foreground: var(--foreground);
   --color-background: var(--background);
   --color-primary: #baff29;
-  --color-muted: var(--color-neutral-400);
+  --color-muted: var(--gray);
 }
 
 @layer base {
