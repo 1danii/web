@@ -90,7 +90,7 @@ export function ImageGallery({
 
   return (
     <>
-      <div className="grid grid-cols-3 gap-2 pt-2">
+      <div className="grid grid-cols-3 gap-2 pt-2 print:hidden">
         {images.map((img, i) => (
           <ImagePreview index={i} key={i} project={project} {...img} />
         ))}
