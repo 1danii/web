@@ -4,11 +4,12 @@ import defaultTheme from "tailwindcss/defaultTheme";
 
 const config: Config = {
   content: ["./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}"],
+  darkMode: "class",
   theme: {
     extend: {
       colors: {
-        foreground: colors.neutral[50],
-        background: "#0f0f0f",
+        background: colors.neutral[50],
+        foreground: "#0f0f0f",
         primary: "#baff29",
         muted: colors.neutral[400],
       },

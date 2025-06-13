@@ -2,6 +2,12 @@
   @apply bg-foreground text-background;
 }
 
+@media print {
+  * {
+    print-color-adjust: exact;
+  }
+}
+
 @font-face {
   font-family: "SF Pro Display";
   src: url("/fonts/SF-Pro-Display-Light.otf") format("opentype");
