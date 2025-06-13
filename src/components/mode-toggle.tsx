@@ -23,12 +23,8 @@ export function ModeToggle() {
 
   return (
     <button
-      className="relative size-4 text-foreground *:absolute *:left-0 *:top-0 *:size-4"
-      onClick={() => {
-        console.log(theme);
-
-        setThemeState(theme === "dark" ? "theme-light" : "dark");
-      }}
+      className="text-foreground relative size-4 *:absolute *:top-0 *:left-0 *:size-4"
+      onClick={() => setThemeState(theme === "dark" ? "theme-light" : "dark")}
     >
       <SunIcon className="dark:hidden" />
       <MoonIcon className="hidden dark:block" />

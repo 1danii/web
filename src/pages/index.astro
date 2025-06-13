@@ -17,7 +17,7 @@ import { ModeToggle } from "@/components/mode-toggle";
 
 <Layout>
   <nav
-    class="max-w-screen-sm px-4 mx-auto h-16 flex items-center justify-between"
+    class="max-w-screen-sm print:hidden px-4 mx-auto h-16 flex items-center justify-between"
   >
     <Star className="h-6 fill-foreground" />
     <div class="flex items-center gap-x-2">
@@ -82,7 +82,8 @@ import { ModeToggle } from "@/components/mode-toggle";
     <h2 class="text-2xl pt-6 pb-4 font-medium">tools</h2>
     <div class="flex flex-wrap gap-1">
       <Tool>
-        <img src="/tools/react.svg" />
+        <img class="dark:hidden" src="/tools/react-light.svg" />
+        <img class="hidden dark:block" src="/tools/react-dark.svg" />
         React
       </Tool>
       <Tool>
@@ -102,19 +103,23 @@ import { ModeToggle } from "@/components/mode-toggle";
         TanStack
       </Tool>
       <Tool>
-        <img src="/tools/astro.svg" />
+        <img class="dark:hidden" src="/tools/astro-light.svg" />
+        <img class="hidden dark:block" src="/tools/astro-dark.svg" />
         Astro
       </Tool>
       <Tool>
-        <img src="/tools/payload.svg" />
+        <img class="dark:hidden" src="/tools/payload-light.svg" />
+        <img class="hidden dark:block" src="/tools/payload-dark.svg" />
         Payload CMS
       </Tool>
       <Tool>
-        <img src="/tools/motion.svg" />
+        <img class="dark:hidden" src="/tools/motion-light.svg" />
+        <img class="hidden dark:block" src="/tools/motion-dark.svg" />
         Motion
       </Tool>
       <Tool>
-        <img src="/tools/drizzle.svg" />
+        <img class="dark:hidden" src="/tools/drizzle-light.svg" />
+        <img class="hidden dark:block" src="/tools/drizzle-dark.svg" />
         Drizzle ORM
       </Tool>
       <Tool>
@@ -125,7 +130,7 @@ import { ModeToggle } from "@/components/mode-toggle";
 
     <h2 class="text-2xl pt-6 pb-4 font-medium">projects</h2>
     <ul class="space-y-12">
-      <li>
+      <li class="break-inside-avoid">
         <h3 class="text-lg">
           <a
             class="flex items-center gap-x-1"
@@ -175,7 +180,7 @@ import { ModeToggle } from "@/components/mode-toggle";
         />
       </li>
 
-      <li>
+      <li class="break-inside-avoid">
         <h3 class="text-lg">
           <a
             class="flex items-center gap-x-1"
@@ -210,7 +215,7 @@ import { ModeToggle } from "@/components/mode-toggle";
         />
       </li>
 
-      <li>
+      <li class="break-inside-avoid">
         <h3 class="text-lg">
           <a
             class="flex items-center gap-x-1"
@@ -244,7 +249,7 @@ import { ModeToggle } from "@/components/mode-toggle";
     </ul>
   </main>
   <footer
-    class="max-w-screen-sm px-4 mx-auto h-16 flex items-center justify-between"
+    class="max-w-screen-sm px-4 print:hidden mx-auto h-16 flex items-center justify-between"
   >
     <div class="flex items-center gap-x-2">
       <a href="https://github.com/1danii" target="_blank">

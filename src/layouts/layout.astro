@@ -43,7 +43,9 @@ const ogUrl = new URL("/og.png", Astro.url);
       src="https://plausible.dani.pw/js/script.js"></script> -->
     <Posthog />
   </head>
-  <body class="bg-background text-foreground">
+  <body
+    class="bg-background transition-colors duration-500 ease-in-out text-foreground"
+  >
     <slot />
   </body>
 </html>

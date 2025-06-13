@@ -1,10 +1,59 @@
-::selection {
-  @apply bg-foreground text-background;
+@import "tailwindcss";
+
+@custom-variant dark {
+  @media not print {
+    &:where(.dark, .dark *) {
+      @slot;
+    }
+  }
 }
 
 @media print {
-  * {
-    print-color-adjust: exact;
+  @page {
+    size: A4;
+    margin: 0;
+    padding-block: 3rem;
+  }
+  /* @page :first {
+    padding: 0;
+  } */
+}
+
+:root {
+  --dark: oklch(16.84% 0 0);
+  --light: var(--color-neutral-50);
+
+  --foreground: var(--dark);
+  --background: var(--light);
+}
+@media not print {
+  .dark {
+    --foreground: var(--light);
+    --background: var(--dark);
+  }
+}
+
+@theme inline {
+  --font-sans: "SF Pro Display", "sans-serif";
+
+  --color-foreground: var(--foreground);
+  --color-background: var(--background);
+  --color-primary: #baff29;
+  --color-muted: var(--color-neutral-400);
+}
+
+@layer base {
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+  ::selection {
+    @apply bg-foreground text-background;
+  }
+  @media print {
+    * {
+      print-color-adjust: exact;
+    }
   }
 }
 

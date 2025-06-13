@@ -14,7 +14,7 @@ export function ContactButton() {
   return (
     <motion.a
       href="mailto:danielpallares@email.cz"
-      className={buttonVariants}
+      className={buttonVariants + " print:hidden"}
       initial="initial"
       whileHover="hover"
     >

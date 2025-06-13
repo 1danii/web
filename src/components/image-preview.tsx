@@ -57,7 +57,7 @@ function ImagePreview({
         <img className="size-full object-cover" alt={""} src={src} />
       ) : (
         <>
-          <PlayCircleIcon className="absolute left-1/2 top-1/2 size-6 -translate-x-1/2 -translate-y-1/2 text-background/75" />
+          <PlayCircleIcon className="absolute top-1/2 left-1/2 size-6 -translate-x-1/2 -translate-y-1/2 text-(--dark)/75" />
           <video src={src} muted className="size-full object-cover" />
         </>
       )}
@@ -108,7 +108,7 @@ export function ImageGallery({
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
                   transition={{ duration: 0.2, ease: "easeOut" }}
-                  className="fixed inset-0 bg-background/75 backdrop-blur-lg"
+                  className="bg-background/75 fixed inset-0 backdrop-blur-lg"
                 />
               </DialogOverlay>
               <div className="fixed inset-0 z-50 flex items-center justify-center px-4">
@@ -151,16 +151,16 @@ export function ImageGallery({
                     >
                       <button
                         onClick={previousImage}
-                        className="fixed bottom-12 flex aspect-square h-12 -translate-x-24 items-center justify-center rounded-full bg-foreground text-sm text-background md:bottom-auto md:left-[5vw] md:top-1/2 md:-translate-y-1/2 md:translate-x-0"
+                        className="bg-foreground text-background fixed bottom-12 flex aspect-square h-12 -translate-x-24 items-center justify-center rounded-full text-sm md:top-1/2 md:bottom-auto md:left-[5vw] md:translate-x-0 md:-translate-y-1/2"
                       >
                         ←
                       </button>
-                      <div className="fixed bottom-12 left-1/2 flex h-12 -translate-x-1/2 items-center justify-center rounded-full px-4 text-sm tabular-nums text-muted">
+                      <div className="text-muted fixed bottom-12 left-1/2 flex h-12 -translate-x-1/2 items-center justify-center rounded-full px-4 text-sm tabular-nums">
                         {currentImagePath!.index + 1} / {images.length}
                       </div>
                       <button
                         onClick={nextImage}
-                        className="fixed bottom-12 flex aspect-square h-12 translate-x-24 items-center justify-center rounded-full bg-foreground text-sm text-background md:bottom-auto md:right-[5vw] md:top-1/2 md:-translate-y-1/2 md:translate-x-0"
+                        className="bg-foreground text-background fixed bottom-12 flex aspect-square h-12 translate-x-24 items-center justify-center rounded-full text-sm md:top-1/2 md:right-[5vw] md:bottom-auto md:translate-x-0 md:-translate-y-1/2"
                       >
                         →
                       </button>

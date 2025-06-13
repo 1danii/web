@@ -1,11 +1,8 @@
-import tailwindConfig from "tailwind.config.js";
-import resolveConfig from "tailwindcss/resolveConfig";
 import { Star } from "./logo/logo";
-
-const { theme } = resolveConfig(tailwindConfig);
+// https://github.com/tailwindlabs/tailwindcss/discussions/14764
+import { colors } from "@/colors";
 
 export function ogImage() {
-  const { colors } = theme as any;
   return (
     <div
       style={{
@@ -15,11 +12,11 @@ export function ogImage() {
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
-        background: colors.background,
-        color: colors.foreground,
+        backgroundColor: colors.dark,
+        color: colors.light,
       }}
     >
-      <Star fill={colors.foreground} />
+      <Star fill={colors.light} />
     </div>
   );
 }
