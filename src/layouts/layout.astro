@@ -1,6 +1,7 @@
 ---
 import Posthog from "@/components/posthog.astro";
 import "@/globals.css";
+import { Star } from "@/components/logo/logo";
 
 const ogUrl = new URL("/og.png", Astro.url);
 ---
@@ -46,6 +47,43 @@ const ogUrl = new URL("/og.png", Astro.url);
   <body
     class="bg-background transition-colors duration-500 ease-in-out text-foreground"
   >
-    <slot />
+    <nav
+      class="max-w-screen-sm print:hidden px-4 mx-auto h-16 flex items-center justify-between"
+    >
+      <a href="/">
+        <Star className="h-6 fill-foreground" />
+      </a>
+      <div class="flex items-center gap-x-2">
+        <a
+          href="/components"
+          class="underline decoration-dashed underline-offset-2 decoration-muted decoration-1"
+        >
+          components
+        </a>
+        <a
+          href="https://github.com/1danii"
+          target="_blank"
+          class="underline decoration-dashed underline-offset-2 decoration-muted decoration-1"
+        >
+          github
+        </a>
+        <a
+          href="https://www.linkedin.com/in/dani-pallares/"
+          target="_blank"
+          class="underline decoration-dashed underline-offset-2 decoration-muted decoration-1"
+        >
+          linkedin
+        </a>
+        <!-- <a
+          href="/"
+          class="underline decoration-dashed underline-offset-2 decoration-muted decoration-1"
+        >
+          home
+        </a> -->
+      </div>
+    </nav>
+    <main class="max-w-screen-sm px-4 pt-8 mx-auto">
+      <slot />
+    </main>
   </body>
 </html>

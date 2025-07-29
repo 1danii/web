@@ -12,7 +12,7 @@ export function ogImage() {
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
-        backgroundColor: colors.dark,
+        backgroundColor: "oklch(16.84% 0 0)",
         color: colors.light,
       }}
     >

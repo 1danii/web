@@ -1,0 +1,18 @@
+---
+import { LoadingButton } from "@/components/examples/loading-button";
+import Layout from "@/layouts/layout.astro";
+---
+
+<Layout>
+  <div class="h-64 rounded-2xl w-full relative overflow-hidden bg-muted/20">
+    <div
+      class="inset-0 absolute -z-10 grid grid-cols-4 bg-background grid-rows-2 gap-px"
+    >
+      {Array.from({ length: 8 }).map((_, index) => <div class="bg-muted/20" />)}
+    </div>
+
+    <div class="flex size-full items-center justify-center scale-150">
+      <LoadingButton client:load>Save</LoadingButton>
+    </div>
+  </div>
+</Layout>

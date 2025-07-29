@@ -15,21 +15,21 @@
     "@heroicons/react": "^2.1.5",
     "@nanostores/react": "^1.0.0",
     "@tailwindcss/vite": "^4.1.10",
-    "@vercel/og": "^0.6.3",
-    "astro": "5.9.3",
+    "@vercel/og": "^0.8.5",
+    "astro": "5.12.4",
     "caniuse-lite": "^1.0.30001722",
-    "framer-motion": "^11.13.1",
+    "framer-motion": "^12.23.11",
     "nanostores": "^1.0.1",
     "radix-ui": "^1.4.2",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1",
     "react-hotkeys-hook": "^5.1.0",
     "tailwindcss": "^4.1.10",
     "typescript": "^5.6.3"
   },
   "devDependencies": {
-    "@types/react": "^18.3.12",
-    "@types/react-dom": "^18.3.1",
+    "@types/react": "^19.1.9",
+    "@types/react-dom": "^19.1.7",
     "prettier": "^3.5.3",
     "prettier-plugin-tailwindcss": "^0.6.12"
   }

@@ -7,7 +7,6 @@ import {
 } from "@heroicons/react/20/solid";
 import Layout from "@/layouts/layout.astro";
 import ProfilePic from "/public/me.jpg";
-import { Star } from "@/components/logo/logo";
 import { ContactButton } from "@/components/contact-button";
 import { FadeIn } from "@/components/fade-in";
 import { ImageGallery } from "@/components/image-preview";
@@ -16,245 +15,214 @@ import { ModeToggle } from "@/components/mode-toggle";
 ---
 
 <Layout>
-  <nav
-    class="max-w-screen-sm print:hidden px-4 mx-auto h-16 flex items-center justify-between"
+  <div
+    class="flex sm:flex-row flex-col gap-y-4 sm:items-center justify-between"
   >
-    <Star className="h-6 fill-foreground" />
-    <div class="flex items-center gap-x-2">
-      <a
-        href="https://github.com/1danii"
-        target="_blank"
-        class="underline decoration-dashed underline-offset-2 decoration-muted decoration-1"
-      >
-        github
-      </a>
-      <a
-        href="https://www.linkedin.com/in/dani-pallares/"
-        target="_blank"
-        class="underline decoration-dashed underline-offset-2 decoration-muted decoration-1"
-      >
-        linkedin
-      </a>
-      <!-- <a
-        href="/"
-        class="underline decoration-dashed underline-offset-2 decoration-muted decoration-1"
-      >
-        home
-      </a> -->
-    </div>
-  </nav>
-  <main class="max-w-screen-sm px-4 py-8 mx-auto">
-    <div
-      class="flex sm:flex-row flex-col gap-y-4 sm:items-center justify-between"
-    >
-      <div class="flex items-center gap-x-6">
-        <Image
-          src={ProfilePic}
-          draggable="false"
-          alt="me"
-          class="size-20 grayscale rounded-xl select-none"
-          loading="eager"
-        />
-        <div>
-          <FadeIn client:load>
-            <h1 class="text-3xl font-semibold">Daniel Pallares</h1>
-          </FadeIn>
-          <FadeIn delay={0.2} client:load>
-            <p class="text-muted">fullstack web developer</p>
-          </FadeIn>
-        </div>
-      </div>
-      <ContactButton client:idle />
-    </div>
-    <div class="flex pt-6 flex-col gap-y-4 text-muted">
-      <div class="flex items-center">
-        <MapPinIcon className="size-5 mr-2" />
-        prague, cz
-      </div>
-      <div class="flex items-center">
-        <AcademicCapIcon className="size-5 mr-2" />
-        střední škola automobilní a informatiky
-      </div>
-      <div class="flex items-center">
-        <BriefcaseIcon className="size-5 mr-2" />
-        web developer – brandcloud.pro
+    <div class="flex items-center gap-x-6">
+      <Image
+        src={ProfilePic}
+        draggable="false"
+        alt="me"
+        class="size-20 grayscale rounded-xl select-none"
+        loading="eager"
+      />
+      <div>
+        <FadeIn client:load>
+          <h1 class="text-3xl font-semibold">Daniel Pallares</h1>
+        </FadeIn>
+        <FadeIn delay={0.2} client:load>
+          <p class="text-muted">fullstack web developer</p>
+        </FadeIn>
       </div>
     </div>
-
-    <h2 class="text-2xl pt-6 pb-4 font-medium">tools</h2>
-    <div class="flex flex-wrap gap-1">
-      <Tool>
-        <img class="dark:hidden" src="/tools/react-light.svg" alt="" />
-        <img class="hidden dark:block" src="/tools/react-dark.svg" alt="" />
-        React
-      </Tool>
-      <Tool>
-        <img src="/tools/typescript.svg" alt="" />
-        TypeScript
-      </Tool>
-      <Tool>
-        <img src="/tools/tailwind.svg" alt="" />
-        Tailwind CSS
-      </Tool>
-      <Tool>
-        <img src="/tools/nextjs.svg" alt="" />
-        Next.js
-      </Tool>
-      <Tool>
-        <img src="/tools/tanstack.svg" alt="" />
-        TanStack
-      </Tool>
-      <Tool>
-        <img class="dark:hidden" src="/tools/astro-light.svg" alt="" />
-        <img class="hidden dark:block" src="/tools/astro-dark.svg" alt="" />
-        Astro
-      </Tool>
-      <Tool>
-        <img class="dark:hidden" src="/tools/payload-light.svg" alt="" />
-        <img class="hidden dark:block" src="/tools/payload-dark.svg" alt="" />
-        Payload CMS
-      </Tool>
-      <Tool>
-        <img class="dark:hidden" src="/tools/motion-light.svg" alt="" />
-        <img class="hidden dark:block" src="/tools/motion-dark.svg" alt="" />
-        Motion
-      </Tool>
-      <Tool>
-        <img class="dark:hidden" src="/tools/drizzle-light.svg" alt="" />
-        <img class="hidden dark:block" src="/tools/drizzle-dark.svg" alt="" />
-        Drizzle ORM
-      </Tool>
-      <Tool>
-        <img src="/tools/figma.svg" alt="" />
-        Figma
-      </Tool>
+    <ContactButton client:idle />
+  </div>
+  <div class="flex pt-6 flex-col gap-y-4 text-muted">
+    <div class="flex items-center">
+      <MapPinIcon className="size-5 mr-2" />
+      prague, cz
     </div>
+    <div class="flex items-center">
+      <AcademicCapIcon className="size-5 mr-2" />
+      střední škola automobilní a informatiky
+    </div>
+    <div class="flex items-center">
+      <BriefcaseIcon className="size-5 mr-2" />
+      web developer – brandcloud.pro
+    </div>
+  </div>
 
-    <h2 class="text-2xl pt-6 pb-4 font-medium">projects</h2>
-    <ul class="space-y-12 print:space-y-4">
-      <li class="break-inside-avoid">
-        <h3 class="text-lg">
-          <a
-            class="flex items-center gap-x-1"
-            href="https://brandcloud.pro/"
-            target="_blank"
-            >BrandCloud.pro <span class="text-muted print:hidden text-sm"
-              >↗</span
-            >
-          </a>
-        </h3>
-        <p class="text-muted text-sm">
-          Developed a new fully localized marketing website with a blog and
-          documentation hub integrated with an existing REST API. Built with
-          Next.js (App Router) and Payload CMS. Leveraged server-side rendering
-          and incremental static regeneration. Implemented email sending on
-          forms, CAPTCHA validation, and end-to-end testing.
-        </p>
-        <ImageGallery
-          project="brandcloud"
-          images={[
-            {
-              src: "/projects/brandcloud/homepage.png",
-              type: "image",
-              colSpan: 2,
-              rowSpan: 2,
-            },
-            {
-              src: "/projects/brandcloud/reseni.png",
-              type: "image",
-            },
-            {
-              src: "/projects/brandcloud/sections.mp4",
-              type: "video",
-            },
-            {
-              src: "/projects/brandcloud/docs.png",
-              type: "image",
-            },
-            {
-              src: "/projects/brandcloud/blog.png",
-              type: "image",
-            },
-            {
-              src: "/projects/brandcloud/form.png",
-              type: "image",
-            },
-          ]}
-          client:idle
-        />
-      </li>
+  <h2 class="text-2xl pt-6 pb-4 font-medium">tools</h2>
+  <div class="flex flex-wrap gap-1">
+    <Tool>
+      <img class="dark:hidden" src="/tools/react-light.svg" alt="" />
+      <img class="hidden dark:block" src="/tools/react-dark.svg" alt="" />
+      React
+    </Tool>
+    <Tool>
+      <img src="/tools/typescript.svg" alt="" />
+      TypeScript
+    </Tool>
+    <Tool>
+      <img src="/tools/tailwind.svg" alt="" />
+      Tailwind CSS
+    </Tool>
+    <Tool>
+      <img src="/tools/nextjs.svg" alt="" />
+      Next.js
+    </Tool>
+    <Tool>
+      <img src="/tools/tanstack.svg" alt="" />
+      TanStack
+    </Tool>
+    <Tool>
+      <img class="dark:hidden" src="/tools/astro-light.svg" alt="" />
+      <img class="hidden dark:block" src="/tools/astro-dark.svg" alt="" />
+      Astro
+    </Tool>
+    <Tool>
+      <img class="dark:hidden" src="/tools/payload-light.svg" alt="" />
+      <img class="hidden dark:block" src="/tools/payload-dark.svg" alt="" />
+      Payload CMS
+    </Tool>
+    <Tool>
+      <img class="dark:hidden" src="/tools/motion-light.svg" alt="" />
+      <img class="hidden dark:block" src="/tools/motion-dark.svg" alt="" />
+      Motion
+    </Tool>
+    <Tool>
+      <img class="dark:hidden" src="/tools/drizzle-light.svg" alt="" />
+      <img class="hidden dark:block" src="/tools/drizzle-dark.svg" alt="" />
+      Drizzle ORM
+    </Tool>
+    <Tool>
+      <img src="/tools/figma.svg" alt="" />
+      Figma
+    </Tool>
+  </div>
 
-      <li class="break-inside-avoid">
-        <h3 class="text-lg">
-          <a
-            class="flex items-center gap-x-1"
-            href="https://csas-devops.vercel.app/"
-            target="_blank"
-            >Česká spořitelna DevOps hackathon portal
-            <span class="text-muted print:hidden text-sm">↗</span>
-          </a>
-        </h3>
-        <p class="text-muted text-sm">
-          Dashboard built for the 2024 Česká spořitelna DevOps Hackathon that
-          consumes a provided REST API to visualize the data. Built with
-          TanStack query and router.
-        </p>
-        <ImageGallery
-          project="csas-devops"
-          images={[
-            {
-              src: "/projects/csas-devops/job.png",
-              type: "image",
-            },
-            {
-              src: "/projects/csas-devops/automations.png",
-              type: "image",
-            },
-            {
-              src: "/projects/csas-devops/runner.png",
-              type: "image",
-            },
-          ]}
-          client:idle
-        />
-      </li>
+  <h2 class="text-2xl pt-6 pb-4 font-medium">projects</h2>
+  <ul class="space-y-12 print:space-y-4">
+    <li class="break-inside-avoid">
+      <h3 class="text-lg">
+        <a
+          class="flex items-center gap-x-1"
+          href="https://brandcloud.pro/"
+          target="_blank"
+          >BrandCloud.pro <span class="text-muted print:hidden text-sm">↗</span
+          >
+        </a>
+      </h3>
+      <p class="text-muted text-sm">
+        Developed a new fully localized marketing website with a blog and
+        documentation hub integrated with an existing REST API. Built with
+        Next.js (App Router) and Payload CMS. Leveraged server-side rendering
+        and incremental static regeneration. Implemented email sending on forms,
+        CAPTCHA validation, and end-to-end testing.
+      </p>
+      <ImageGallery
+        project="brandcloud"
+        images={[
+          {
+            src: "/projects/brandcloud/homepage.png",
+            type: "image",
+            colSpan: 2,
+            rowSpan: 2,
+          },
+          {
+            src: "/projects/brandcloud/reseni.png",
+            type: "image",
+          },
+          {
+            src: "/projects/brandcloud/sections.mp4",
+            type: "video",
+          },
+          {
+            src: "/projects/brandcloud/docs.png",
+            type: "image",
+          },
+          {
+            src: "/projects/brandcloud/blog.png",
+            type: "image",
+          },
+          {
+            src: "/projects/brandcloud/form.png",
+            type: "image",
+          },
+        ]}
+        client:idle
+      />
+    </li>
 
-      <li class="break-inside-avoid">
-        <h3 class="text-lg">
-          <a
-            class="flex items-center gap-x-1"
-            href="https://rezervace.kampapark.com/"
-            target="_blank"
-            >Restaurant reservation system
-            <span class="text-muted print:hidden text-sm">↗</span>
-          </a>
-        </h3>
-        <p class="text-muted text-sm">
-          Restaurant reservation system built for a Prague restaurant and used
-          by hundreds of people each month, complete with a custom admin
-          dashboard allowing reservation window management and email
-          notifications. Built with Next.js with Drizzle ORM.
-        </p>
-        <ImageGallery
-          project="restaurant-form"
-          images={[
-            {
-              src: "/projects/restaurant-form/date.png",
-              type: "image",
-            },
-            {
-              src: "/projects/restaurant-form/contacts.png",
-              type: "image",
-            },
-          ]}
-          client:idle
-        />
-      </li>
-    </ul>
-  </main>
-  <footer
-    class="max-w-screen-sm px-4 print:hidden mx-auto h-16 flex items-center justify-between"
-  >
+    <li class="break-inside-avoid">
+      <h3 class="text-lg">
+        <a
+          class="flex items-center gap-x-1"
+          href="https://csas-devops.vercel.app/"
+          target="_blank"
+          >Česká spořitelna DevOps hackathon portal
+          <span class="text-muted print:hidden text-sm">↗</span>
+        </a>
+      </h3>
+      <p class="text-muted text-sm">
+        Dashboard built for the 2024 Česká spořitelna DevOps Hackathon that
+        consumes a provided REST API to visualize the data. Built with TanStack
+        query and router.
+      </p>
+      <ImageGallery
+        project="csas-devops"
+        images={[
+          {
+            src: "/projects/csas-devops/job.png",
+            type: "image",
+          },
+          {
+            src: "/projects/csas-devops/automations.png",
+            type: "image",
+          },
+          {
+            src: "/projects/csas-devops/runner.png",
+            type: "image",
+          },
+        ]}
+        client:idle
+      />
+    </li>
+
+    <li class="break-inside-avoid">
+      <h3 class="text-lg">
+        <a
+          class="flex items-center gap-x-1"
+          href="https://rezervace.kampapark.com/"
+          target="_blank"
+          >Restaurant reservation system
+          <span class="text-muted print:hidden text-sm">↗</span>
+        </a>
+      </h3>
+      <p class="text-muted text-sm">
+        Restaurant reservation system built for a Prague restaurant and used by
+        hundreds of people each month, complete with a custom admin dashboard
+        allowing reservation window management and email notifications. Built
+        with Next.js with Drizzle ORM.
+      </p>
+      <ImageGallery
+        project="restaurant-form"
+        images={[
+          {
+            src: "/projects/restaurant-form/date.png",
+            type: "image",
+          },
+          {
+            src: "/projects/restaurant-form/contacts.png",
+            type: "image",
+          },
+        ]}
+        client:idle
+      />
+    </li>
+  </ul>
+
+  <footer class="print:hidden mt-8 h-16 flex items-center justify-between">
     <div class="flex items-center gap-x-2">
       <a href="https://github.com/1danii" target="_blank">
         <svg
