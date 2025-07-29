@@ -12,6 +12,7 @@ export default defineConfig({
   site: "https://dani.pw",
 
   vite: {
+    // @ts-expect-error tailwind plugin version mismatch
     plugins: [tailwindcss()],
   },
 });
