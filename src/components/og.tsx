@@ -12,11 +12,13 @@ export function ogImage() {
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
-        backgroundColor: "oklch(16.84% 0 0)",
+        backgroundColor: colors.dark,
         color: colors.light,
+        fill: colors.light,
       }}
     >
-      <Star fill={colors.light} />
+      {/* TODO: fix png rendering gaps  */}
+      <Star style={{ height: "64px", width: "64px" }} fill={colors.light} />
     </div>
   );
 }
