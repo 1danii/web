@@ -33,7 +33,7 @@
 }
 
 @theme inline {
-  --font-sans: "SF Pro Display", "sans-serif";
+  --font-sans: "SF Pro Display", "Inter", "system-ui", "sans-serif";
 
   --color-foreground: var(--foreground);
   --color-background: var(--background);
