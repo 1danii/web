@@ -1,5 +1,5 @@
 import { buttonVariants } from "@/components/button";
-import { motion, type Variants } from "framer-motion";
+import { motion, type Variants } from "motion/react";
 
 const textVariants: Variants = {
   initial: {

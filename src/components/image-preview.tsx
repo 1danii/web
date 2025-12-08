@@ -8,7 +8,7 @@ import {
   DialogTitle,
 } from "@radix-ui/react-dialog";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion } from "motion/react";
 import { atom } from "nanostores";
 import { useEffect, type PropsWithChildren } from "react";
 import { useHotkeys } from "react-hotkeys-hook";
