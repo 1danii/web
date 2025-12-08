@@ -1,9 +1,11 @@
 ---
 import { LoadingButton } from "@/components/examples/loading-button";
 import Layout from "@/layouts/layout.astro";
+import { Accordions } from "@/components/examples/accordions";
 ---
 
 <Layout>
+  <Accordions client:load />
   <div class="h-64 rounded-2xl w-full relative overflow-hidden bg-muted/20">
     <div
       class="inset-0 absolute -z-10 grid grid-cols-4 bg-background grid-rows-2 gap-px"
