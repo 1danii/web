@@ -1,5 +1,5 @@
 import { motion } from "motion/react";
-import type { PropsWithChildren } from "react";
+import { Children, isValidElement, type PropsWithChildren } from "react";
 
 export function FadeIn(props: PropsWithChildren<{ delay?: number }>) {
   return (
@@ -9,10 +9,30 @@ export function FadeIn(props: PropsWithChildren<{ delay?: number }>) {
         ease: "easeOut",
         delay: props.delay,
       }}
-      initial={{ y: 8, opacity: 0, filter: "blur(6px)" }}
-      animate={{ y: 0, opacity: 1, filter: "blur(0px)" }}
+      initial={{ y: "20%", opacity: 0, filter: "blur(8px)" }}
+      animate={{ y: "0%", opacity: 1, filter: "blur(0px)" }}
     >
       {props.children}
     </motion.div>
+  );
+}
+
+export function FadeInText(props: { delay?: number; children: string }) {
+  return [...new Intl.Segmenter().segment(props.children.props.value)].map(
+    (segment) => (
+      <motion.span
+        className="inline-block whitespace-pre"
+        transition={{
+          duration: 0.5,
+          ease: "easeOut",
+          delay: props.delay ?? 0 + segment.index * 0.03,
+        }}
+        initial={{ y: "20%", opacity: 0, filter: "blur(8px)" }}
+        animate={{ y: "0%", opacity: 1, filter: "blur(0px)" }}
+        key={segment.index}
+      >
+        {segment.segment}
+      </motion.span>
+    ),
   );
 }
