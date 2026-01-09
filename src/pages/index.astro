@@ -8,7 +8,7 @@ import {
 import Layout from "@/layouts/layout.astro";
 import ProfilePic from "/public/me.jpg";
 import { ContactButton } from "@/components/contact-button";
-import { FadeIn } from "@/components/fade-in";
+import { FadeIn, FadeInText } from "@/components/fade-in";
 import { ImageGallery } from "@/components/image-preview";
 import { Tool } from "@/components/tool";
 import { ModeToggle } from "@/components/mode-toggle";
@@ -27,10 +27,10 @@ import { ModeToggle } from "@/components/mode-toggle";
         loading="eager"
       />
       <div>
-        <FadeIn client:load>
-          <h1 class="text-3xl font-semibold">Daniel Pallares</h1>
-        </FadeIn>
-        <FadeIn delay={0.2} client:load>
+        <h1 class="text-3xl font-semibold">
+          <FadeInText client:load>Daniel Pallares</FadeInText>
+        </h1>
+        <FadeIn delay={0.8} client:load>
           <p class="text-muted">fullstack web developer</p>
         </FadeIn>
       </div>
@@ -52,7 +52,10 @@ import { ModeToggle } from "@/components/mode-toggle";
     </div>
   </div>
 
-  <h2 class="text-2xl pt-6 pb-4 font-medium">tools</h2>
+  <h2 class="text-xl pt-6 pb-1 mb-4 border-b border-muted/20 font-medium">
+    tools
+  </h2>
+
   <div class="flex flex-wrap gap-1">
     <Tool>
       <img class="dark:hidden" src="/tools/react-light.svg" alt="" />
@@ -101,7 +104,9 @@ import { ModeToggle } from "@/components/mode-toggle";
     </Tool>
   </div>
 
-  <h2 class="text-2xl pt-6 pb-4 font-medium">projects</h2>
+  <h2 class="text-xl pt-6 pb-1 mb-4 border-b border-muted/20 font-medium">
+    projects
+  </h2>
   <ul class="space-y-12 print:space-y-4">
     <li class="break-inside-avoid">
       <h3 class="text-lg">
