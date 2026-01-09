@@ -51,7 +51,7 @@ function ImagePreview({
         gridColumn: `span ${colSpan}`,
         gridRow: `span ${rowSpan}`,
       }}
-      className="relative aspect-video size-full cursor-zoom-in overflow-hidden rounded-xl"
+      className="relative aspect-video size-full cursor-zoom-in overflow-hidden rounded-lg"
     >
       {type === "image" ? (
         <img className="size-full object-cover" alt={""} src={src} />
