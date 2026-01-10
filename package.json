@@ -15,6 +15,7 @@
     "@base-ui-components/react": "^1.0.0-rc.0",
     "@heroicons/react": "^2.2.0",
     "@nanostores/react": "^1.0.0",
+    "@paper-design/shaders-react": "^0.0.69",
     "@tailwindcss/vite": "^4.1.17",
     "@vercel/og": "^0.8.5",
     "astro": "5.16.4",

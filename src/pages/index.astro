@@ -12,6 +12,7 @@ import { FadeIn, FadeInText } from "@/components/fade-in";
 import { ImageGallery } from "@/components/image-preview";
 import { Tool } from "@/components/tool";
 import { ModeToggle } from "@/components/mode-toggle";
+import { Shader } from "@/components/shader";
 ---
 
 <Layout>
@@ -52,7 +53,8 @@ import { ModeToggle } from "@/components/mode-toggle";
     </div>
   </div>
 
-  <h2 class="text-xl pt-8 pb-1 mb-4 border-b border-muted/20 font-medium">
+  <Shader client:load />
+  <h2 class="text-xl pt-8 pb-1 mb-4 border-b border-muted/10 font-medium">
     tools
   </h2>
 
@@ -104,7 +106,7 @@ import { ModeToggle } from "@/components/mode-toggle";
     </Tool>
   </div>
 
-  <h2 class="text-xl pt-8 pb-1 mb-4 border-b border-muted/20 font-medium">
+  <h2 class="text-xl pt-8 pb-1 mb-4 border-b border-muted/10 font-medium">
     projects
   </h2>
   <ul class="space-y-12 print:space-y-4">

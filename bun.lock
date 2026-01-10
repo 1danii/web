@@ -10,6 +10,7 @@
         "@base-ui-components/react": "^1.0.0-rc.0",
         "@heroicons/react": "^2.2.0",
         "@nanostores/react": "^1.0.0",
+        "@paper-design/shaders-react": "^0.0.69",
         "@tailwindcss/vite": "^4.1.17",
         "@vercel/og": "^0.8.5",
         "astro": "5.16.4",
@@ -243,6 +244,10 @@
     "@nodelib/fs.walk": ["@nodelib/fs.walk@1.2.8", "", { "dependencies": { "@nodelib/fs.scandir": "2.1.5", "fastq": "^1.6.0" } }, "sha512-oGB+UxlgWcgQkgwo8GcEGwemoTFt3FIO9ababBmaGwXIoBKZ+GTy0pP185beGg7Llih/NSHSV2XAs1lnznocSg=="],
 
     "@oslojs/encoding": ["@oslojs/encoding@1.1.0", "", {}, "sha512-70wQhgYmndg4GCPxPPxPGevRKqTIJ2Nh4OkiMWmDAVYsTQ+Ta7Sq+rPevXyXGdzr30/qZBnyOalCszoMxlyldQ=="],
+
+    "@paper-design/shaders": ["@paper-design/shaders@0.0.69", "", {}, "sha512-DLO62CNzBhGQEbCGYmaajTzQdooXiuLF3CutF3Xff79PdHtnnG6/1IXw3YlcFC5JyaamenKkMx3kBCkY1dg1KA=="],
+
+    "@paper-design/shaders-react": ["@paper-design/shaders-react@0.0.69", "", { "dependencies": { "@paper-design/shaders": "0.0.69" }, "peerDependencies": { "@types/react": "^18 || ^19", "react": "^18 || ^19" }, "optionalPeers": ["@types/react"] }, "sha512-iXZOzzc5u8RJYjXqcP0EU9Q74o0NeAXqIDgNR42c/txNN6BEHJYeEKKzZw7gyeEf5zE6edZ+iqXtj5ZgA6nTpA=="],
 
     "@radix-ui/number": ["@radix-ui/number@1.1.1", "", {}, "sha512-MkKCwxlXTgz6CFoJx3pCwn07GKp36+aZyu/u2Ln2VrA5DcdyCZkASEDBTd8x5whTQQL5CiYf4prXKLcgQdv29g=="],
 
