@@ -5,15 +5,15 @@ import { Accordions } from "@/components/examples/accordions";
 ---
 
 <Layout>
-  <Accordions client:load />
-  <div class="h-64 rounded-2xl w-full relative overflow-hidden bg-muted/20">
-    <div
-      class="inset-0 absolute -z-10 grid grid-cols-4 bg-background grid-rows-2 gap-px"
-    >
-      {Array.from({ length: 8 }).map((_) => <div class="bg-muted/20" />)}
-    </div>
+  <h2 class="text-xl pb-1 mb-4 border-b border-muted/20 font-medium">
+    components
+  </h2>
 
-    <div class="flex size-full items-center justify-center scale-150">
+  <div class="flex flex-col gap-4">
+    <div class="outline-muted/20 rounded-lg not-dark:shadow-sm outline h-72">
+      <Accordions client:load />
+    </div>
+    <div class="outline-muted/20 rounded-lg not-dark:shadow-sm outline h-72">
       <LoadingButton client:load>Save</LoadingButton>
     </div>
   </div>
