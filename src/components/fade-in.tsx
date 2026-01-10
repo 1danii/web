@@ -17,7 +17,7 @@ export function FadeIn(props: PropsWithChildren<{ delay?: number }>) {
   );
 }
 
-export function FadeInText(props: { delay?: number; children: string }) {
+export function FadeInText(props: PropsWithChildren<{ delay?: number }>) {
   // @ts-expect-error astro child props idk
   return [...new Intl.Segmenter().segment(props.children.props.value)].map(
     (segment) => (
@@ -26,7 +26,7 @@ export function FadeInText(props: { delay?: number; children: string }) {
         transition={{
           duration: 0.5,
           ease: "easeOut",
-          delay: props.delay ?? 0 + segment.index * 0.03,
+          delay: (props.delay ?? 0) + segment.index * 0.03,
         }}
         initial={{ y: "20%", opacity: 0, filter: "blur(8px)" }}
         animate={{ y: "0%", opacity: 1, filter: "blur(0px)" }}
