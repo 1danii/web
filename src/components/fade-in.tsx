@@ -18,6 +18,7 @@ export function FadeIn(props: PropsWithChildren<{ delay?: number }>) {
 }
 
 export function FadeInText(props: { delay?: number; children: string }) {
+  // @ts-expect-error astro child props idk
   return [...new Intl.Segmenter().segment(props.children.props.value)].map(
     (segment) => (
       <motion.span
