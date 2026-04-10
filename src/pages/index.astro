@@ -9,7 +9,6 @@ import { ArrowUpRightIcon } from "@heroicons/react/16/solid";
 import Layout from "@/layouts/layout.astro";
 import ProfilePic from "/public/me.jpg";
 import { ContactButton } from "@/components/contact-button";
-import { FadeIn, FadeInText } from "@/components/fade-in";
 import { ImageGallery } from "@/components/image-preview";
 import { Tool } from "@/components/tool";
 import { ModeToggle } from "@/components/mode-toggle";
@@ -17,7 +16,7 @@ import { ModeToggle } from "@/components/mode-toggle";
 
 <Layout>
   <div
-    class="flex sm:flex-row flex-col gap-y-4 sm:items-center justify-between"
+    class="animate-fade-up-mount flex sm:flex-row flex-col gap-y-4 sm:items-center justify-between"
   >
     <div class="flex items-center gap-x-6">
       <Image
@@ -29,12 +28,14 @@ import { ModeToggle } from "@/components/mode-toggle";
       />
       <div>
         <h1 class="text-3xl font-semibold">
-          <FadeIn client:load>Daniel</FadeIn>
-          <FadeIn delay={0.2} client:load>Pallares</FadeIn>
+          <span class="animate-fade-in-blur inline-block">Daniel</span>{" "}
+          <span class="animate-fade-in-blur inline-block fade-up-delay-2"
+            >Pallares</span
+          >
         </h1>
-        <FadeIn delay={0.6} client:load>
-          <p class="text-muted">fullstack web developer</p>
-        </FadeIn>
+        <p class="animate-fade-in-blur text-muted fade-up-delay-6">
+          fullstack developer
+        </p>
       </div>
     </div>
     <ContactButton client:idle />
@@ -54,11 +55,11 @@ import { ModeToggle } from "@/components/mode-toggle";
     </div>
   </div> -->
 
-  <h2 class="text-xl pt-8 pb-1 mb-4 border-b border-border font-medium">
-    work experience
-  </h2>
+  <div class="animate-fade-up-mount fade-up-delay-1">
+    <h2 class="text-xl pt-8 pb-1 mb-4 border-b border-border font-medium">
+      work experience
+    </h2>
 
-  <div>
     <div class="flex gap-x-3">
       <img
         src="/companies/brandcloud.svg"
@@ -84,67 +85,70 @@ import { ModeToggle } from "@/components/mode-toggle";
     </ul>
   </div>
 
-  <h2 class="text-xl pt-8 pb-1 mb-4 border-b border-border font-medium">
-    tools
-  </h2>
-
-  <div class="flex flex-wrap gap-1">
-    <Tool>
-      <img src="/tools/typescript.svg" alt="" />
-      TypeScript
-    </Tool>
-    <Tool>
-      <img class="dark:hidden" src="/tools/react-light.svg" alt="" />
-      <img class="hidden dark:block" src="/tools/react-dark.svg" alt="" />
-      React
-    </Tool>
-    <Tool>
-      <img src="/tools/vue.svg" alt="" />
-      Vue
-    </Tool>
-    <Tool>
-      <img src="/tools/tailwind.svg" alt="" />
-      Tailwind CSS
-    </Tool>
-    <Tool>
-      <img src="/tools/nextjs.svg" alt="" />
-      Next.js
-    </Tool>
-    <Tool>
-      <img src="/tools/tanstack.svg" alt="" />
-      TanStack
-    </Tool>
-    <Tool>
-      <img class="dark:hidden" src="/tools/astro-light.svg" alt="" />
-      <img class="hidden dark:block" src="/tools/astro-dark.svg" alt="" />
-      Astro
-    </Tool>
-    <Tool>
-      <img class="dark:hidden" src="/tools/payload-light.svg" alt="" />
-      <img class="hidden dark:block" src="/tools/payload-dark.svg" alt="" />
-      Payload CMS
-    </Tool>
-    <Tool>
-      <img class="dark:hidden" src="/tools/motion-light.svg" alt="" />
-      <img class="hidden dark:block" src="/tools/motion-dark.svg" alt="" />
-      Motion
-    </Tool>
-    <Tool>
-      <img class="dark:hidden" src="/tools/drizzle-light.svg" alt="" />
-      <img class="hidden dark:block" src="/tools/drizzle-dark.svg" alt="" />
-      Drizzle ORM
-    </Tool>
-    <Tool>
-      <img src="/tools/figma.svg" alt="" />
-      Figma
-    </Tool>
+  <div class="animate-fade-up-mount fade-up-delay-2">
+    <h2 class="text-xl pt-8 pb-1 mb-4 border-b border-border font-medium">
+      tools
+    </h2>
+    <div class="flex flex-wrap gap-1">
+      <Tool>
+        <img src="/tools/typescript.svg" alt="" />
+        TypeScript
+      </Tool>
+      <Tool>
+        <img class="dark:hidden" src="/tools/react-light.svg" alt="" />
+        <img class="hidden dark:block" src="/tools/react-dark.svg" alt="" />
+        React
+      </Tool>
+      <Tool>
+        <img src="/tools/vue.svg" alt="" />
+        Vue
+      </Tool>
+      <Tool>
+        <img src="/tools/tailwind.svg" alt="" />
+        Tailwind CSS
+      </Tool>
+      <Tool>
+        <img src="/tools/nextjs.svg" alt="" />
+        Next.js
+      </Tool>
+      <Tool>
+        <img src="/tools/tanstack.svg" alt="" />
+        TanStack
+      </Tool>
+      <Tool>
+        <img class="dark:hidden" src="/tools/astro-light.svg" alt="" />
+        <img class="hidden dark:block" src="/tools/astro-dark.svg" alt="" />
+        Astro
+      </Tool>
+      <Tool>
+        <img class="dark:hidden" src="/tools/payload-light.svg" alt="" />
+        <img class="hidden dark:block" src="/tools/payload-dark.svg" alt="" />
+        Payload CMS
+      </Tool>
+      <Tool>
+        <img class="dark:hidden" src="/tools/motion-light.svg" alt="" />
+        <img class="hidden dark:block" src="/tools/motion-dark.svg" alt="" />
+        Motion
+      </Tool>
+      <Tool>
+        <img class="dark:hidden" src="/tools/drizzle-light.svg" alt="" />
+        <img class="hidden dark:block" src="/tools/drizzle-dark.svg" alt="" />
+        Drizzle ORM
+      </Tool>
+      <Tool>
+        <img src="/tools/figma.svg" alt="" />
+        Figma
+      </Tool>
+    </div>
   </div>
 
-  <h2 class="text-xl pt-8 pb-1 mb-4 border-b border-border font-medium">
+  <h2
+    class="animate-fade-up-mount fade-up-delay-3 text-xl pt-8 pb-1 mb-4 border-b border-border font-medium"
+  >
     projects
   </h2>
   <ul class="space-y-12 print:space-y-4">
-    <li class="break-inside-avoid">
+    <li class="break-inside-avoid animate-fade-up-mount fade-up-delay-4">
       <h3 class="text-lg">
         <a
           class="flex items-center gap-x-0.5"
@@ -196,7 +200,7 @@ import { ModeToggle } from "@/components/mode-toggle";
       />
     </li>
 
-    <li class="break-inside-avoid">
+    <li class="break-inside-avoid animate-fade-up-mount fade-up-delay-5">
       <h3 class="text-lg">
         <a
           class="flex items-center gap-x-0.5"
@@ -231,7 +235,7 @@ import { ModeToggle } from "@/components/mode-toggle";
       />
     </li>
 
-    <li class="break-inside-avoid">
+    <li class="break-inside-avoid animate-fade-up-mount fade-up-delay-6">
       <h3 class="text-lg">Restaurant reservation system</h3>
       <p class="text-muted text-sm">
         Restaurant reservation system built for a Prague restaurant and used by
@@ -256,7 +260,9 @@ import { ModeToggle } from "@/components/mode-toggle";
     </li>
   </ul>
 
-  <footer class="print:hidden mt-8 h-16 flex items-center justify-between">
+  <footer
+    class="animate-fade-up-mount fade-up-delay-7 print:hidden mt-8 h-16 flex items-center justify-between"
+  >
     <div class="flex items-center gap-x-2">
       <a href="https://github.com/1danii" target="_blank">
         <svg
