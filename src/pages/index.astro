@@ -5,6 +5,7 @@ import {
   AcademicCapIcon,
   BriefcaseIcon,
 } from "@heroicons/react/20/solid";
+import { ArrowUpRightIcon } from "@heroicons/react/16/solid";
 import Layout from "@/layouts/layout.astro";
 import ProfilePic from "/public/me.jpg";
 import { ContactButton } from "@/components/contact-button";
@@ -23,7 +24,7 @@ import { ModeToggle } from "@/components/mode-toggle";
         src={ProfilePic}
         draggable="false"
         alt="me"
-        class="size-20 grayscale rounded-xl select-none"
+        class="size-20 grayscale rounded-xl select-none outline outline-border-transparent -outline-offset-1 not-dark:shadow-xs"
         loading="eager"
       />
       <div>
@@ -52,6 +53,36 @@ import { ModeToggle } from "@/components/mode-toggle";
       web developer – brandcloud.pro
     </div>
   </div> -->
+
+  <h2 class="text-xl pt-8 pb-1 mb-4 border-b border-border font-medium">
+    work experience
+  </h2>
+
+  <div>
+    <div class="flex gap-x-3">
+      <img
+        src="/companies/brandcloud.svg"
+        alt="BrandCloud"
+        draggable="false"
+        class="size-12 shrink-0 p-2.5 rounded-lg outline outline-border-transparent not-dark:shadow-xs bg-background-elevated"
+      />
+      <div>
+        <h3 class="text-lg">BrandCloud</h3>
+        <p class="text-muted text-sm">
+          Software Engineer · September 2025 – Present
+        </p>
+      </div>
+    </div>
+    <ul class="text-sm text-muted mt-3 list-disc list-inside">
+      <li>
+        Worked on new features for the main SaaS application using Vue and PHP
+      </li>
+      <li>
+        Developed a fully localized marketing website, blog, and documentation
+        hub using Next.js and Payload CMS.
+      </li>
+    </ul>
+  </div>
 
   <h2 class="text-xl pt-8 pb-1 mb-4 border-b border-border font-medium">
     tools
@@ -116,18 +147,17 @@ import { ModeToggle } from "@/components/mode-toggle";
     <li class="break-inside-avoid">
       <h3 class="text-lg">
         <a
-          class="flex items-center gap-x-1"
+          class="flex items-center gap-x-0.5"
           href="https://brandcloud.pro/"
           target="_blank"
         >
           BrandCloud.pro
-          <span class="text-muted text-sm">↗</span>
+          <ArrowUpRightIcon className="size-4 text-muted" />
         </a>
       </h3>
       <p class="text-muted text-sm">
-        Currently contributing to the main SaaS application using Vue.js.
-        Previously, developed a fully localized marketing website with a blog
-        and documentation hub integrated with an existing REST API. Built with
+        Developed a fully localized marketing website with a blog and
+        documentation hub integrated with an existing REST API. Built with
         Next.js (App Router) and Payload CMS. Leveraged server-side rendering
         and incremental static regeneration. Implemented email sending on forms,
         CAPTCHA validation, and end-to-end testing.
@@ -169,11 +199,11 @@ import { ModeToggle } from "@/components/mode-toggle";
     <li class="break-inside-avoid">
       <h3 class="text-lg">
         <a
-          class="flex items-center gap-x-1"
+          class="flex items-center gap-x-0.5"
           href="https://csas-devops.vercel.app/"
           target="_blank"
           >Česká spořitelna DevOps hackathon portal
-          <span class="text-muted text-sm">↗</span>
+          <ArrowUpRightIcon className="size-4 text-muted" />
         </a>
       </h3>
       <p class="text-muted text-sm">
@@ -202,15 +232,7 @@ import { ModeToggle } from "@/components/mode-toggle";
     </li>
 
     <li class="break-inside-avoid">
-      <h3 class="text-lg">
-        <a
-          class="flex items-center gap-x-1"
-          href="https://rezervace.kampapark.com/"
-          target="_blank"
-          >Restaurant reservation system
-          <span class="text-muted text-sm">↗</span>
-        </a>
-      </h3>
+      <h3 class="text-lg">Restaurant reservation system</h3>
       <p class="text-muted text-sm">
         Restaurant reservation system built for a Prague restaurant and used by
         hundreds of people each month, complete with a custom admin dashboard

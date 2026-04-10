@@ -25,14 +25,22 @@
 :root {
   --foreground: var(--color-gray-12);
   --background: var(--color-gray-1);
+  --background-elevated: white;
   --gray: var(--color-gray-11);
   --border: var(--color-gray-4);
   --border-transparent: var(--color-gray-a4);
 }
 
+@media not print {
+  .dark {
+    --background-elevated: var(--color-gray-2);
+  }
+}
+
 @theme inline {
   --color-foreground: var(--foreground);
   --color-background: var(--background);
+  --color-background-elevated: var(--background-elevated);
   --color-primary: #baff29;
   --color-muted: var(--gray);
   --color-border: var(--border);
