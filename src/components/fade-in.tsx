@@ -1,9 +1,10 @@
 import { motion } from "motion/react";
-import { Children, isValidElement, type PropsWithChildren } from "react";
+import { type PropsWithChildren } from "react";
 
 export function FadeIn(props: PropsWithChildren<{ delay?: number }>) {
   return (
-    <motion.div
+    <motion.span
+      className="inline-block will-change-transform"
       transition={{
         duration: 0.6,
         ease: "easeOut",
@@ -13,7 +14,7 @@ export function FadeIn(props: PropsWithChildren<{ delay?: number }>) {
       animate={{ y: "0%", opacity: 1, filter: "blur(0px)" }}
     >
       {props.children}
-    </motion.div>
+    </motion.span>
   );
 }
 
@@ -28,8 +29,8 @@ export function FadeInText(props: PropsWithChildren<{ delay?: number }>) {
           ease: "easeOut",
           delay: (props.delay ?? 0) + segment.index * 0.03,
         }}
-        initial={{ y: "20%", opacity: 0, filter: "blur(8px)" }}
-        animate={{ y: "0%", opacity: 1, filter: "blur(0px)" }}
+        initial={{ y: "4px", opacity: 0, filter: "blur(4px)" }}
+        animate={{ y: "0px", opacity: 1, filter: "blur(0px)" }}
         key={segment.index}
       >
         {segment.segment}

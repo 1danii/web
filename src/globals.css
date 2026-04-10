@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "tailwindcss-radix-colors/dist/gray.css";
 
 @custom-variant dark {
   @media not print {
@@ -17,18 +18,17 @@
 }
 
 :root {
-  --dark: oklch(16.84% 0 0);
-  --light: var(--color-neutral-50);
-
-  --foreground: var(--dark);
-  --background: var(--light);
-  --gray: var(--color-neutral-600);
+  --foreground: var(--color-gray-12);
+  --background: var(--color-gray-1);
+  --gray: var(--color-gray-11);
+  --border: var(--color-gray-4);
 }
 @media not print {
   .dark {
-    --foreground: var(--light);
-    --background: var(--dark);
-    --gray: var(--color-neutral-400);
+    --foreground: var(--color-graydark-12);
+    --background: var(--color-graydark-1);
+    --gray: var(--color-graydark-11);
+    --border: var(--color-graydark-4);
   }
 }
 
@@ -39,6 +39,7 @@
   --color-background: var(--background);
   --color-primary: #baff29;
   --color-muted: var(--gray);
+  --color-border: var(--border);
 }
 
 @layer base {
