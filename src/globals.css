@@ -1,5 +1,10 @@
 @import "tailwindcss";
-@import "tailwindcss-radix-colors/dist/gray.css";
+
+@theme inline {
+  --color-*: initial;
+}
+
+@import "radix-colors-tailwind";
 
 @custom-variant dark {
   @media not print {
@@ -22,24 +27,18 @@
   --background: var(--color-gray-1);
   --gray: var(--color-gray-11);
   --border: var(--color-gray-4);
-}
-@media not print {
-  .dark {
-    --foreground: var(--color-graydark-12);
-    --background: var(--color-graydark-1);
-    --gray: var(--color-graydark-11);
-    --border: var(--color-graydark-4);
-  }
+  --border-transparent: var(--color-gray-a4);
 }
 
 @theme inline {
-  --font-sans: "SF Pro Display", "Inter", "system-ui", "sans-serif";
-
   --color-foreground: var(--foreground);
   --color-background: var(--background);
   --color-primary: #baff29;
   --color-muted: var(--gray);
   --color-border: var(--border);
+  --color-border-transparent: var(--border-transparent);
+
+  --font-sans: "SF Pro Display", "Inter", "system-ui", "sans-serif";
 }
 
 @layer base {

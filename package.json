@@ -21,12 +21,12 @@
     "caniuse-lite": "^1.0.30001787",
     "motion": "^12.38.0",
     "nanostores": "^1.2.0",
+    "radix-colors-tailwind": "^2.1.0",
     "radix-ui": "^1.4.3",
     "react": "^19.2.5",
     "react-dom": "^19.2.5",
     "react-hotkeys-hook": "^5.2.4",
     "tailwindcss": "^4.2.2",
-    "tailwindcss-radix-colors": "^2.1.0",
     "typescript": "^6.0.2"
   },
   "devDependencies": {
