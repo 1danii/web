@@ -11,6 +11,7 @@ export default defineConfig({
   output: "static",
   site: "https://dani.pw",
   vite: {
+    // @ts-expect-error astro types
     plugins: [tailwindcss()],
   },
 });
