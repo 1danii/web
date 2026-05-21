@@ -1,4 +1,3 @@
-// @ts-check
 import { defineConfig, fontProviders } from "astro/config";
 
 import react from "@astrojs/react";
@@ -11,6 +10,7 @@ export default defineConfig({
   output: "static",
   site: "https://dani.pw",
   vite: {
+    // @ts-expect-error
     plugins: [tailwindcss()],
   },
   fonts: [
