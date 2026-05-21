@@ -2,6 +2,7 @@
 import Posthog from "@/components/posthog.astro";
 import "@/globals.css";
 import { Star } from "@/components/logo/logo";
+import { Font } from "astro:assets";
 
 const ogUrl = new URL("/og.png", Astro.url);
 ---
@@ -42,6 +43,7 @@ const ogUrl = new URL("/og.png", Astro.url);
     <meta name="generator" content={Astro.generator} />
     <title>daniel pallares</title>
     <meta name="description" content="web developer" />
+    <Font cssVariable="--font-sf-pro" preload />
     <!-- <script
       defer
       data-domain="dani.pw"

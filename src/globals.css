@@ -51,7 +51,7 @@
   --color-border: var(--border);
   --color-border-transparent: var(--border-transparent);
 
-  --font-sans: "SF Pro Display", "Inter", "system-ui", "sans-serif";
+  --font-sans: var(--font-sf-pro);
 
   --animate-fade-up-mount: fade-up-mount 0.6s ease both;
   --animate-fade-in-blur: fade-in-blur 0.6s ease both;
@@ -106,44 +106,4 @@
       print-color-adjust: exact;
     }
   }
-}
-
-@font-face {
-  font-family: "SF Pro Display";
-  src: url("/fonts/SF-Pro-Display-Light.otf") format("opentype");
-  font-weight: 300;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "SF Pro Display";
-  src: url("/fonts/SF-Pro-Display-Regular.otf") format("opentype");
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "SF Pro Display";
-  src: url("/fonts/SF-Pro-Display-Medium.otf") format("opentype");
-  font-weight: 500;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "SF Pro Display";
-  src: url("/fonts/SF-Pro-Display-Semibold.otf") format("opentype");
-  font-weight: 600;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "SF Pro Display";
-  src: url("/fonts/SF-Pro-Display-Bold.otf") format("opentype");
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
 }
