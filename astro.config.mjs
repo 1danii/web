@@ -11,7 +11,7 @@ export default defineConfig({
   integrations: [react()],
   output: "static",
   site: "https://dani.pw",
-  adapter: cloudflare(),
+  adapter: cloudflare({ imageService: "compile" }),
   vite: {
     plugins: [tailwindcss()],
   },
