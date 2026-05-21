@@ -7,10 +7,12 @@
     "start": "astro dev",
     "build": "astro check && astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "generate-types": "wrangler types"
   },
   "dependencies": {
     "@astrojs/check": "0.9.9",
+    "@astrojs/cloudflare": "^13.5.3",
     "@astrojs/react": "5.0.5",
     "@base-ui-components/react": "^1.0.0-rc.0",
     "@heroicons/react": "^2.2.0",
@@ -27,12 +29,16 @@
     "react-dom": "^19.2.5",
     "react-hotkeys-hook": "^5.2.4",
     "tailwindcss": "^4.3.0",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "wrangler": "^4.93.1"
   },
   "devDependencies": {
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
     "prettier": "^3.8.1",
     "prettier-plugin-tailwindcss": "^0.7.2"
+  },
+  "overrides": {
+    "vite": "^7"
   }
 }
