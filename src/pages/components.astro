@@ -10,10 +10,14 @@ import { Accordions } from "@/components/examples/accordions";
   </h2>
 
   <div class="flex flex-col gap-4">
-    <div class="outline-muted/20 rounded-lg not-dark:shadow-sm outline h-72">
+    <div
+      class="border border-border-transparent bg-clip-padding rounded-lg not-dark:shadow-xs h-72"
+    >
       <Accordions client:load />
     </div>
-    <div class="outline-muted/20 rounded-lg not-dark:shadow-sm outline h-72">
+    <div
+      class="border border-border-transparent bg-clip-padding rounded-lg not-dark:shadow-xs h-72"
+    >
       <LoadingButton client:load>Save</LoadingButton>
     </div>
   </div>
