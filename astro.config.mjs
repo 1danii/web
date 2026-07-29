@@ -4,17 +4,11 @@ import react from "@astrojs/react";
 
 import tailwindcss from "@tailwindcss/vite";
 
-import cloudflare from "@astrojs/cloudflare";
-
 // https://astro.build/config
 export default defineConfig({
   integrations: [react()],
   output: "static",
   site: "https://dani.pw",
-  adapter: cloudflare({
-    imageService: "compile",
-    prerenderEnvironment: "node",
-  }),
   vite: {
     plugins: [tailwindcss()],
   },
