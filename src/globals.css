@@ -50,6 +50,7 @@
   --color-muted: var(--gray);
   --color-border: var(--border);
   --color-border-transparent: var(--border-transparent);
+  --color-white: white;
 
   --font-sans: var(--font-sf-pro);
 
