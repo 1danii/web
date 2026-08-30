@@ -1,0 +1,39 @@
+@import "tailwindcss";
+@import "radix-colors-tailwind";
+
+@theme {
+  --font-sans: Inter, sans-serif;
+
+  --color-*: initial;
+
+  --color-brand: var(--radix-intermediate-blue-9);
+  --color-brand-hover: var(--radix-intermediate-blue-a10);
+
+  --color-primary: var(--radix-intermediate-gray-1);
+  --color-primary-foreground: var(--radix-intermediate-gray-12);
+
+  --color-accent: var(--radix-intermediate-gray-3);
+  --color-accent-hover: var(--radix-intermediate-gray-4);
+  --color-accent-foreground: var(--radix-intermediate-gray-11);
+
+  --color-inverted: var(--radix-intermediate-gray-12);
+  --color-inverted-foreground: var(--radix-intermediate-gray-1);
+
+  --color-destructive: var(--radix-intermediate-red-3);
+  --color-destructive-foreground: var(--radix-intermediate-red-9);
+
+  --color-border: var(--radix-intermediate-gray-a3);
+}
+
+:root {
+  @apply font-sans;
+  font-feature-settings:
+    "liga" 1,
+    "calt" 1; /* fix for Chrome */
+}
+
+@supports (font-variation-settings: normal) {
+  :root {
+    font-family: InterVariable, sans-serif;
+  }
+}

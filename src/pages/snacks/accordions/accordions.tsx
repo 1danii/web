@@ -2,7 +2,7 @@
 
 import { Accordion } from "@base-ui-components/react/accordion";
 import { ChevronDownIcon } from "@heroicons/react/24/solid";
-import { type CSSProperties, type PropsWithChildren } from "react";
+import { type CSSProperties } from "react";
 
 const items = [
   {
@@ -47,9 +47,9 @@ function AccordionItem(props: { title: string; content: string }) {
   return (
     <Accordion.Item className="text-foreground bg-white duration-550 ease-(--spring) first:rounded-t-2xl last:rounded-b-2xl data-open:rounded-2xl data-open:not-first:mt-2 data-open:not-last:mb-2">
       <Accordion.Header>
-        <Accordion.Trigger className="group flex h-9 w-full items-center justify-between px-3 text-left text-sm font-medium text-(--dark)">
+        <Accordion.Trigger className="group flex h-9 w-full items-center justify-between px-3 text-left text-sm font-medium text-black">
           {props.title}
-          <ChevronDownIcon className="size-3 stroke-(--dark) stroke-1 transition-transform duration-200 ease-in-out group-data-panel-open:rotate-180" />
+          <ChevronDownIcon className="size-3 stroke-black stroke-1 transition-transform duration-200 ease-in-out group-data-panel-open:rotate-180" />
         </Accordion.Trigger>
       </Accordion.Header>
       <Accordion.Panel className="h-(--accordion-panel-height) overflow-hidden text-sm text-neutral-500 transition-[height] duration-550 ease-(--spring) data-ending-style:h-0 data-starting-style:h-0">

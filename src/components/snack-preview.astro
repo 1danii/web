@@ -1,0 +1,39 @@
+---
+import { ArrowTopRightOnSquareIcon } from "@heroicons/react/16/solid";
+import { ScaledIframe } from "./scaled-iframe";
+
+type Props = {
+  title: string;
+  src: string;
+  renderWidth?: number;
+};
+const props = Astro.props;
+---
+
+<div
+  class="outline-border-transparent bg-background-elevated flex flex-col overflow-hidden rounded-lg bg-clip-padding outline not-dark:shadow-xs"
+>
+  <div
+    class="outline-border-transparent relative aspect-video overflow-hidden rounded-lg outline"
+  >
+    <slot />
+    {
+      props.renderWidth ? (
+        <ScaledIframe
+          client:load
+          src={props.src}
+          renderWidth={props.renderWidth}
+        />
+      ) : (
+        <iframe class="size-full" src={props.src} />
+      )
+    }
+  </div>
+  <div class="text-muted flex h-8 items-center justify-between px-3 text-xs">
+    {props.title}
+    <div class="relative flex items-center justify-center">
+      <ArrowTopRightOnSquareIcon className="size-3" />
+      <a href={props.src} target="_blank" class="absolute size-6"> </a>
+    </div>
+  </div>
+</div>

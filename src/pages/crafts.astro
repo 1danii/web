@@ -1,0 +1,22 @@
+---
+import Layout from "@/layouts/layout.astro";
+import Preview from "@/components/snack-preview.astro";
+---
+
+<Layout>
+  <h2 class="border-border mb-4 border-b pb-1 text-xl font-medium">crafts</h2>
+
+  <div class="flex flex-col gap-y-6">
+    <Preview title="Forest hero" src="/snacks/forest-hero" renderWidth={1376} />
+
+    <Preview title="Codex model picker" src="/snacks/model-switch" />
+
+    <Preview title="Accordion" src="/snacks/accordions" />
+
+    <!-- <div
+      class="border-border-transparent h-72 rounded-lg border bg-clip-padding not-dark:shadow-xs"
+    >
+      <LoadingButton client:load>Save</LoadingButton>
+    </div> -->
+  </div>
+</Layout>

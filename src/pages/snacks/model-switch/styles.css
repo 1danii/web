@@ -1,0 +1,24 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: Inter, sans-serif;
+}
+
+:root {
+  @apply font-sans;
+  font-feature-settings:
+    "liga" 1,
+    "calt" 1; /* fix for Chrome */
+}
+
+@supports (font-variation-settings: normal) {
+  :root {
+    font-family: InterVariable, sans-serif;
+  }
+}
+
+@property --mask-length {
+  syntax: "<percentage>";
+  inherits: false;
+  initial-value: 0%;
+}
