@@ -27,6 +27,42 @@
   }
 }
 
+@property --foreground {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: transparent;
+}
+
+@property --background {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: transparent;
+}
+
+@property --background-elevated {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: transparent;
+}
+
+@property --gray {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: transparent;
+}
+
+@property --border {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: transparent;
+}
+
+@property --border-transparent {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: transparent;
+}
+
 :root {
   --foreground: var(--color-gray-12);
   --background: var(--color-gray-1);
@@ -34,6 +70,12 @@
   --gray: var(--color-gray-11);
   --border: var(--color-gray-4);
   --border-transparent: var(--color-gray-a4);
+
+  transition-property:
+    --foreground, --background, --background-elevated, --gray, --border,
+    --border-transparent;
+  transition-duration: 500ms;
+  transition-timing-function: ease-in-out;
 }
 
 @media not print {
@@ -83,6 +125,10 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  :root {
+    transition-duration: 0s;
+  }
+
   .animate-fade-up-mount,
   .animate-fade-in-blur {
     animation: none !important;
