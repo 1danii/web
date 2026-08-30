@@ -94,6 +94,10 @@
   animation-delay: calc(--value(integer) * 50ms);
 }
 
+@utility container {
+  @apply mx-auto max-w-screen-sm px-4;
+}
+
 @layer base {
   button:not(:disabled),
   [role="button"]:not(:disabled) {

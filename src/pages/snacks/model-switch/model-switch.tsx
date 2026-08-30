@@ -97,7 +97,7 @@ export function ModelSwitchPopover({ open }: { open: boolean }) {
           "--offset-height": `${offsetHeight}px`,
         } as CSSProperties
       }
-      className="group relative w-(--popover-width) origin-bottom-right overflow-hidden rounded-2xl bg-white p-1 font-light text-black shadow-md/6 outline-[0.5px] outline-gray-300 transition-[height,opacity,scale] duration-[250ms,150ms,150ms] ease-[cubic-bezier(0.19,1,0.22,1),ease-out,ease-out] not-data-ready:invisible data-ending-style:scale-[0.98] data-ending-style:opacity-0 data-starting-style:scale-[0.98] data-starting-style:opacity-0 data-[mode=advanced]:h-[calc(var(--advanced-height)+_--spacing(2))] data-[mode=simple]:h-[calc(var(--simple-height)+_--spacing(2))]"
+      className="group relative w-(--popover-width) origin-bottom-right overflow-hidden rounded-2xl bg-white p-1 text-black shadow-md/6 outline-[0.5px] outline-gray-300 transition-[height,opacity,scale] duration-[250ms,150ms,150ms] ease-[cubic-bezier(0.19,1,0.22,1),ease-out,ease-out] not-data-ready:invisible data-ending-style:scale-[0.98] data-ending-style:opacity-0 data-starting-style:scale-[0.98] data-starting-style:opacity-0 data-[mode=advanced]:h-[calc(var(--advanced-height)+_--spacing(2))] data-[mode=simple]:h-[calc(var(--simple-height)+_--spacing(2))]"
     >
       <div
         ref={rootRef}
@@ -108,15 +108,15 @@ export function ModelSwitchPopover({ open }: { open: boolean }) {
           inert={mode === "simple"}
           aria-hidden={mode === "simple"}
         >
-          <button className="flex h-7 w-full items-center justify-between rounded-xl px-3 text-xs outline-0 hover:bg-gray-100 focus:bg-gray-100">
+          <button className="flex h-7 w-full items-center justify-between rounded-xl px-3 text-xs outline-0 focus-within:bg-gray-100 hover:bg-gray-100">
             Model
             <span className="text-gray-500">GPT-5.6</span>
           </button>
-          <button className="flex h-7 w-full items-center justify-between rounded-xl px-3 text-xs outline-0 hover:bg-gray-100 focus:bg-gray-100">
+          <button className="flex h-7 w-full items-center justify-between rounded-xl px-3 text-xs outline-0 focus-within:bg-gray-100 hover:bg-gray-100">
             Effort
             <span className="text-gray-500">Medium</span>
           </button>
-          <button className="flex h-7 w-full items-center justify-between rounded-xl px-3 text-xs outline-0 hover:bg-gray-100 focus:bg-gray-100">
+          <button className="flex h-7 w-full items-center justify-between rounded-xl px-3 text-xs outline-0 focus-within:bg-gray-100 hover:bg-gray-100">
             Speed
             <span className="text-gray-500">Standard</span>
           </button>
@@ -127,7 +127,7 @@ export function ModelSwitchPopover({ open }: { open: boolean }) {
             onClick={() => {
               setMode((v) => (v === "simple" ? "advanced" : "simple"));
             }}
-            className="flex h-5 items-center justify-between rounded-lg px-1 text-[0.625rem] leading-none text-gray-500 outline-0 hover:bg-gray-100 focus:bg-gray-100"
+            className="flex h-5 items-center justify-between rounded-lg px-1 text-[0.625rem] leading-none text-gray-500 outline-0 focus-within:bg-gray-100 hover:bg-gray-100"
           >
             Advanced
             <svg
