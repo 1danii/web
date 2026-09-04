@@ -1,0 +1,20 @@
+@import "tailwindcss";
+@import "radix-colors-tailwind";
+
+@theme {
+  --font-sans: Inter, sans-serif;
+}
+
+:root {
+  @apply font-sans;
+  font-feature-settings:
+    "liga" 1,
+    "calt" 1,
+    "cv10" 1;
+}
+
+@supports (font-variation-settings: normal) {
+  :root {
+    font-family: InterVariable, sans-serif;
+  }
+}

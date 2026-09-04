@@ -7,10 +7,14 @@ import Preview from "@/components/snack-preview.astro";
   <h2 class="border-border mb-4 border-b pb-1 text-xl font-medium">crafts</h2>
 
   <div class="flex flex-col gap-y-6">
+    <Preview src="/snacks/book" renderWidth={1376}>
+      <span slot="title">
+        Book - inspired by{" "}
+        <a href="https://vercel.com/geist/book"> Vercel Geist </a>
+      </span>
+    </Preview>
     <Preview title="Forest hero" src="/snacks/forest-hero" renderWidth={1376} />
-
     <Preview title="Codex model picker" src="/snacks/model-switch" />
-
     <Preview title="Accordion" src="/snacks/accordions" />
 
     <!-- <div

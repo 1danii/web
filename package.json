@@ -21,6 +21,7 @@
     "@vercel/og": "^0.8.5",
     "astro": "7.1.5",
     "caniuse-lite": "^1.0.30001806",
+    "dialkit": "^1.4.3",
     "motion": "^12.43.0",
     "nanostores": "^1.4.1",
     "radix-colors-tailwind": "^2.1.0",

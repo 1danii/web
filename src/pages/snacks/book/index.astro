@@ -1,5 +1,6 @@
 ---
-import { Accordions } from "./_accordions";
+import { BookWithDials } from "./_book";
+import "dialkit/styles.css";
 import "./styles.css";
 ---
 
@@ -10,7 +11,7 @@ import "./styles.css";
     <link rel="preconnect" href="https://rsms.me/" />
     <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
   </head>
-  <body class="flex h-dvh items-center justify-center bg-black">
-    <Accordions client:load />
+  <body class="bg-gray-1 flex h-dvh items-center justify-center antialiased">
+    <BookWithDials client:load />
   </body>
 </html>

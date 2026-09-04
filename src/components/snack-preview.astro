@@ -3,7 +3,7 @@ import { ArrowTopRightOnSquareIcon } from "@heroicons/react/16/solid";
 import { ScaledIframe } from "./scaled-iframe";
 
 type Props = {
-  title: string;
+  title?: string;
   src: string;
   renderWidth?: number;
 };
@@ -30,9 +30,12 @@ const props = Astro.props;
     }
   </div>
   <div class="text-muted flex h-8 items-center justify-between px-3 text-xs">
-    {props.title}
+    <span class="[&_a]:underline [&_a]:decoration-1 [&_a]:underline-offset-2"
+      ><slot name="title">{props.title}</slot></span
+    >
     <div class="relative flex items-center justify-center">
-      <ArrowTopRightOnSquareIcon className="size-3" />
+      Open
+      <ArrowTopRightOnSquareIcon className="ml-1 size-3" />
       <a href={props.src} target="_blank" class="absolute size-6"> </a>
     </div>
   </div>
