@@ -46,11 +46,11 @@ export function BookWithDials() {
         >
           <div className="h-[100cqh] w-[100cqw] rounded-xs bg-[#FC4720] px-[8cqw] pt-[7cqh] pb-[10cqh] [box-shadow:#ffffff40_0px_0px_1px_1px_inset]">
             <div className="absolute inset-y-0 left-0 w-[3.5cqw] bg-linear-[to_right,#fff0_40%,#ffffff40_50%,#9A0F01_70%,#fff0]" />
-            <div className="relative grid size-full grid-cols-[1fr_2cqw_1fr_2cqw_1fr_2cqw_1fr] grid-rows-[repeat(7,minmax(0,1fr)_2cqw)_minmax(0,1fr)] gap-[0.5px] bg-white/30 p-[0.5px]">
+            <div className="relative grid size-full grid-cols-[1fr_2cqw_1fr_2cqw_1fr_2cqw_1fr] grid-rows-[repeat(7,minmax(0,1fr)_2cqw)_minmax(0,1fr)] gap-px bg-white/30 p-px">
               {Array.from({ length: 7 * 15 }, (_, i) => (
                 <div key={i} className="bg-[#FC4720]" />
               ))}
-              <div className="absolute inset-0 grid size-full grid-cols-[1fr_2cqw_1fr_2cqw_1fr_2cqw_1fr] grid-rows-[repeat(7,minmax(0,1fr)_2cqw)_minmax(0,1fr)] gap-[0.5px] p-[0.5px]">
+              <div className="absolute inset-0 grid size-full grid-cols-[1fr_2cqw_1fr_2cqw_1fr_2cqw_1fr] grid-rows-[repeat(7,minmax(0,1fr)_2cqw)_minmax(0,1fr)] gap-px p-px">
                 <h1 className="col-span-full row-start-5 indent-[-0.055em] text-[11.7cqw] leading-[0.65] font-bold">
                   Grid systems
                 </h1>
