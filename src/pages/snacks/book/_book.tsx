@@ -3,7 +3,6 @@ import { motion } from "motion/react";
 import type { CSSProperties } from "react";
 
 const bookDialConfig = {
-  depth: [64, 12, 96, 1],
   transition: {
     type: "easing",
     duration: 0.3,
