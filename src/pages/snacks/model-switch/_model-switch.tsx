@@ -97,7 +97,7 @@ export function ModelSwitchPopover({ open }: { open: boolean }) {
           "--offset-height": `${offsetHeight}px`,
         } as CSSProperties
       }
-      className="group relative w-(--popover-width) origin-bottom-right overflow-hidden rounded-2xl bg-white p-1 text-black shadow-md/6 outline-[0.5px] outline-gray-300 transition-[height,opacity,scale] duration-[250ms,150ms,150ms] ease-[cubic-bezier(0.19,1,0.22,1),ease-out,ease-out] not-data-ready:invisible data-ending-style:scale-[0.98] data-ending-style:opacity-0 data-starting-style:scale-[0.98] data-starting-style:opacity-0 data-[mode=advanced]:h-[calc(var(--advanced-height)+_--spacing(2))] data-[mode=simple]:h-[calc(var(--simple-height)+_--spacing(2))]"
+      className="group relative w-(--popover-width) origin-bottom-right overflow-hidden rounded-2xl bg-white p-1 text-black shadow-md/6 outline-[0.5px] outline-gray-900/15 transition-[height,opacity,scale] duration-[250ms,150ms,150ms] ease-[cubic-bezier(0.19,1,0.22,1),ease-out,ease-out] not-data-ready:invisible data-ending-style:scale-[0.98] data-ending-style:opacity-0 data-starting-style:scale-[0.98] data-starting-style:opacity-0 data-[mode=advanced]:h-[calc(var(--advanced-height)+_--spacing(2))] data-[mode=simple]:h-[calc(var(--simple-height)+_--spacing(2))]"
     >
       <div
         ref={rootRef}
