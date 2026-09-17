@@ -145,6 +145,10 @@
 }
 
 @layer base {
+  html {
+    text-decoration-skip-ink: auto;
+    text-underline-position: from-font;
+  }
   button:not(:disabled),
   [role="button"]:not(:disabled) {
     cursor: pointer;
