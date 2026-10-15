@@ -59,7 +59,7 @@ export function BookWithDials() {
               </div>
             </div>
           </div>
-          <div className="absolute top-(--book-page-inset) aspect-2/3 h-[calc(100%-var(--book-page-inset)*2)] w-[calc(var(--book-depth)-2px)] transform-[translateX(calc(var(--book-width)-var(--book-depth)/2-var(--book-page-inset)))_rotateY(90deg)_translateX(calc(var(--book-depth)/2))] bg-white" />
+          <div className="absolute top-(--book-page-inset) h-[calc(100%-var(--book-page-inset)*2)] w-[calc(var(--book-depth)-2px)] transform-[translateX(calc(var(--book-width)-var(--book-depth)/2-var(--book-page-inset)))_rotateY(90deg)_translateX(calc(var(--book-depth)/2))] bg-white" />
           <div className="absolute left-0 size-full -translate-z-(--book-depth) rounded-xs bg-[#FC4720]" />
         </motion.div>
       </div>
