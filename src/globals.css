@@ -6,6 +6,10 @@
 
 @import "radix-colors-tailwind";
 
+@view-transition {
+  navigation: auto;
+}
+
 @custom-variant dark {
   @media not print {
     &:where(.dark, .dark *) {
@@ -125,6 +129,10 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  @view-transition {
+    navigation: none;
+  }
+
   :root {
     transition-duration: 0s;
   }
