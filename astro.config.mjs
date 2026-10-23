@@ -9,6 +9,10 @@ export default defineConfig({
   integrations: [react()],
   output: "static",
   site: "https://dani.pw",
+  prefetch: {
+    prefetchAll: true,
+    defaultStrategy: "hover",
+  },
   vite: {
     plugins: [tailwindcss()],
   },
