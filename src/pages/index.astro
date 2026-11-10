@@ -1,277 +1,48 @@
 ---
-import { Image } from "astro:assets";
-import { ArrowUpRightIcon } from "@heroicons/react/16/solid";
 import Layout from "@/layouts/layout.astro";
-import ProfilePic from "/public/me.jpg";
-import { ContactButton } from "@/components/contact-button";
-import { ImageGallery } from "@/components/image-preview";
-import { Tool } from "@/components/tool";
+import TimelineRow from "@/components/timeline-row.astro";
+import ProjectRow from "@/components/project-row.astro";
+import HoverList from "@/components/hover-list.astro";
+import { FrameCarousel } from "@/components/frame-carousel";
 ---
 
 <Layout>
-  <div
-    class="animate-fade-up-mount flex flex-col justify-between gap-y-4 sm:flex-row sm:items-center"
-  >
-    <div class="flex items-center gap-x-6">
-      <Image
-        src={ProfilePic}
-        draggable="false"
-        alt="me"
-        class="outline-border-transparent size-20 rounded-xl outline -outline-offset-1 grayscale select-none not-dark:shadow-xs"
-        loading="eager"
-      />
-      <div>
-        <h1 class="text-3xl font-semibold">
-          <span class="animate-fade-in-blur inline-block">Daniel</span>{" "}
-          <span class="animate-fade-in-blur fade-up-delay-2 inline-block"
-            >Pallares</span
-          >
-        </h1>
-        <p class="animate-fade-in-blur text-muted fade-up-delay-6">
-          fullstack developer
-        </p>
-      </div>
-    </div>
-    <ContactButton client:idle />
-  </div>
-  <!-- <div class="flex pt-6 flex-col gap-y-4 text-muted">
-    <div class="flex items-center">
-      <MapPinIcon className="size-5 mr-2" />
-      prague, cz
-    </div>
-    <div class="flex items-center">
-      <AcademicCapIcon className="size-5 mr-2" />
-      střední škola automobilní a informatiky
-    </div>
-    <div class="flex items-center">
-      <BriefcaseIcon className="size-5 mr-2" />
-      web developer – brandcloud.pro
-    </div>
-  </div> -->
-
-  <div class="animate-fade-up-mount fade-up-delay-1">
-    <h2 class="border-border mb-4 border-b pt-8 pb-1 text-xl font-medium">
-      work experience
-    </h2>
-    <ul class="space-y-4">
-      <li>
-        <div class="flex gap-x-3">
-          <img
-            src="/companies/giant.svg"
-            alt="BrandCloud"
-            draggable="false"
-            class="border-border-transparent size-12 shrink-0 rounded-lg border bg-white bg-clip-padding p-2.5 not-dark:shadow-xs"
-          />
-          <div>
-            <h3 class="text-lg">Giant interactive</h3>
-            <p class="text-muted text-sm">
-              Frontend Developer · June 2026 – Present
-            </p>
-          </div>
-        </div>
-      </li>
-
-      <li>
-        <div class="flex gap-x-3">
-          <img
-            src="/companies/brandcloud.svg"
-            alt="BrandCloud"
-            draggable="false"
-            class="border-border-transparent size-12 shrink-0 rounded-lg border bg-white bg-clip-padding p-2.5 not-dark:shadow-xs"
-          />
-          <div>
-            <h3 class="text-lg">BrandCloud</h3>
-            <p class="text-muted text-sm">
-              Software Engineer · September 2025 – May 2026
-            </p>
-          </div>
-        </div>
-        <ul class="text-muted mt-3 list-inside list-disc text-sm">
-          <li>
-            Worked on new features for the main SaaS application using Vue and
-            PHP.
-          </li>
-          <li>
-            Developed a fully localized marketing website, blog, and
-            documentation hub using Next.js and Payload CMS.
-          </li>
-        </ul>
-      </li>
-    </ul>
-  </div>
-
-  <div class="animate-fade-up-mount fade-up-delay-2">
-    <h2 class="border-border mb-4 border-b pt-8 pb-1 text-xl font-medium">
-      tools
-    </h2>
-    <div class="flex flex-wrap gap-1">
-      <Tool>
-        <img src="/tools/typescript.svg" alt="" />
-        TypeScript
-      </Tool>
-      <Tool>
-        <img class="dark:hidden" src="/tools/react-light.svg" alt="" />
-        <img class="hidden dark:block" src="/tools/react-dark.svg" alt="" />
-        React
-      </Tool>
-      <Tool>
-        <img src="/tools/vue.svg" alt="" />
-        Vue
-      </Tool>
-      <Tool>
-        <img src="/tools/tailwind.svg" alt="" />
-        Tailwind CSS
-      </Tool>
-      <Tool>
-        <img src="/tools/nextjs.svg" alt="" />
-        Next.js
-      </Tool>
-      <Tool>
-        <img src="/tools/tanstack.svg" alt="" />
-        TanStack
-      </Tool>
-      <Tool>
-        <img class="dark:hidden" src="/tools/astro-light.svg" alt="" />
-        <img class="hidden dark:block" src="/tools/astro-dark.svg" alt="" />
-        Astro
-      </Tool>
-      <Tool>
-        <img class="dark:hidden" src="/tools/payload-light.svg" alt="" />
-        <img class="hidden dark:block" src="/tools/payload-dark.svg" alt="" />
-        Payload CMS
-      </Tool>
-      <Tool>
-        <img class="dark:hidden" src="/tools/motion-light.svg" alt="" />
-        <img class="hidden dark:block" src="/tools/motion-dark.svg" alt="" />
-        Motion
-      </Tool>
-      <Tool>
-        <img class="dark:hidden" src="/tools/drizzle-light.svg" alt="" />
-        <img class="hidden dark:block" src="/tools/drizzle-dark.svg" alt="" />
-        Drizzle ORM
-      </Tool>
-      <Tool>
-        <img src="/tools/figma.svg" alt="" />
-        Figma
-      </Tool>
-    </div>
-  </div>
-
-  <h2
-    class="animate-fade-up-mount fade-up-delay-3 border-border mb-4 border-b pt-8 pb-1 text-xl font-medium"
-  >
-    projects
-  </h2>
-  <ul class="space-y-12 print:space-y-4">
-    <li class="animate-fade-up-mount fade-up-delay-4 break-inside-avoid">
-      <h3 class="text-lg">
-        <a
-          class="flex items-center gap-x-0.5"
-          href="https://brandcloud.pro/"
-          target="_blank"
-        >
-          BrandCloud.pro
-          <ArrowUpRightIcon className="text-muted size-4" />
-        </a>
-      </h3>
-      <p class="text-muted text-sm">
-        Developed a fully localized marketing website with a blog and
-        documentation hub integrated with an existing REST API. Built with
-        Next.js (App Router) and Payload CMS. Leveraged server-side rendering
-        and incremental static regeneration. Implemented email sending on forms,
-        CAPTCHA validation, and end-to-end testing.
+  <div class="flex flex-col gap-y-10">
+    <section class="animate-fade-up-mount flex flex-col gap-y-0.5">
+      <h1 class="text-2xl font-medium">Daniel Pallares</h1>
+      <p class="text-muted text-sm">web developer</p>
+    </section>
+    <section class="animate-fade-up-mount fade-up-delay-1">
+      <p class="text-muted text-sm text-pretty">
+        Id et id dolor id aute dolor reprehenderit quis consequat. Nostrud
+        adipisicing ipsum eu ipsum excepteur. Occaecat irure exercitation
+        commodo reprehenderit adipisicing est. Eiusmod nostrud consectetur
+        commodo reprehenderit incididunt.
       </p>
-      <ImageGallery
-        project="brandcloud"
-        images={[
-          {
-            src: "/projects/brandcloud/homepage.png",
-            type: "image",
-            colSpan: 2,
-            rowSpan: 2,
-          },
-          {
-            src: "/projects/brandcloud/reseni.png",
-            type: "image",
-          },
-          {
-            src: "/projects/brandcloud/sections.mp4",
-            type: "video",
-          },
-          {
-            src: "/projects/brandcloud/docs.png",
-            type: "image",
-          },
-          {
-            src: "/projects/brandcloud/blog.png",
-            type: "image",
-          },
-          {
-            src: "/projects/brandcloud/form.png",
-            type: "image",
-          },
-        ]}
-        client:idle
+    </section>
+    <section
+      class="animate-fade-up-mount fade-up-delay-2 flex flex-col gap-y-3"
+    >
+      <TimelineRow
+        logo="/companies/brandcloud.svg"
+        title="Lorem ipsum"
+        year="2020"
       />
-    </li>
-
-    <li class="animate-fade-up-mount fade-up-delay-5 break-inside-avoid">
-      <h3 class="text-lg">
-        <a
-          class="flex items-center gap-x-0.5"
-          href="https://csas-devops.vercel.app/"
-          target="_blank"
-          >Česká spořitelna DevOps hackathon portal
-          <ArrowUpRightIcon className="text-muted size-4" />
-        </a>
-      </h3>
-      <p class="text-muted text-sm">
-        Dashboard built for the 2024 Česká spořitelna DevOps Hackathon that
-        consumes a provided REST API to visualize the data. Built with TanStack
-        query and router.
-      </p>
-      <ImageGallery
-        project="csas-devops"
-        images={[
-          {
-            src: "/projects/csas-devops/job.png",
-            type: "image",
-          },
-          {
-            src: "/projects/csas-devops/automations.png",
-            type: "image",
-          },
-          {
-            src: "/projects/csas-devops/runner.png",
-            type: "image",
-          },
-        ]}
-        client:idle
+      <TimelineRow
+        logo="/companies/brandcloud.svg"
+        title="Lorem ipsum"
+        year="2020"
       />
-    </li>
-
-    <li class="animate-fade-up-mount fade-up-delay-6 break-inside-avoid">
-      <h3 class="text-lg">Restaurant reservation system</h3>
-      <p class="text-muted text-sm">
-        Restaurant reservation system built for a Prague restaurant and used by
-        hundreds of people each month, complete with a custom admin dashboard
-        allowing reservation window management and email notifications. Built
-        with Next.js with Drizzle ORM.
-      </p>
-      <ImageGallery
-        project="restaurant-form"
-        images={[
-          {
-            src: "/projects/restaurant-form/date.png",
-            type: "image",
-          },
-          {
-            src: "/projects/restaurant-form/contacts.png",
-            type: "image",
-          },
-        ]}
-        client:idle
-      />
-    </li>
-  </ul>
+    </section>
+    <section class="animate-fade-up-mount fade-up-delay-3">
+      <FrameCarousel client:load />
+    </section>
+    <section class="animate-fade-up-mount fade-up-delay-4">
+      <HoverList>
+        <ProjectRow title="Lorem ipsum" href="#" />
+        <ProjectRow title="Lorem ipsum" href="#" />
+        <ProjectRow title="Lorem ipsum" href="#" />
+      </HoverList>
+    </section>
+  </div>
 </Layout>

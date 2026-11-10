@@ -1,0 +1,71 @@
+---
+/**
+ * Vertical list with a single rounded highlight that slides to the hovered
+ * `[data-hover-item]` child and fades out when the pointer leaves the list.
+ */
+interface Props {
+  /** Timing function of the highlight's movement between items. */
+  moveEase?: string;
+}
+
+const { moveEase = "var(--ease-in-out)" } = Astro.props;
+---
+
+<div
+  data-hover-list
+  class="relative -mx-3 flex flex-col"
+  style={{ "--hover-move-ease": moveEase }}
+>
+  <div
+    data-hover-highlight
+    aria-hidden="true"
+    class="bg-gray-3 pointer-events-none absolute inset-x-0 top-0 rounded-md opacity-0 transition-[translate,opacity] [transition-duration:300ms,200ms] [transition-timing-function:var(--hover-move-ease),var(--ease-out)] motion-reduce:transition-none"
+  >
+  </div>
+  <slot />
+</div>
+
+<script>
+  for (const list of document.querySelectorAll<HTMLElement>(
+    "[data-hover-list]",
+  )) {
+    const highlight = list.querySelector<HTMLElement>("[data-hover-highlight]");
+    if (!highlight) continue;
+    let visible = false;
+
+    const moveTo = (item: HTMLElement) => {
+      const place = () => {
+        highlight.style.translate = `0 ${item.offsetTop}px`;
+        highlight.style.height = `${item.offsetHeight}px`;
+      };
+      // Appear in place instead of sliding in from the last hovered item.
+      if (!visible) {
+        highlight.style.transitionProperty = "opacity";
+        highlight.style.transitionTimingFunction = "var(--ease-out)";
+        highlight.style.transitionDuration = "200ms";
+        place();
+        highlight.getBoundingClientRect();
+        highlight.style.transitionProperty = "";
+        highlight.style.transitionTimingFunction = "";
+        highlight.style.transitionDuration = "";
+      } else {
+        place();
+      }
+      highlight.style.opacity = "1";
+      visible = true;
+    };
+
+    for (const item of list.querySelectorAll<HTMLElement>(
+      "[data-hover-item]",
+    )) {
+      item.addEventListener("pointerenter", (event) => {
+        if (event.pointerType === "mouse") moveTo(item);
+      });
+    }
+
+    list.addEventListener("pointerleave", () => {
+      highlight.style.opacity = "0";
+      visible = false;
+    });
+  }
+</script>

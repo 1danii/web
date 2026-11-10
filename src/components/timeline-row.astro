@@ -1,0 +1,22 @@
+---
+interface Props {
+  logo: string;
+  title: string;
+  year: string;
+}
+
+const { logo, title, year } = Astro.props;
+---
+
+<div class="flex h-6 items-center gap-x-3 text-sm">
+  <div class="flex min-w-0 items-center gap-x-2">
+    <div
+      class="bg-background-elevated outline-border-transparent flex size-6 shrink-0 items-center justify-center rounded-sm shadow-xs outline-[0.5px]"
+    >
+      <img src={logo} alt="" draggable="false" class="size-3.5" />
+    </div>
+    <span class="line-clamp-1">{title}</span>
+  </div>
+  <div class="bg-border-transparent h-px flex-1"></div>
+  <span class="text-muted line-clamp-1 shrink-0">{year}</span>
+</div>

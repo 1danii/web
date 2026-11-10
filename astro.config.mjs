@@ -20,34 +20,19 @@ export default defineConfig({
   fonts: [
     {
       provider: fontProviders.local(),
-      name: "SF Pro Display",
-      cssVariable: "--font-sf-pro",
+      name: "Inter",
+      cssVariable: "--font-inter",
       options: {
         variants: [
           {
-            src: ["./src/assets/fonts/SF-Pro-Display-Light.otf"],
-            weight: "300",
+            src: ["./src/assets/fonts/InterVariable.woff2"],
+            weight: "100 900",
             style: "normal",
           },
           {
-            src: ["./src/assets/fonts/SF-Pro-Display-Regular.otf"],
-            weight: "400",
-            style: "normal",
-          },
-          {
-            src: ["./src/assets/fonts/SF-Pro-Display-Medium.otf"],
-            weight: "500",
-            style: "normal",
-          },
-          {
-            src: ["./src/assets/fonts/SF-Pro-Display-Semibold.otf"],
-            weight: "600",
-            style: "normal",
-          },
-          {
-            src: ["./src/assets/fonts/SF-Pro-Display-Bold.otf"],
-            weight: "700",
-            style: "normal",
+            src: ["./src/assets/fonts/InterVariable-Italic.woff2"],
+            weight: "100 900",
+            style: "italic",
           },
         ],
       },

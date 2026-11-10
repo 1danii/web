@@ -1,3 +1,6 @@
+/* Keep Blossom Carousel defaults below Tailwind layers so utilities override them. */
+@layer blossom-carousel;
+
 @import "tailwindcss";
 
 @theme inline {
@@ -5,14 +8,6 @@
 }
 
 @import "radix-colors-tailwind";
-
-@custom-variant dark {
-  @media not print {
-    &:where(.dark, .dark *) {
-      @slot;
-    }
-  }
-}
 
 @media print {
   @page {
@@ -27,61 +22,14 @@
   }
 }
 
-@property --foreground {
-  syntax: "<color>";
-  inherits: true;
-  initial-value: transparent;
-}
-
-@property --background {
-  syntax: "<color>";
-  inherits: true;
-  initial-value: transparent;
-}
-
-@property --background-elevated {
-  syntax: "<color>";
-  inherits: true;
-  initial-value: transparent;
-}
-
-@property --gray {
-  syntax: "<color>";
-  inherits: true;
-  initial-value: transparent;
-}
-
-@property --border {
-  syntax: "<color>";
-  inherits: true;
-  initial-value: transparent;
-}
-
-@property --border-transparent {
-  syntax: "<color>";
-  inherits: true;
-  initial-value: transparent;
-}
-
 :root {
+  color-scheme: light;
   --foreground: var(--color-gray-12);
   --background: var(--color-gray-1);
   --background-elevated: white;
   --gray: var(--color-gray-11);
-  --border: var(--color-gray-4);
-  --border-transparent: var(--color-gray-a4);
-
-  transition-property:
-    --foreground, --background, --background-elevated, --gray, --border,
-    --border-transparent;
-  transition-duration: 500ms;
-  transition-timing-function: ease-in-out;
-}
-
-@media not print {
-  .dark {
-    --background-elevated: var(--color-gray-2);
-  }
+  --border: var(--color-gray-3);
+  --border-transparent: var(--color-gray-a3);
 }
 
 @theme inline {
@@ -94,9 +42,9 @@
   --color-border-transparent: var(--border-transparent);
   --color-white: white;
 
-  --font-sans: var(--font-sf-pro);
+  --font-sans: var(--font-inter);
 
-  --animate-fade-up-mount: fade-up-mount 0.6s ease both;
+  --animate-fade-up-mount: fade-up-mount 0.6s var(--ease-out) both;
   --animate-fade-in-blur: fade-in-blur 0.6s ease both;
 
   @keyframes fade-up-mount {
@@ -113,8 +61,8 @@
   @keyframes fade-in-blur {
     from {
       opacity: 0;
-      filter: blur(4px);
-      transform: translateY(6px);
+      filter: blur(8px);
+      transform: translateY(10%);
     }
     to {
       opacity: 1;
@@ -125,10 +73,6 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  :root {
-    transition-duration: 0s;
-  }
-
   .animate-fade-up-mount,
   .animate-fade-in-blur {
     animation: none !important;
@@ -141,7 +85,7 @@
 }
 
 @utility container {
-  @apply mx-auto max-w-screen-sm px-4;
+  @apply mx-auto max-w-screen-sm px-8;
 }
 
 @layer base {
