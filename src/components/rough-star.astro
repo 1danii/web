@@ -1,0 +1,201 @@
+---
+/**
+ * A small hand-drawn star that sketches itself once on screen, drawn with the same rough.js
+ * settings rough-notation uses for its `circle` annotation (stroke width 2, two passes, 800 ms).
+ * `color` accepts any CSS colour, including `var(--color-*)` tokens.
+ */
+type Props = {
+  /** Any CSS length; the star is drawn at its rendered pixel size. */
+  size?: string;
+  color?: string;
+  strokeWidth?: number;
+  /** Number of passes over the outline. */
+  iterations?: number;
+  /** Number of star points. */
+  points?: number;
+  /** Tilt in degrees, so it doesn't look ruler-straight. */
+  rotate?: number;
+  animate?: boolean;
+  animationDuration?: number;
+  /** Extra wait in ms before drawing. */
+  delay?: number;
+  class?: string;
+};
+
+const {
+  size = "1em",
+  color = "currentColor",
+  strokeWidth = 2,
+  iterations = 2,
+  points = 5,
+  rotate = -8,
+  animate = true,
+  animationDuration = 800,
+  delay = 0,
+  class: className,
+} = Astro.props;
+
+const config = {
+  color,
+  strokeWidth,
+  iterations,
+  points,
+  rotate,
+  animate,
+  animationDuration,
+};
+---
+
+<span
+  aria-hidden="true"
+  class:list={["rough-star", className]}
+  style={{ "--rough-star-size": size }}
+  data-rough-star={JSON.stringify(config)}
+  data-rough-delay={delay}
+>
+  <svg></svg>
+</span>
+
+<style is:global>
+  .rough-star {
+    display: inline-block;
+    width: var(--rough-star-size);
+    height: var(--rough-star-size);
+    vertical-align: middle;
+  }
+
+  .rough-star svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+  }
+
+  @keyframes rough-star-dash {
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+</style>
+
+<script>
+  import { linearPath } from "roughjs/bin/renderer";
+  import type { OpSet, ResolvedOptions } from "roughjs/bin/core";
+  import { drawWhenVisible, reduceMotion, resolveColor } from "@/lib/rough";
+
+  type Config = {
+    color: string;
+    strokeWidth: number;
+    iterations: number;
+    points: number;
+    rotate: number;
+    animate: boolean;
+    animationDuration: number;
+  };
+
+  /** rough-notation's own options (lib/render.js `getOptions`), one stroke per pass. */
+  const roughOptions = (seed: number) =>
+    ({
+      maxRandomnessOffset: 2,
+      roughness: 1.5,
+      bowing: 1,
+      stroke: "#000",
+      strokeWidth: 1.5,
+      curveTightness: 0,
+      curveFitting: 0.95,
+      curveStepCount: 9,
+      fillStyle: "hachure",
+      fillWeight: -1,
+      hachureAngle: -41,
+      hachureGap: -1,
+      dashOffset: -1,
+      dashGap: -1,
+      zigzagOffset: -1,
+      combineNestedSvgPaths: false,
+      disableMultiStroke: true,
+      disableMultiStrokeFill: false,
+      preserveVertices: false,
+      fillShapeRoughnessGain: 0.8,
+      seed,
+    }) as ResolvedOptions;
+
+  function starPoints(
+    size: number,
+    count: number,
+    rotate: number,
+  ): [number, number][] {
+    const c = size / 2;
+    const outer = size / 2;
+    const inner = outer * 0.45;
+    const start = -Math.PI / 2 + (rotate * Math.PI) / 180;
+    return Array.from({ length: count * 2 }, (_, i) => {
+      const r = i % 2 ? inner : outer;
+      const a = start + (i * Math.PI) / count;
+      return [c + r * Math.cos(a), c + r * Math.sin(a)];
+    });
+  }
+
+  /**
+   * Joins rough.js ops into one unbroken stroke per pass, like the circle's ellipse: rough.js
+   * starts every edge with a `move`, which would break the dash animation into separate subpaths.
+   */
+  function toPath({ ops }: OpSet) {
+    return ops
+      .map(({ op, data }, i) =>
+        op === "move"
+          ? `${i ? "L" : "M"}${data[0]} ${data[1]}`
+          : op === "lineTo"
+            ? `L${data[0]} ${data[1]}`
+            : `C${data[0]} ${data[1]}, ${data[2]} ${data[3]}, ${data[4]} ${data[5]}`,
+      )
+      .join(" ");
+  }
+
+  function draw(el: HTMLElement) {
+    const config = JSON.parse(el.dataset.roughStar!) as Config;
+    const svg = el.querySelector("svg")!;
+    const size = el.getBoundingClientRect().width;
+    const color = resolveColor(el, config.color);
+    const animate = config.animate && !reduceMotion;
+    const points = starPoints(size, config.points, config.rotate);
+    const options = roughOptions(Math.floor(Math.random() * 2 ** 31));
+
+    svg.setAttribute("viewBox", `0 0 ${size} ${size}`);
+    svg.replaceChildren();
+
+    const paths = Array.from({ length: config.iterations }, () => {
+      const path = document.createElementNS(
+        "http://www.w3.org/2000/svg",
+        "path",
+      );
+      path.setAttribute("d", toPath(linearPath(points, true, options)));
+      path.setAttribute("fill", "none");
+      path.setAttribute("stroke", color);
+      path.setAttribute("stroke-width", `${config.strokeWidth}`);
+      path.setAttribute("stroke-linecap", "round");
+      path.setAttribute("stroke-linejoin", "round");
+      svg.appendChild(path);
+      return path;
+    });
+
+    if (!animate) return;
+    const lengths = paths.map((path) => path.getTotalLength());
+    const total = lengths.reduce((a, b) => a + b, 0);
+    let offset = 0;
+    paths.forEach((path, i) => {
+      const duration = total
+        ? config.animationDuration * (lengths[i] / total)
+        : 0;
+      path.style.strokeDasharray = `${lengths[i]}`;
+      path.style.strokeDashoffset = `${lengths[i]}`;
+      path.style.animation = `rough-star-dash ${duration}ms ease-out ${offset}ms forwards`;
+      offset += duration;
+    });
+  }
+
+  drawWhenVisible(
+    document.querySelectorAll<HTMLElement>("[data-rough-star]"),
+    draw,
+    (el) => Number(el.dataset.roughDelay) || 0,
+  );
+</script>

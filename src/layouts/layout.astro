@@ -1,4 +1,5 @@
 ---
+import { ContactLink } from "@/components/contact-link";
 import Posthog from "@/components/posthog.astro";
 import "../globals.css";
 import { Font } from "astro:assets";
@@ -13,8 +14,15 @@ import { GitHubLogoIcon, LinkedInLogoIcon } from "@radix-ui/react-icons";
     <meta property="og:description" content="web developer" />
     <meta property="og:url" content={Astro.url} />
     <meta property="og:type" content="website" />
+    <meta property="og:image" content={new URL("/og.png", Astro.url)} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
     <meta name="generator" content={Astro.generator} />
     <title>Daniel Pallares</title>
+    <link rel="icon" href="/favicon.ico" sizes="48x48" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <meta name="description" content="web developer" />
     <Font cssVariable="--font-inter" preload />
     <Posthog />
@@ -22,9 +30,7 @@ import { GitHubLogoIcon, LinkedInLogoIcon } from "@radix-ui/react-icons";
   <body class="bg-background text-foreground overflow-x-clip">
     <main class="container flex min-h-dvh flex-col pt-24">
       <slot />
-      <footer
-        class="mt-auto flex items-center justify-between pt-16 pb-8 text-sm text-(--color-gray-9)"
-      >
+      <footer class="text-muted mt-auto flex items-center justify-between pt-16 pb-8 text-sm">
         <div class="flex items-center gap-x-3">
           <a
             href="https://github.com/1danii"
@@ -43,12 +49,7 @@ import { GitHubLogoIcon, LinkedInLogoIcon } from "@radix-ui/react-icons";
             <LinkedInLogoIcon className="size-4" />
           </a>
         </div>
-        <a
-          href="mailto:danielpallares@email.cz"
-          class="hover:text-foreground transition-colors duration-200 ease-[ease]"
-        >
-          contact
-        </a>
+        <ContactLink client:load />
       </footer>
     </main>
   </body>

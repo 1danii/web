@@ -3,35 +3,58 @@ import Layout from "@/layouts/layout.astro";
 import TimelineRow from "@/components/timeline-row.astro";
 import ProjectRow from "@/components/project-row.astro";
 import HoverList from "@/components/hover-list.astro";
+import RoughNotation from "@/components/rough-notation.astro";
+import RoughStar from "@/components/rough-star.astro";
 import { FrameCarousel } from "@/components/frame-carousel";
 ---
 
 <Layout>
   <div class="flex flex-col gap-y-10">
-    <section class="animate-fade-up-mount flex flex-col gap-y-0.5">
-      <h1 class="text-2xl font-medium">Daniel Pallares</h1>
-      <p class="text-muted text-sm">web developer</p>
-    </section>
-    <section class="animate-fade-up-mount fade-up-delay-1">
-      <p class="text-muted text-sm text-pretty">
-        Id et id dolor id aute dolor reprehenderit quis consequat. Nostrud
-        adipisicing ipsum eu ipsum excepteur. Occaecat irure exercitation
-        commodo reprehenderit adipisicing est. Eiusmod nostrud consectetur
-        commodo reprehenderit incididunt.
+    <section class="animate-fade-up-mount flex flex-col gap-y-0">
+      <h1 class="text-base font-[450]">Daniel Pallares</h1>
+      <p class="text-muted text-sm">
+        web developer{" "}
+        <RoughStar color="var(--color-primary)" delay={800} />{" "}
       </p>
     </section>
-    <section
-      class="animate-fade-up-mount fade-up-delay-2 flex flex-col gap-y-3"
-    >
+    <section class="animate-fade-up-mount fade-up-delay-1">
+      <p class="text-sm text-pretty">
+        Id et{" "}
+        {/* <a
+          href="#"
+          class="decoration-muted hover:decoration-foreground ease underline decoration-dashed decoration-1 duration-200 [text-decoration-skip-ink:auto] [text-underline-position:from-font]"
+          >Link github</a
+        > */}
+        {/* <a
+          href="#"
+          class="decoration-muted hover:decoration-foreground ease underline decoration-wavy decoration-1 duration-200 [text-decoration-skip-ink:auto] [text-underline-position:from-font]"
+          >Link github</a
+        > */}
+        a{" "}
+        <a href="#" class="link-dashed">
+          {" "}
+          Link github{" "}
+        </a>{" "}
+        id dolor id aute dolor reprehenderit quis{" "}
+        <RoughNotation type="circle" color="var(--color-primary)">
+          consequat
+        </RoughNotation>
+        . Nostrud adipisicing ipsum eu ipsum excepteur. Occaecat irure
+        exercitation commodo reprehenderit adipisicing est. Eiusmod nostrud
+        consectetur commodo reprehenderit incididunt.
+      </p>
+    </section>
+    <section class="animate-fade-up-mount fade-up-delay-2 grid grid-cols-[1fr_auto] gap-y-3">
       <TimelineRow
         logo="/companies/brandcloud.svg"
         title="Lorem ipsum"
-        year="2020"
+        start="2020-09"
       />
       <TimelineRow
         logo="/companies/brandcloud.svg"
         title="Lorem ipsum"
-        year="2020"
+        start="2029-09"
+        end="2020-09"
       />
     </section>
     <section class="animate-fade-up-mount fade-up-delay-3">

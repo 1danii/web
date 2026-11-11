@@ -27,16 +27,25 @@
   --foreground: var(--color-gray-12);
   --background: var(--color-gray-1);
   --background-elevated: white;
-  --gray: var(--color-gray-11);
+  --gray: var(--color-gray-10);
   --border: var(--color-gray-3);
   --border-transparent: var(--color-gray-a3);
+  --primary: #b8ff00;
+}
+
+@supports (color: oklch(0 0 0)) {
+  @media (color-gamut: p3) {
+    :root {
+      --primary: oklch(0.915 0.277 127.35);
+    }
+  }
 }
 
 @theme inline {
   --color-foreground: var(--foreground);
   --color-background: var(--background);
   --color-background-elevated: var(--background-elevated);
-  --color-primary: #baff29;
+  --color-primary: var(--primary);
   --color-muted: var(--gray);
   --color-border: var(--border);
   --color-border-transparent: var(--border-transparent);
@@ -84,17 +93,82 @@
   animation-delay: calc(--value(integer) * 50ms);
 }
 
+/* Dashed underline whose dashes grow from their centres into a solid line on hover. */
+@property --dash {
+  syntax: "<percentage>";
+  inherits: false;
+  initial-value: 60%;
+}
+
+@utility link-dashed {
+  /* One tile = 3px dash centred in 5px (1px of gap on each side). */
+  --dash-tile: 5px;
+  position: relative;
+  isolation: isolate;
+  /* Fake skip-ink: a background-coloured halo around glyphs hides the line under descenders. */
+  text-shadow:
+    1.5px 0 var(--color-background),
+    -1.5px 0 var(--color-background),
+    0 1.5px var(--color-background),
+    0 -1.5px var(--color-background),
+    1px 1px var(--color-background),
+    -1px 1px var(--color-background),
+    1px -1px var(--color-background),
+    -1px -1px var(--color-background);
+
+  &::selection {
+    text-shadow: none;
+  }
+
+  &::after {
+    /* Must live here: --dash animates on this element, not the link. */
+    --dash-edge: calc((100% - var(--dash)) / 2);
+    content: "";
+    position: absolute;
+    z-index: -1;
+    /* Overhang by half a gap so the first and last dash sit flush with the text. */
+    inset-inline: -1px;
+    bottom: 0px;
+    height: 1px;
+    background-image: linear-gradient(
+      to right,
+      transparent var(--dash-edge),
+      var(--color-muted) var(--dash-edge) calc(100% - var(--dash-edge)),
+      transparent calc(100% - var(--dash-edge))
+    );
+    background-size: var(--dash-tile) 100%;
+    /* Rescales the tile slightly so a whole number of dashes fills the width. */
+    background-repeat: round no-repeat;
+    clip-path: inset(0 1px);
+    pointer-events: none;
+    transition: --dash 200ms var(--ease-in-out);
+  }
+
+  &:hover::after {
+    --dash: 100%;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    &::after {
+      transition: none;
+    }
+  }
+}
+
 @utility container {
   @apply mx-auto max-w-screen-sm px-8;
 }
 
 @layer base {
+  body {
+    font-weight: 350;
+  }
   button:not(:disabled),
   [role="button"]:not(:disabled) {
     cursor: pointer;
   }
   ::selection {
-    @apply bg-foreground text-background;
+    @apply bg-border-transparent;
   }
   @media print {
     * {

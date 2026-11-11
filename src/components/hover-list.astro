@@ -19,15 +19,14 @@ const { moveEase = "var(--ease-in-out)" } = Astro.props;
   <div
     data-hover-highlight
     aria-hidden="true"
-    class="bg-gray-3 pointer-events-none absolute inset-x-0 top-0 rounded-md opacity-0 transition-[translate,opacity] [transition-duration:300ms,200ms] [transition-timing-function:var(--hover-move-ease),var(--ease-out)] motion-reduce:transition-none"
-  >
-  </div>
+    class="bg-gray-3 pointer-events-none absolute inset-x-0 top-0 rounded-md opacity-0 transition-[translate,opacity] duration-[300ms,200ms] ease-[var(--hover-move-ease),var(--ease-out)] motion-reduce:transition-none"
+  ></div>
   <slot />
 </div>
 
 <script>
   for (const list of document.querySelectorAll<HTMLElement>(
-    "[data-hover-list]",
+    "[data-hover-list]"
   )) {
     const highlight = list.querySelector<HTMLElement>("[data-hover-highlight]");
     if (!highlight) continue;
@@ -42,7 +41,7 @@ const { moveEase = "var(--ease-in-out)" } = Astro.props;
       if (!visible) {
         highlight.style.transitionProperty = "opacity";
         highlight.style.transitionTimingFunction = "var(--ease-out)";
-        highlight.style.transitionDuration = "200ms";
+        highlight.style.transitionDuration = "1000ms";
         place();
         highlight.getBoundingClientRect();
         highlight.style.transitionProperty = "";
@@ -56,7 +55,7 @@ const { moveEase = "var(--ease-in-out)" } = Astro.props;
     };
 
     for (const item of list.querySelectorAll<HTMLElement>(
-      "[data-hover-item]",
+      "[data-hover-item]"
     )) {
       item.addEventListener("pointerenter", (event) => {
         if (event.pointerType === "mouse") moveTo(item);

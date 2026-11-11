@@ -2,21 +2,38 @@
 interface Props {
   logo: string;
   title: string;
-  year: string;
+  /** Start month as `YYYY-MM`. */
+  start: string;
+  /** End month as `YYYY-MM`; omit for an ongoing role. */
+  end?: string;
 }
 
-const { logo, title, year } = Astro.props;
+const { logo, title, start, end } = Astro.props;
+
+const monthYear = new Intl.DateTimeFormat("en-US", {
+  month: "short",
+  year: "numeric",
+  timeZone: "UTC",
+});
+const format = (month: string) => monthYear.format(new Date(`${month}-01`));
 ---
 
-<div class="flex h-6 items-center gap-x-3 text-sm">
-  <div class="flex min-w-0 items-center gap-x-2">
-    <div
-      class="bg-background-elevated outline-border-transparent flex size-6 shrink-0 items-center justify-center rounded-sm shadow-xs outline-[0.5px]"
-    >
-      <img src={logo} alt="" draggable="false" class="size-3.5" />
+{/*
+  Rows share a two-column subgrid with their parent (`grid grid-cols-[1fr_auto]`),
+  so the date column takes the width of the longest date and every line ends at the same x.
+*/}
+<div class="col-span-2 grid h-6 grid-cols-subgrid items-center gap-x-3 text-sm">
+  <div class="flex min-w-0 items-center gap-x-3">
+    <div class="flex min-w-0 items-center gap-x-2">
+      <div class="bg-background-elevated outline-border-transparent flex size-6 shrink-0 items-center justify-center rounded-sm shadow-xs outline-[0.5px]">
+        <img src={logo} alt="" draggable="false" class="size-3.5" />
+      </div>
+      <span class="line-clamp-1 text-sm font-[450]">{title}</span>
     </div>
-    <span class="line-clamp-1">{title}</span>
+    <div class="bg-border-transparent h-px flex-1"></div>
   </div>
-  <div class="bg-border-transparent h-px flex-1"></div>
-  <span class="text-muted line-clamp-1 shrink-0">{year}</span>
+  <span class="text-muted line-clamp-1 text-xs tabular-nums">
+    <time datetime={start}>{format(start)}</time> –{" "}
+    {end ? <time datetime={end}>{format(end)}</time> : "Present"}
+  </span>
 </div>

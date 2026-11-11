@@ -13,9 +13,7 @@ import HeroBg from "./hero-bg.png";
   </head>
   <body class="bg-primary text-primary-foreground font-sans antialiased">
     <header class="mx-auto max-w-5xl px-6">
-      <div
-        class="border-border flex h-16 items-center justify-between border-b"
-      >
+      <div class="border-border flex h-16 items-center justify-between border-b">
         <div class="flex items-center text-lg font-medium tracking-tight">
           <div class="bg-inverted mr-2 size-5"></div>
           Brandly
@@ -40,9 +38,7 @@ import HeroBg from "./hero-bg.png";
             style="filter: blur(8px); opacity: 0; transform: translateY(20%);"
             class="bg-accent text-accent-foreground hover:bg-accent-hover mb-8 flex h-6 items-center justify-center rounded-full pr-2 pl-0.5 text-xs whitespace-nowrap transition-colors duration-100 ease-linear"
           >
-            <div
-              class="bg-brand text-inverted-foreground mr-1.5 flex h-5 items-center justify-center rounded-full px-1.5 text-[0.5rem] leading-none font-medium"
-            >
+            <div class="bg-brand text-inverted-foreground mr-1.5 flex h-5 items-center justify-center rounded-full px-1.5 text-[0.5rem] leading-none font-medium">
               NEW
             </div>
             Check out the changelog
@@ -51,16 +47,16 @@ import HeroBg from "./hero-bg.png";
               viewBox="0 0 15 15"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
-              ><path
+            >
+              <path
                 d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z"
                 fill="currentColor"
                 fill-rule="evenodd"
-                clip-rule="evenodd"></path></svg
-            >
+                clip-rule="evenodd"
+              ></path>
+            </svg>
           </a>
-          <h1
-            class="text-5xl leading-[1.1] font-medium tracking-tighter text-balance"
-          >
+          <h1 class="text-5xl leading-[1.1] font-medium tracking-tighter text-balance">
             <FadeInText client:load text="Lorem ipsum tempor," />
             <br />
             <FadeInText client:load text="aliqua eiusmod esse" />
@@ -79,8 +75,7 @@ import HeroBg from "./hero-bg.png";
             style="opacity: 0;"
             class="border-border mt-20 aspect-video w-full rounded-2xl border bg-white/50 p-1"
           >
-            <div class="border-border size-full rounded-xl border bg-white">
-            </div>
+            <div class="border-border size-full rounded-xl border bg-white"></div>
           </div>
         </div>
       </section>
@@ -97,10 +92,9 @@ import HeroBg from "./hero-bg.png";
         <div
           style={{ maskImage: `url("${HeroBg.src}")` }}
           class="bg-brand absolute inset-0 mask-[100%_auto] mask-bottom mask-no-repeat mix-blend-color"
-        >
-        </div>
+        ></div>
       </div>
-      <!-- <svg width="1" height="1">
+      {/* <svg width="1" height="1">
         <defs>
           <filter id="blur" x="-20%" y="-20%" width="140%" height="140%">
             <feConvolveMatrix
@@ -111,7 +105,7 @@ import HeroBg from "./hero-bg.png";
               order="64 1"></feConvolveMatrix>
           </filter>
         </defs>
-      </svg> -->
+      </svg> */}
     </div>
 
     <script>

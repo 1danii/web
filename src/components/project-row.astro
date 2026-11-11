@@ -1,6 +1,4 @@
 ---
-import { ChevronRightIcon } from "@radix-ui/react-icons";
-
 interface Props {
   title: string;
   href: string;
@@ -9,14 +7,11 @@ interface Props {
 const { title, href } = Astro.props;
 ---
 
-<a
-  {href}
-  data-hover-item
-  class="relative flex h-9 items-center gap-x-3 px-3 text-sm"
->
-  <span class="line-clamp-1 min-w-0">{title}</span>
-  <div class="flex flex-1 items-center gap-x-1.5">
-    <div class="bg-border-transparent h-px flex-1"></div>
-    <ChevronRightIcon className="text-muted -mr-1 size-4 shrink-0" />
-  </div>
+<a {href} data-hover-item class="relative flex h-9 items-center gap-x-3 px-3">
+  <span class="line-clamp-1 min-w-0 text-sm font-[450]">{title}</span>
+  <div class="h-px flex-1 bg-transparent"></div>
+  <span class="text-muted mb-px shrink-0 text-base leading-none font-light">
+    ↗
+  </span>
+  {/* <span class="text-muted text-base font-light"></span> */}
 </a>

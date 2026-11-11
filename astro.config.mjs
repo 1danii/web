@@ -6,7 +6,7 @@ import tailwindcss from "@tailwindcss/vite";
 
 // https://astro.build/config
 export default defineConfig({
-  integrations: [react()],
+  integrations: [react({ compiler: true })],
   output: "static",
   site: "https://dani.pw",
   prefetch: {

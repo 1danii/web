@@ -10,33 +10,29 @@ type Props = {
 const props = Astro.props;
 ---
 
-<div
-  class="outline-border-transparent bg-background-elevated flex flex-col overflow-hidden rounded-lg bg-clip-padding shadow-xs outline"
->
-  <div
-    class="outline-border-transparent relative aspect-video overflow-hidden rounded-lg outline"
-  >
+<div class="outline-border-transparent bg-background-elevated flex flex-col overflow-hidden rounded-lg bg-clip-padding shadow-xs outline">
+  <div class="outline-border-transparent relative aspect-video overflow-hidden rounded-lg outline">
     <slot />
-    {
-      props.renderWidth ? (
-        <ScaledIframe
-          client:load
-          src={props.src}
-          renderWidth={props.renderWidth}
-        />
-      ) : (
-        <iframe class="size-full" src={props.src} />
-      )
-    }
+    {props.renderWidth ? (
+      <ScaledIframe
+        client:load
+        src={props.src}
+        renderWidth={props.renderWidth}
+      />
+    ) : (
+      <iframe class="size-full" src={props.src} />
+    )}
   </div>
   <div class="text-muted flex h-8 items-center justify-between px-3 text-xs">
-    <span class="[&_a]:underline [&_a]:decoration-1 [&_a]:underline-offset-2"
-      ><slot name="title">{props.title}</slot></span
-    >
+    <span class="[&_a]:underline [&_a]:decoration-1 [&_a]:underline-offset-2">
+      <slot name="title">{props.title}</slot>
+    </span>
     <div class="relative flex items-center justify-center">
       Open
       <ArrowTopRightOnSquareIcon className="ml-1 size-3" />
-      <a href={props.src} target="_blank" class="absolute size-6"> </a>
+      <a href={props.src} target="_blank" class="absolute size-6">
+        {" "}
+      </a>
     </div>
   </div>
 </div>

@@ -1,0 +1,38 @@
+---
+import type { RoughAnnotationConfig } from "rough-notation/lib/model";
+
+/**
+ * Wraps inline content in a hand-drawn rough-notation annotation that draws itself once the
+ * content is on screen (after any entrance animation on an ancestor has finished).
+ * `color` accepts any CSS colour, including `var(--color-*)` tokens.
+ */
+type Props = RoughAnnotationConfig & {
+  /** Extra wait in ms before drawing. */
+  delay?: number;
+};
+
+const { delay = 0, ...config } = Astro.props;
+---
+
+<span data-rough-notation={JSON.stringify(config)} data-rough-delay={delay}>
+  <slot />
+</span>
+
+<script>
+  import { annotate } from "rough-notation";
+  import type { RoughAnnotationConfig } from "rough-notation/lib/model";
+  import { drawWhenVisible, reduceMotion, resolveColor } from "@/lib/rough";
+
+  drawWhenVisible(
+    document.querySelectorAll<HTMLElement>("[data-rough-notation]"),
+    (el) => {
+      const config = JSON.parse(
+        el.dataset.roughNotation!,
+      ) as RoughAnnotationConfig;
+      if (config.color) config.color = resolveColor(el, config.color);
+      if (reduceMotion) config.animate = false;
+      annotate(el, config).show();
+    },
+    (el) => Number(el.dataset.roughDelay) || 0,
+  );
+</script>
