@@ -58,7 +58,8 @@
 
   @keyframes fade-up-mount {
     from {
-      opacity: 0;
+      /* Not 0: Chrome ignores fully transparent text for LCP until the animation ends. */
+      opacity: 0.01;
       transform: translateY(12px);
     }
     to {

@@ -25,7 +25,8 @@ export default defineConfig({
       options: {
         variants: [
           {
-            src: ["./src/assets/fonts/InterVariable.woff2"],
+            // Latin + Latin Extended-A subset of InterVariable.woff2 (pyftsubset, all features kept).
+            src: ["./src/assets/fonts/InterVariable-latin.woff2"],
             weight: "100 900",
             style: "normal",
           },
