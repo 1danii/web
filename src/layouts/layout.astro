@@ -4,6 +4,14 @@ import Posthog from "@/components/posthog.astro";
 import "../globals.css";
 import { Font } from "astro:assets";
 import { GitHubLogoIcon, LinkedInLogoIcon } from "@radix-ui/react-icons";
+
+const person = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: "Daniel Pallares",
+  url: new URL("/", Astro.site),
+  sameAs: ["https://www.linkedin.com/in/dani-pallares/"],
+};
 ---
 
 <html lang="en">
@@ -20,37 +28,40 @@ import { GitHubLogoIcon, LinkedInLogoIcon } from "@radix-ui/react-icons";
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="generator" content={Astro.generator} />
     <title>Daniel Pallares</title>
+    <link rel="canonical" href={Astro.url} />
+    <meta name="theme-color" content="#fcfcfc" />
     <link rel="icon" href="/favicon.ico" sizes="48x48" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <meta name="description" content="web developer" />
     <Font cssVariable="--font-inter" preload />
+    <script type="application/ld+json" set:html={JSON.stringify(person)} />
     <Posthog />
   </head>
-  <body class="bg-background text-foreground overflow-x-clip">
-    <main class="container flex min-h-dvh flex-col pt-24">
+  <body class="bg-background text-foreground flex min-h-dvh flex-col overflow-x-clip">
+    <main class="container w-full flex-1 pt-24">
       <slot />
-      <footer class="text-muted mt-auto flex items-center justify-between pt-16 pb-8 text-sm">
-        <div class="flex items-center gap-x-3">
-          <a
-            href="https://github.com/1danii"
-            target="_blank"
-            aria-label="GitHub"
-            class="hover:text-foreground transition-colors duration-200 ease-[ease]"
-          >
-            <GitHubLogoIcon className="size-4" />
-          </a>
-          <a
-            href="https://www.linkedin.com/in/dani-pallares/"
-            target="_blank"
-            aria-label="LinkedIn"
-            class="hover:text-foreground transition-colors duration-200 ease-[ease]"
-          >
-            <LinkedInLogoIcon className="size-4" />
-          </a>
-        </div>
-        <ContactLink client:load />
-      </footer>
     </main>
+    <footer class="text-muted container flex w-full items-center justify-between pt-16 pb-8 text-sm">
+      <div class="flex items-center gap-x-3">
+        <a
+          href="https://github.com/1danii"
+          target="_blank"
+          aria-label="GitHub"
+          class="hover:text-foreground -m-1.5 p-1.5 transition-colors duration-200 ease-[ease]"
+        >
+          <GitHubLogoIcon className="size-4" />
+        </a>
+        <a
+          href="https://www.linkedin.com/in/dani-pallares/"
+          target="_blank"
+          aria-label="LinkedIn"
+          class="hover:text-foreground -m-1.5 p-1.5 transition-colors duration-200 ease-[ease]"
+        >
+          <LinkedInLogoIcon className="size-4" />
+        </a>
+      </div>
+      <ContactLink client:idle />
+    </footer>
   </body>
 </html>

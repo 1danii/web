@@ -29,11 +29,6 @@ export default defineConfig({
             weight: "100 900",
             style: "normal",
           },
-          {
-            src: ["./src/assets/fonts/InterVariable-Italic.woff2"],
-            weight: "100 900",
-            style: "italic",
-          },
         ],
       },
     },

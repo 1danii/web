@@ -1,5 +1,5 @@
 @import "tailwindcss";
-@import "radix-colors-tailwind";
+@import "radix-colors-tailwind/dist/gray.css";
 
 @theme {
   --font-sans: Inter, sans-serif;

@@ -32,8 +32,7 @@ import { FrameCarousel } from "@/components/frame-carousel";
         > */}
         a{" "}
         <a href="#" class="link-dashed">
-          {" "}
-          Link github{" "}
+          Link github
         </a>{" "}
         id dolor id aute dolor reprehenderit quis{" "}
         <RoughNotation type="circle" color="var(--color-primary)">
@@ -44,21 +43,23 @@ import { FrameCarousel } from "@/components/frame-carousel";
         consectetur commodo reprehenderit incididunt.
       </p>
     </section>
-    <section class="animate-fade-up-mount fade-up-delay-2 grid grid-cols-[1fr_auto] gap-y-3">
-      <TimelineRow
-        logo="/companies/brandcloud.svg"
-        title="Lorem ipsum"
-        start="2020-09"
-      />
-      <TimelineRow
-        logo="/companies/brandcloud.svg"
-        title="Lorem ipsum"
-        start="2029-09"
-        end="2020-09"
-      />
+    <section class="animate-fade-up-mount fade-up-delay-2">
+      <ul role="list" class="grid grid-cols-[1fr_auto] gap-y-3">
+        <TimelineRow
+          logo="/companies/brandcloud.svg"
+          title="Lorem ipsum"
+          start="2020-09"
+        />
+        <TimelineRow
+          logo="/companies/brandcloud.svg"
+          title="Lorem ipsum"
+          start="2029-09"
+          end="2020-09"
+        />
+      </ul>
     </section>
     <section class="animate-fade-up-mount fade-up-delay-3">
-      <FrameCarousel client:load />
+      <FrameCarousel client:idle />
     </section>
     <section class="animate-fade-up-mount fade-up-delay-4">
       <HoverList>

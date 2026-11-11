@@ -32,7 +32,7 @@ export function ContactLink() {
         render={
           <a
             href={`mailto:${EMAIL}`}
-            className="hover:text-foreground inline-flex items-center gap-1 transition-colors duration-200 ease-[ease]"
+            className="hover:text-foreground -m-1.5 inline-flex items-center gap-1 p-1.5 transition-colors duration-200 ease-[ease]"
           />
         }
       >

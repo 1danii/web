@@ -1,5 +1,7 @@
 @import "tailwindcss";
-@import "radix-colors-tailwind";
+@import "radix-colors-tailwind/dist/gray.css";
+@import "radix-colors-tailwind/dist/blue.css";
+@import "radix-colors-tailwind/dist/red.css";
 
 @theme {
   --font-sans: Inter, sans-serif;

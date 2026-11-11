@@ -7,11 +7,20 @@ interface Props {
 const { title, href } = Astro.props;
 ---
 
-<a {href} data-hover-item class="relative flex h-9 items-center gap-x-3 px-3">
-  <span class="line-clamp-1 min-w-0 text-sm font-[450]">{title}</span>
-  <div class="h-px flex-1 bg-transparent"></div>
-  <span class="text-muted mb-px shrink-0 text-base leading-none font-light">
-    ↗
-  </span>
-  {/* <span class="text-muted text-base font-light"></span> */}
-</a>
+<li>
+  <a
+    {href}
+    data-hover-item
+    class="relative flex h-9 items-center gap-x-3 px-3 outline-none"
+  >
+    <span class="line-clamp-1 min-w-0 text-sm font-[450]">{title}</span>
+    <div class="h-px flex-1 bg-transparent"></div>
+    <span
+      aria-hidden="true"
+      class="text-muted mb-px shrink-0 text-base leading-none font-light"
+    >
+      ↗
+    </span>
+    {/* <span class="text-muted text-base font-light"></span> */}
+  </a>
+</li>

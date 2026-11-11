@@ -7,7 +7,7 @@
   --color-*: initial;
 }
 
-@import "radix-colors-tailwind";
+@import "radix-colors-tailwind/dist/gray.css";
 
 @media print {
   @page {

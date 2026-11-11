@@ -1,7 +1,7 @@
 ---
 /**
  * Vertical list with a single rounded highlight that slides to the hovered
- * `[data-hover-item]` child and fades out when the pointer leaves the list.
+ * or keyboard-focused `[data-hover-item]` child and fades out when the pointer and focus leave.
  */
 interface Props {
   /** Timing function of the highlight's movement between items. */
@@ -13,7 +13,7 @@ const { moveEase = "var(--ease-in-out)" } = Astro.props;
 
 <div
   data-hover-list
-  class="relative -mx-3 flex flex-col"
+  class="relative -mx-3"
   style={{ "--hover-move-ease": moveEase }}
 >
   <div
@@ -21,12 +21,14 @@ const { moveEase = "var(--ease-in-out)" } = Astro.props;
     aria-hidden="true"
     class="bg-gray-3 pointer-events-none absolute inset-x-0 top-0 rounded-md opacity-0 transition-[translate,opacity] duration-[300ms,200ms] ease-[var(--hover-move-ease),var(--ease-out)] motion-reduce:transition-none"
   ></div>
-  <slot />
+  <ul role="list" class="flex flex-col">
+    <slot />
+  </ul>
 </div>
 
 <script>
   for (const list of document.querySelectorAll<HTMLElement>(
-    "[data-hover-list]"
+    "[data-hover-list]",
   )) {
     const highlight = list.querySelector<HTMLElement>("[data-hover-highlight]");
     if (!highlight) continue;
@@ -54,17 +56,31 @@ const { moveEase = "var(--ease-in-out)" } = Astro.props;
       visible = true;
     };
 
+    const hide = () => {
+      highlight.style.opacity = "0";
+      visible = false;
+    };
+    const keyboardFocused = () =>
+      list.querySelector<HTMLElement>("[data-hover-item]:focus-visible");
+
     for (const item of list.querySelectorAll<HTMLElement>(
-      "[data-hover-item]"
+      "[data-hover-item]",
     )) {
       item.addEventListener("pointerenter", (event) => {
         if (event.pointerType === "mouse") moveTo(item);
       });
+      item.addEventListener("focus", () => {
+        if (item.matches(":focus-visible")) moveTo(item);
+      });
+      item.addEventListener("blur", () => {
+        if (!list.matches(":hover")) hide();
+      });
     }
 
     list.addEventListener("pointerleave", () => {
-      highlight.style.opacity = "0";
-      visible = false;
+      const focused = keyboardFocused();
+      if (focused) moveTo(focused);
+      else hide();
     });
   }
 </script>
