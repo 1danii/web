@@ -37,6 +37,7 @@
   @media (color-gamut: p3) {
     :root {
       --primary: oklch(0.915 0.277 127.35);
+      /* --primary: oklch(0.59 0.24 254.23); */
     }
   }
 }
