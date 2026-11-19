@@ -1,0 +1,24 @@
+---
+interface Props {
+  /** File name in `/public/tools` without the extension, e.g. `react`. */
+  icon: string;
+}
+
+const { icon } = Astro.props;
+---
+
+{/*
+  A tool name with its logo, set inline in running text. `whitespace-nowrap` keeps the logo on the
+  same line as its name when the paragraph wraps.
+*/}
+<span class="font-[450] whitespace-nowrap">
+  <img
+    src={`/tools/${icon}.svg`}
+    alt=""
+    width="14"
+    height="14"
+    draggable="false"
+    class="mr-1 inline-block size-3.5 -translate-y-px object-contain align-middle select-none"
+  />
+  <slot />
+</span>

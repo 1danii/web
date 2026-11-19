@@ -1,0 +1,156 @@
+---
+interface Props {
+  /** Rendered width in px; everything inside scales from the 512px design. */
+  size?: number;
+  /** Only the cards, centred, without the folder panels. */
+  bare?: boolean;
+  /** Icon next to text: sized by the DialKit "Inline" dials and trimmed to its visible shape. */
+  inline?: boolean;
+}
+
+const { size = 20, bare = false, inline = false } = Astro.props;
+const id = `f${inline ? "inline" : size}${bare ? "-bare" : ""}`;
+const sizeVar = bare ? "--inline-icons-size" : "--inline-folder-size";
+const stageSize = inline ? `var(${sizeVar}, ${size}px)` : `${size}px`;
+// Inline: on open the cards grow to this px width (DialKit "cardSize" overrides it). A card is 33.2% of the stage.
+const cardScaleVar = bare ? "--inline-icons-card-scale" : "--inline-folder-card-scale";
+const cardScale = `var(${cardScaleVar}, ${(32 / (size * 0.332)).toFixed(4)})`;
+
+// Positions in cqw of the 512px design frame (design px / 5.12).
+const cards = [
+  { name: "left", x: 16.41, y: 7.81, rotate: -18 },
+  { name: "right", x: 50.39, y: 5.47, rotate: 14 },
+  { name: "center", x: 33.4, y: 2.73, rotate: -2 },
+];
+
+/*
+ * Inline cards grow on open, so their spread grows with them around a fixed anchor: horizontally the
+ * group's centre, vertically roughly the bottom of the lifted (unscaled) fan. These are each card's
+ * centre offsets from that anchor, in cqw.
+ */
+const fanAnchor = { x: 50, y: 11 };
+const fanOffset = (card: { x: number; y: number }) =>
+  `--fan-dx: ${(card.x + 16.6 - fanAnchor.x).toFixed(2)}cqw; --fan-dy: ${(card.y + 16.6 - fanAnchor.y).toFixed(2)}cqw;`;
+---
+
+<div
+  class:list={["stage", { "stage--bare": bare, "stage--inline": inline }]}
+  style={`--size: ${stageSize};${inline ? ` --card-scale: ${cardScale};` : ""}`}
+>
+  <div
+    class:list={["folder", { "folder--bare": bare }]}
+    tabindex="0"
+    aria-label={bare ? "Icons" : "Folder"}
+  >
+    {!bare && (
+      <svg class="panel" viewBox="0 0 512 512" fill="none" aria-hidden="true">
+        <defs>
+          <linearGradient
+            id={`fbBack-${id}`}
+            x1="40"
+            x2="40"
+            y1="10.49"
+            y2="69.45"
+            gradientUnits="userSpaceOnUse"
+          >
+            <stop stop-color="#5CC2F1" offset="0" />
+            <stop stop-color="#38A5DB" offset=".1786" />
+          </linearGradient>
+          <linearGradient
+            id={`fbBackStroke-${id}`}
+            x1="40"
+            x2="40"
+            y1="10.49"
+            y2="12.05"
+            gradientUnits="userSpaceOnUse"
+          >
+            <stop stop-color="#fff" stop-opacity=".3" offset="0" />
+            <stop stop-color="#fff" stop-opacity="0" offset="1" />
+          </linearGradient>
+        </defs>
+        <path
+          transform="scale(6.4)"
+          d="m3.29 15.75c0-3.08 2.07-5.26 5.09-5.26h15.81c1.48 0 2.88 0.67 3.81 1.83l1.16 1.42c1.02 1.25 2.54 1.97 4.15 1.97h38.02c3.34 0 5.47 2.05 5.47 5.44v43.1c0 3.1-2.19 5.2-5.29 5.2h-63.02c-3.1 0-5.2-2.07-5.2-5.2v-48.5z"
+          fill={`url(#fbBack-${id})`}
+        />
+        <path
+          transform="scale(6.4)"
+          d="m3.29 15.75c0-3.08 2.07-5.26 5.09-5.26h15.81c1.48 0 2.88 0.67 3.81 1.83l1.16 1.42c1.02 1.25 2.54 1.97 4.15 1.97h38.02c3.34 0 5.47 2.05 5.47 5.44"
+          stroke={`url(#fbBackStroke-${id})`}
+          stroke-width=".2083"
+        />
+      </svg>
+    )}
+
+    {cards.map((card) => (
+      <div
+        class="card"
+        data-card={card.name}
+        style={`left: ${card.x}cqw; top: ${card.y}cqw; --r: ${card.rotate}deg; ${fanOffset(card)}`}
+      >
+        <img src="/tools/react.svg" alt="" draggable="false" />
+        <span class="tip" aria-hidden="true"><span class="tip-bubble">React<span class="tip-arrow" /></span></span>
+      </div>
+    ))}
+
+    {!bare && (
+      <div class="front">
+        <svg class="panel" viewBox="0 0 512 512" fill="none" aria-hidden="true">
+          <defs>
+            <linearGradient
+              id={`fbFront-${id}`}
+              x1="40"
+              x2="40"
+              y1="21.03"
+              y2="69.45"
+              gradientUnits="userSpaceOnUse"
+            >
+              <stop stop-color="#75D0F8" offset="0" />
+              <stop stop-color="#57BDED" offset=".5052" />
+              <stop stop-color="#45AEE2" offset="1" />
+            </linearGradient>
+            <linearGradient
+              id={`fbFrontTop-${id}`}
+              x1="40"
+              x2="40"
+              y1="21.03"
+              y2="22.59"
+              gradientUnits="userSpaceOnUse"
+            >
+              <stop stop-color="#fff" stop-opacity=".2" offset="0" />
+              <stop stop-color="#fff" stop-opacity="0" offset="1" />
+            </linearGradient>
+            <linearGradient
+              id={`fbFrontBottom-${id}`}
+              x1="40"
+              x2="40"
+              y1="67.89"
+              y2="69.45"
+              gradientUnits="userSpaceOnUse"
+            >
+              <stop stop-opacity="0" offset="0" />
+              <stop stop-opacity=".2" offset="1" />
+            </linearGradient>
+          </defs>
+          <path
+            transform="scale(6.4)"
+            d="m3.33 26.25c0-3.19 2.09-5.22 5.42-5.22h62.37c3.45 0 5.63 1.96 5.63 5.32v37.9c0 3.13-2.21 5.2-5.26 5.2h-62.98c-3.04 0-5.18-2.12-5.18-5.2v-38z"
+            fill={`url(#fbFront-${id})`}
+          />
+          <path
+            transform="scale(6.4)"
+            d="m3.33 26.25c0-3.19 2.09-5.22 5.42-5.22h62.37c3.45 0 5.63 1.96 5.63 5.32"
+            stroke={`url(#fbFrontTop-${id})`}
+            stroke-width=".2083"
+          />
+          <path
+            transform="scale(6.4)"
+            d="m3.33 64.25c0 3.08 2.14 5.2 5.18 5.2h62.98c3.05 0 5.26-2.07 5.26-5.2"
+            stroke={`url(#fbFrontBottom-${id})`}
+            stroke-width=".4167"
+          />
+        </svg>
+      </div>
+    )}
+  </div>
+</div>

@@ -1,0 +1,20 @@
+---
+import { tooltipArrow, tooltipPopup } from "./tooltip-styles";
+
+/*
+ * The tooltip bubble on its own, for CSS-driven tooltips (no JS). The parent positions it and
+ * decides when it shows; the arrow points down from its bottom centre.
+ */
+interface Props {
+  class?: string;
+}
+
+const { class: className } = Astro.props;
+---
+
+<span class:list={[tooltipPopup, "relative inline-block whitespace-nowrap", className]}
+  ><slot /><span
+    class:list={[tooltipArrow, "absolute -bottom-0.5 left-1/2 -translate-x-1/2"]}
+    aria-hidden="true"></span
+  ></span
+>

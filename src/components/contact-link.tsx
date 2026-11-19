@@ -1,5 +1,6 @@
 import { Tooltip } from "@base-ui/react/tooltip";
 import { useEffect, useState } from "react";
+import { tooltipArrow, tooltipPopup } from "./tooltip-styles";
 
 const EMAIL = "danielpallares@email.cz";
 
@@ -51,9 +52,11 @@ export function ContactLink() {
           sideOffset={4}
           collisionAvoidance={{ side: "none", align: "none" }}
         >
-          <Tooltip.Popup className="bg-foreground text-background rounded px-2 py-1 text-xs shadow-xs transition-opacity duration-200 ease-out select-none data-ending-style:opacity-0 data-starting-style:opacity-0">
+          <Tooltip.Popup
+            className={`${tooltipPopup} transition-opacity duration-200 ease-out data-ending-style:opacity-0 data-starting-style:opacity-0`}
+          >
             Copied!
-            <Tooltip.Arrow className="bg-foreground -bottom-0.5 size-2 rotate-45" />
+            <Tooltip.Arrow className={`${tooltipArrow} -bottom-0.5`} />
           </Tooltip.Popup>
         </Tooltip.Positioner>
       </Tooltip.Portal>

@@ -5,6 +5,7 @@ import ProjectRow from "@/components/project-row.astro";
 import HoverList from "@/components/hover-list.astro";
 import RoughNotation from "@/components/rough-notation.astro";
 import RoughStar from "@/components/rough-star.astro";
+import ToolFan from "@/components/tool-fan.astro";
 import { FrameCarousel } from "@/components/frame-carousel";
 ---
 
@@ -17,44 +18,55 @@ import { FrameCarousel } from "@/components/frame-carousel";
       </h1>
       <p class="text-muted text-sm">web developer</p>
     </section>
-    <section class="animate-fade-up-mount fade-up-delay-1">
-      <p class="text-sm text-pretty">
-        Id et{" "}
-        {/* <a
-          href="#"
-          class="decoration-muted hover:decoration-foreground ease underline decoration-dashed decoration-1 duration-200 [text-decoration-skip-ink:auto] [text-underline-position:from-font]"
-          >Link github</a
-        > */}
-        {/* <a
-          href="#"
-          class="decoration-muted hover:decoration-foreground ease underline decoration-wavy decoration-1 duration-200 [text-decoration-skip-ink:auto] [text-underline-position:from-font]"
-          >Link github</a
-        > */}
-        a{" "}
-        <a href="#" class="link-dashed">
-          Link github
-        </a>{" "}
-        id dolor id aute dolor reprehenderit quis{" "}
-        <RoughNotation type="circle" color="var(--color-primary)">
-          consequat
-        </RoughNotation>
-        . Nostrud adipisicing ipsum eu ipsum excepteur. Occaecat irure
-        exercitation commodo reprehenderit adipisicing est. Eiusmod nostrud
-        consectetur commodo reprehenderit incididunt.
+    <section class="animate-fade-up-mount fade-up-delay-1 text-sm leading-normal text-pretty">
+      <p>
+        I'm a developer based in Prague, building web and mobile interfaces{" "}
+        <RoughNotation
+          type="underline"
+          color="var(--color-primary)"
+          padding={0}
+        >
+          with care
+        </RoughNotation>{" "}
+        for how they look and feel. I have experience working as a freelancer,
+        on a product at a SaaS company, and on client projects at a web agency.
+        <br />
+        <br />
+        My main stack is TypeScript and React, plus{" "}
+        <ToolFan
+          tools={[
+            { name: "Next.js", icon: "nextjs", bg: "#000" },
+            { name: "Astro", icon: "astro", bg: "#fff" },
+            { name: "TanStack", icon: "tanstack", bg: "#fff" },
+          ]}
+        >
+          frameworks and tools
+        </ToolFan>{" "}
+        around them. I also have some experience with Node.js backends, ORMs and
+        CMSs. I spend time in{" "}
+        <ToolFan
+          tools={[
+            { name: "Figma", icon: "figma", bg: "#fff" },
+            { name: "Wonder", icon: "wonder", bg: "#000" },
+          ]}
+        >
+          design tools
+        </ToolFan>{" "}
+        too, learning more of the design side.
       </p>
     </section>
     <section class="animate-fade-up-mount fade-up-delay-2">
       <ul role="list" class="grid grid-cols-[1fr_auto] gap-y-3">
         <TimelineRow
-          logo="/companies/brandcloud.svg"
-          title="Lorem ipsum"
-          start="2020-09"
+          logo="/companies/giant.svg"
+          title="Giant interactive"
+          start="2026-06"
         />
         <TimelineRow
           logo="/companies/brandcloud.svg"
-          title="Lorem ipsum"
-          start="2029-09"
-          end="2020-09"
+          title="BrandCloud"
+          start="2024-01"
+          end="2026-05"
         />
       </ul>
     </section>

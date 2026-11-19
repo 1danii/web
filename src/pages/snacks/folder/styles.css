@@ -1,0 +1,316 @@
+@import "tailwindcss";
+
+body {
+  font-family: var(--font-inter), sans-serif;
+}
+
+/* A one-line paragraph with the icon inline in it. */
+.inline-icon {
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+/*
+ * Everything is sized in cqw of .stage, so 100cqw = the 512px design frame
+ * and 1 design px = 0.1953cqw. Any --size scales the whole folder, motion included.
+ */
+.stage {
+  container-type: inline-size;
+  flex: 0 1 var(--size);
+  min-width: 0;
+}
+
+/*
+ * Inline icons behave like an image in running text:
+ * - Horizontally, negative margins trim the frame to the visible shape, so text after it moves with its width.
+ * - Vertically, the margins collapse the box to zero height at the visible shape's centre, and
+ *   vertical-align: middle puts that centre on the text's middle. The line box never grows,
+ *   so changing the size doesn't move the text up or down.
+ * Folder body spans x 21–491, y 67–444 (centre 255.5). Resting card group spans x 62–446, y 154–376 (centre 265).
+ */
+.stage--inline {
+  display: inline-block;
+  vertical-align: middle;
+  width: var(--size);
+  margin: calc(var(--size) * -0.499) calc(var(--size) * -0.041 + var(--inline-gap, 6px))
+    calc(var(--size) * -0.501) calc(var(--size) * -0.041);
+}
+
+.stage--inline.stage--bare {
+  margin: calc(var(--size) * -0.5176) calc(var(--size) * -0.1289 + var(--inline-gap, 6px))
+    calc(var(--size) * -0.4824) calc(var(--size) * -0.1211);
+}
+
+.stage--inline .folder {
+  margin-bottom: 0;
+}
+
+/* Keep the grown cards above the text next to the icon. */
+.stage--inline:hover,
+.stage--inline:focus-within {
+  position: relative;
+  z-index: 1;
+}
+
+/*
+ * Small icons: the cards fly further and grow (folder panels unchanged) so the lift reads at this size.
+ * Their layout box is the open size (--k = --card-scale) and they rest scaled down by 1/k, so the browser
+ * rasterises them at full resolution. Scaling a small raster up blurs until the transition ends.
+ */
+.stage--inline .card {
+  --k: var(--card-scale, 1);
+  --lift-s: 1;
+
+  /*
+   * The whole fan scales by --lift-s around an anchor near its bottom centre: the lift scales with the
+   * card, and each card also moves away from the anchor by (s - 1) × its offset (--fan-dx/dy, set in
+   * _folder.astro). At rest s = 1 and the card shows at its normal size (scale 1/k).
+   */
+  translate: calc(
+      var(--lift-x) * var(--inline-lift, 1.6) * var(--lift-s) +
+        var(--fan-dx, 0cqw) * (var(--lift-s) - 1)
+    )
+    calc(
+      var(--lift-y) * var(--inline-lift, 1.6) * var(--lift-s) +
+        var(--fan-dy, 0cqw) * (var(--lift-s) - 1)
+    );
+  scale: calc(var(--lift-s) / var(--k));
+}
+
+/*
+ * Once open, a static invisible box around the whole fan keeps it hovered, so the cursor can move
+ * through the gaps between the cards. It only catches the pointer while open, so at rest the text next
+ * to the icon stays usable. Sized in open-card widths (--c), centred on the folder: about 1.75 cards
+ * either side, 2 above the centre (the lifted fan) and 1 below.
+ */
+.stage--inline .folder::before {
+  --c: calc(33.2cqw * var(--card-scale, 1));
+
+  content: "";
+  position: absolute;
+  left: calc(50% - var(--c) * 1.75);
+  top: calc(50% - var(--c) * 2);
+  width: calc(var(--c) * 3.5);
+  height: calc(var(--c) * 3);
+  pointer-events: none;
+}
+
+.stage--inline .folder:is(:hover, :focus-visible, .is-open)::before {
+  pointer-events: auto;
+}
+
+.stage--inline .folder:is(:hover, :focus-visible, .is-open) .card {
+  --lift-s: var(--card-scale, 1);
+}
+
+.folder {
+  --ease-out: cubic-bezier(0.215, 0.61, 0.355, 1);
+  --ease-spring: cubic-bezier(0.34, 1.4, 0.64, 1);
+
+  position: relative;
+  aspect-ratio: 1;
+  /* The frame has 67.5px of empty space under the folder; drop it so variants align on their bottom edge. */
+  margin-bottom: -13.18cqw;
+  perspective: var(--front-perspective, 273.4cqw);
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.panel {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* Cards: 170px, 36px radius, React logo 128×115 */
+.card {
+  --lift-x: 0cqw;
+  --lift-y: 0cqw;
+  --lift-r: 0deg;
+
+  /* Box scale: 1 normally, the open scale for inline icons (see .stage--inline .card). */
+  --k: 1;
+
+  position: absolute;
+  width: calc(33.2cqw * var(--k));
+  aspect-ratio: 1;
+  /* A box k× larger, kept centred on the same spot as the normal one. */
+  margin-left: calc(16.6cqw * (1 - var(--k)));
+  margin-top: calc(var(--card-top, 0cqw) + 16.6cqw * (1 - var(--k)));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: calc(7.03cqw * var(--k));
+  background: #fff;
+  /*
+   * Tailwind shadow-lg with the big layer's spread at +2px instead of -3px, as designed on a 230px card
+   * in Wonder: 0 10px 15px 2px, 0 4px 6px -4px, black 10%. Scaled to the card (1 Wonder px = 33.2 / 230 cqw).
+   */
+  box-shadow:
+    0 calc(1.4435cqw * var(--k)) calc(2.1652cqw * var(--k)) calc(0.2887cqw * var(--k)) rgb(0 0 0 / 0.1),
+    0 calc(0.5774cqw * var(--k)) calc(0.8661cqw * var(--k)) calc(-0.5774cqw * var(--k)) rgb(0 0 0 / 0.1);
+  /*
+   * Separate properties, not one transform, so the scale gets its own curve. CSS applies them as
+   * translate → rotate → scale, the same order the single transform had.
+   * Closing (the base state's transition): the springs are for opening only (below). The exit is
+   * plainer than the entrance (no overshoot), one curve for the move and the shrink, staggered as the
+   * opening reversed (same gaps) so it reads as the open played backwards. Values come from DialKit's
+   * "close" folder; the per-card delays are derived from the opening ones in _dials.ts.
+   */
+  translate: var(--lift-x) var(--lift-y);
+  rotate: calc(var(--r) + var(--lift-r));
+  transition-property: translate, rotate, scale;
+  transition-duration: var(--close-duration, 400ms);
+  transition-timing-function: var(--close-ease, var(--ease-out));
+}
+
+/* The hovered card comes to the front so its tooltip isn't covered by its neighbours. */
+.card:hover {
+  z-index: 1;
+}
+
+/*
+ * Tooltip with the tool's name above the hovered card, upright whatever the card's tilt (--a). Same
+ * look as the site's email tooltip (src/components/tooltip-styles.ts), copied so the snack stays
+ * self-contained. Its corner sits on the card's centre: it turns back by -a around that point, then
+ * moves up by half the tilted card's height (--reach) plus a 4px gap.
+ */
+.tip {
+  --a: calc(var(--r) + var(--lift-r));
+  --reach: calc(16.6cqw * var(--k) * (cos(var(--a)) + max(sin(var(--a)), -1 * sin(var(--a)))));
+
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform-origin: 0 0;
+  transform: rotate(calc(-1 * var(--a))) translate(-50%, calc(-100% - var(--reach) - 4px));
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 200ms ease-out;
+}
+
+.card:hover .tip {
+  opacity: 1;
+}
+
+/* bg-foreground text-background rounded px-2 py-1 text-xs shadow-xs */
+.tip-bubble {
+  position: relative;
+  display: inline-block;
+  white-space: nowrap;
+  padding: 4px 8px;
+  border-radius: 4px;
+  background: #202020;
+  color: #fcfcfc;
+  font-size: 12px;
+  line-height: 16px;
+  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  user-select: none;
+}
+
+.tip-arrow {
+  position: absolute;
+  bottom: -2px;
+  left: 50%;
+  width: 8px;
+  height: 8px;
+  background: inherit;
+  translate: -50% 0;
+  rotate: 45deg;
+}
+
+/* Icons-only variant: the card group spans y 14–210 of the frame, so drop it 144px to centre it. */
+.folder--bare .card {
+  --card-top: 28.13cqw;
+}
+
+.card img {
+  width: calc(25cqw * var(--k));
+  height: calc(22.46cqw * var(--k));
+  user-select: none;
+}
+
+/* Front panel tilts its top edge toward the viewer, hinged on its bottom edge (y = 444.5 / 512). */
+.front {
+  position: absolute;
+  inset: 0;
+  transform-origin: 50% 86.8%;
+  /* Closing (DialKit "close" folder). */
+  transition: transform var(--close-flap-duration, 400ms) var(--close-flap-ease, var(--ease-out))
+    var(--close-flap-delay, 60ms);
+}
+
+/* Open (hover, keyboard focus, or DialKit's "hold open"). Values come from _dials.ts, with these as defaults. */
+.folder:is(:hover, :focus-visible, .is-open) .front {
+  transform: rotateX(var(--front-tilt, -24deg));
+  /* Opening (DialKit "front" folder). */
+  transition: transform var(--front-duration, 400ms) var(--front-ease, var(--ease-out));
+}
+
+/* Opening: movement on the "cards" spring, growth (inline icons) on its own "scaleTransition" spring. */
+.folder:is(:hover, :focus-visible, .is-open) .card {
+  transition-duration: var(--cards-duration, 650ms), var(--cards-duration, 650ms),
+    var(--cards-scale-duration, var(--cards-duration, 650ms));
+  transition-timing-function: var(--cards-ease, var(--ease-spring)),
+    var(--cards-ease, var(--ease-spring)),
+    var(--cards-scale-ease, var(--cards-ease, var(--ease-spring)));
+}
+
+/* Closing order: right, left, centre (the opening's 110 / 70 / 30ms reversed). */
+[data-card="left"] {
+  transition-delay: var(--left-close-delay, 40ms);
+}
+
+[data-card="center"] {
+  transition-delay: var(--center-close-delay, 80ms);
+}
+
+[data-card="right"] {
+  transition-delay: var(--right-close-delay, 0ms);
+}
+
+.folder:is(:hover, :focus-visible, .is-open) [data-card="left"] {
+  --lift-x: var(--left-x, -5.08cqw);
+  --lift-y: var(--left-y, -18.75cqw);
+  --lift-r: var(--left-r, -9deg);
+  transition-delay: var(--left-delay, 70ms);
+}
+
+.folder:is(:hover, :focus-visible, .is-open) [data-card="center"] {
+  --lift-x: var(--center-x, 0cqw);
+  --lift-y: var(--center-y, -25.78cqw);
+  --lift-r: var(--center-r, 2deg);
+  transition-delay: var(--center-delay, 30ms);
+}
+
+.folder:is(:hover, :focus-visible, .is-open) [data-card="right"] {
+  --lift-x: var(--right-x, 5.08cqw);
+  --lift-y: var(--right-y, -21.09cqw);
+  --lift-r: var(--right-r, 9deg);
+  transition-delay: var(--right-delay, 110ms);
+}
+
+/* DialKit "showHitboxes": blue = the folder's own hover area, red = the open-state area around the fan. */
+.show-hitboxes .stage--inline .folder {
+  outline: 1px solid rgb(0 112 243 / 0.7);
+}
+
+.show-hitboxes .stage--inline .folder::before {
+  outline: 1px dashed rgb(229 72 77 / 0.5);
+}
+
+.show-hitboxes .stage--inline .folder:is(:hover, :focus-visible, .is-open)::before {
+  outline-style: solid;
+  outline-color: rgb(229 72 77);
+  background: rgb(229 72 77 / 0.06);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .front,
+  .card,
+  .folder:is(:hover, :focus-visible, .is-open) :is(.front, .card) {
+    transition-duration: 0ms;
+    transition-delay: 0ms;
+  }
+}

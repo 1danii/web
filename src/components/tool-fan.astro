@@ -1,0 +1,269 @@
+---
+import Tooltip from "./tooltip.astro";
+
+/*
+ * A phrase in running text with a small fan of tool logos in front of it. Hovering the logos or the
+ * phrase lifts the cards out and grows them. Ported from the folder snack (src/pages/snacks/folder,
+ * icons-only inline variant) with its DialKit values baked in.
+ */
+interface Props {
+  /** Two or three logos, left to right. Two fill the left and right cards. */
+  tools: [Tool, Tool] | [Tool, Tool, Tool];
+}
+
+interface Tool {
+  /** Shown to screen readers, e.g. "Next.js". */
+  name: string;
+  /** File in /public/tools without .svg. */
+  icon: string;
+  /** Card background, chosen per logo. */
+  bg: "#fff" | "#000";
+}
+
+const { tools } = Astro.props;
+const [left, center, right] = tools.length === 3 ? tools : [tools[0], undefined, tools[1]];
+
+// Positions in cqw of the 512px design frame (design px / 5.12). Centre is last so it sits on top.
+const cards = [
+  { name: "left", x: 16.41, y: 7.81, rotate: -18, tool: left },
+  { name: "right", x: 50.39, y: 5.47, rotate: 14, tool: right },
+  ...(center ? [{ name: "center", x: 33.4, y: 2.73, rotate: -2, tool: center }] : []),
+];
+
+// The logos are decorative; screen readers get the names after the phrase: "… (Next.js, Astro and TanStack)".
+const names = tools.map((t) => t.name);
+const spoken = `${names.slice(0, -1).join(", ")} and ${names.at(-1)}`;
+
+// Trimmed so the only space between the logos and the phrase is the 6px gap, as in the snack.
+const phrase = (await Astro.slots.render("default")).trim();
+
+// Each card's centre offset from the fan's anchor (group centre, roughly the lifted fan's bottom), in cqw.
+const fanAnchor = { x: 50, y: 11 };
+const style = (card: (typeof cards)[number]) =>
+  [
+    `left: ${card.x}cqw`,
+    `top: ${card.y}cqw`,
+    `--r: ${card.rotate}deg`,
+    `--fan-dx: ${(card.x + 16.6 - fanAnchor.x).toFixed(2)}cqw`,
+    `--fan-dy: ${(card.y + 16.6 - fanAnchor.y).toFixed(2)}cqw`,
+    `--bg: ${card.tool.bg}`,
+  ].join("; ");
+---
+
+<span class="tool-fan"
+  ><span class="stage" aria-hidden="true"
+    ><span class="fan">
+      {
+        cards.map((card) => (
+          <span class="card" data-card={card.name} style={style(card)}>
+            <img src={`/tools/${card.tool.icon}.svg`} alt="" draggable="false" />
+            {/* Screen readers already get the names after the phrase. */}
+            <span class="tip" aria-hidden="true">
+              <Tooltip>{card.tool.name}</Tooltip>
+            </span>
+          </span>
+        ))
+      }
+    </span></span
+  ><Fragment set:html={phrase} /><span class="sr-only"> ({spoken})</span></span
+>
+
+<style>
+  .tool-fan {
+    /* Icon size in the line, the open card size, and how much further than designed the cards fly. */
+    --size: 36px;
+    --card-size: 32px;
+    --lift: 1.6;
+    /* A card is 33.2% of the stage, so this is the open card's scale against its resting size. */
+    --k: calc(32 / (36 * 0.332));
+
+    --ease-out: cubic-bezier(0.215, 0.61, 0.355, 1);
+    /* Spring (stiffness 151, damping 19, mass 1.2) sampled into linear(), lasting 858ms. */
+    --spring: linear(
+      0, 0.0087, 0.025, 0.0476, 0.0756, 0.1079, 0.1438, 0.1824, 0.2231, 0.2652, 0.3082, 0.3515, 0.3948,
+      0.4376, 0.4798, 0.5209, 0.5608, 0.5992, 0.6361, 0.6713, 0.7047, 0.7363, 0.766, 0.7939, 0.8199,
+      0.844, 0.8663, 0.8868, 0.9056, 0.9228, 0.9383, 0.9524, 0.965, 0.9763, 0.9862, 0.995, 1.0027,
+      1.0093, 1.015, 1.0198, 1.0238, 1.027, 1.0296, 1.0316, 1.0331, 1.034, 1.0346, 1.0347, 1.0346,
+      1.0341, 1.0335, 1.0326, 1.0315, 1.0304, 1.0291, 1.0277, 1.0262, 1.0248, 1.0233, 1.0218, 1.0203,
+      1.0188, 1.0173, 1.0159, 1.0146, 1.0133, 1.012, 1.0108, 1.0097, 1.0086, 1.0076, 1.0067, 1.0058,
+      1.005, 1.0043, 1.0036, 1.003, 1.0024, 1.0019, 1.0014, 1.001, 1.0006, 1.0003, 1, 0.9998, 0.9996,
+      0.9994, 0.9992, 0.9991, 0.999, 0.9989, 0.9989, 0.9988, 0.9988, 0.9988, 0.9988, 0.9988, 0.9988,
+      0.9989, 0.9989, 0.9989, 0.999, 1
+    );
+    --spring-duration: 858ms;
+
+    white-space: nowrap;
+  }
+
+  /*
+   * Sized in cqw of .stage: 100cqw = the 512px design frame. Like an image in running text, negative
+   * margins trim the frame to the resting card group (x 62–446, y 154–376) and collapse its height to
+   * zero at the group's centre, so the line box never grows.
+   */
+  .stage {
+    container-type: inline-size;
+    display: inline-block;
+    vertical-align: middle;
+    width: var(--size);
+    margin: calc(var(--size) * -0.5176) calc(var(--size) * -0.1289 + 6px) calc(var(--size) * -0.4824)
+      calc(var(--size) * -0.1211);
+  }
+
+  /* Keep the grown cards above the surrounding text. */
+  .tool-fan:hover .stage {
+    position: relative;
+    z-index: 1;
+  }
+
+  .fan {
+    position: relative;
+    display: block;
+    aspect-ratio: 1;
+  }
+
+  /*
+   * Once open, a static invisible box around the whole fan keeps it hovered while the cursor crosses
+   * the gaps between cards. It only catches the pointer while open. Sized in open-card widths.
+   */
+  .fan::before {
+    --c: calc(33.2cqw * var(--k));
+
+    content: "";
+    position: absolute;
+    left: calc(50% - var(--c) * 1.75);
+    top: calc(50% - var(--c) * 2);
+    width: calc(var(--c) * 3.5);
+    height: calc(var(--c) * 3);
+    pointer-events: none;
+  }
+
+  .tool-fan:hover .fan::before {
+    pointer-events: auto;
+  }
+
+  /*
+   * Card: 170px with a 36px radius in the design frame. Its layout box is the open size (k×) and it
+   * rests scaled down by 1/k, so the logo is rasterised at full resolution and stays sharp while growing.
+   * translate → rotate → scale are separate properties, which CSS applies in that order.
+   */
+  .card {
+    --lift-x: 0cqw;
+    --lift-y: 0cqw;
+    --lift-r: 0deg;
+    /* How far the fan has spread: 1 at rest, k when open. */
+    --s: 1;
+
+    position: absolute;
+    width: calc(33.2cqw * var(--k));
+    aspect-ratio: 1;
+    margin-left: calc(16.6cqw * (1 - var(--k)));
+    /* 28.13cqw drops the group to the frame's centre (there is no folder under it). */
+    margin-top: calc(28.13cqw + 16.6cqw * (1 - var(--k)));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: calc(7.03cqw * var(--k));
+    background: var(--bg);
+    /* Tailwind shadow-lg with the big layer's spread at +2px (designed on a 230px card in Wonder). */
+    box-shadow:
+      0 calc(1.4435cqw * var(--k)) calc(2.1652cqw * var(--k)) calc(0.2887cqw * var(--k)) rgb(0 0 0 / 0.1),
+      0 calc(0.5774cqw * var(--k)) calc(0.8661cqw * var(--k)) calc(-0.5774cqw * var(--k)) rgb(0 0 0 / 0.1);
+
+    /* The whole fan scales by --s around its anchor: lift and spread grow with the cards. */
+    translate: calc(var(--lift-x) * var(--lift) * var(--s) + var(--fan-dx) * (var(--s) - 1))
+      calc(var(--lift-y) * var(--lift) * var(--s) + var(--fan-dy) * (var(--s) - 1));
+    rotate: calc(var(--r) + var(--lift-r));
+    scale: calc(var(--s) / var(--k));
+
+    /* Closing: one plain ease-out, the opening order reversed with the same gaps. */
+    transition-property: translate, rotate, scale;
+    transition-duration: 400ms;
+    transition-timing-function: var(--ease-out);
+  }
+
+  .card img {
+    width: 64%;
+    height: 64%;
+    object-fit: contain;
+    user-select: none;
+  }
+
+  /* The hovered card comes to the front so its tooltip isn't covered by its neighbours. */
+  .card:hover {
+    z-index: 1;
+  }
+
+  /*
+   * Tooltip with the tool's name above the hovered card, upright whatever the card's tilt (--a).
+   * Its corner sits on the card's centre: it turns back by -a around that point, then moves up
+   * by half the tilted card's height (--reach) plus a 4px gap, like the email tooltip's offset.
+   */
+  .tip {
+    --a: calc(var(--r) + var(--lift-r));
+    --reach: calc(
+      16.6cqw * var(--k) * (cos(var(--a)) + max(sin(var(--a)), -1 * sin(var(--a))))
+    );
+
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform-origin: 0 0;
+    transform: rotate(calc(-1 * var(--a))) translate(-50%, calc(-100% - var(--reach) - 4px));
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 200ms ease-out;
+  }
+
+  .card:hover .tip {
+    opacity: 1;
+  }
+
+  [data-card="right"] {
+    transition-delay: 0ms;
+  }
+
+  [data-card="left"] {
+    transition-delay: 40ms;
+  }
+
+  [data-card="center"] {
+    transition-delay: 80ms;
+  }
+
+  /* Opening: spring, centre first. */
+  .tool-fan:hover .card {
+    --s: var(--k);
+
+    transition-duration: var(--spring-duration);
+    transition-timing-function: var(--spring);
+  }
+
+  .tool-fan:hover [data-card="left"] {
+    --lift-x: -5.08cqw;
+    --lift-y: -18.75cqw;
+    --lift-r: -9deg;
+    transition-delay: 70ms;
+  }
+
+  .tool-fan:hover [data-card="center"] {
+    --lift-x: 0cqw;
+    --lift-y: -25.78cqw;
+    --lift-r: 2deg;
+    transition-delay: 30ms;
+  }
+
+  .tool-fan:hover [data-card="right"] {
+    --lift-x: 5.08cqw;
+    --lift-y: -21.09cqw;
+    --lift-r: 9deg;
+    transition-delay: 110ms;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .card,
+    .tool-fan:hover .card {
+      transition-duration: 0ms;
+      transition-delay: 0ms;
+    }
+  }
+</style>

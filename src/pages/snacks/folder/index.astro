@@ -1,0 +1,28 @@
+---
+import { Font } from "astro:assets";
+import "./styles.css";
+import Folder from "./_folder.astro";
+---
+
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Folder</title>
+    <Font cssVariable="--font-inter" preload />
+  </head>
+  <body class="flex h-dvh items-end justify-center gap-16 bg-white pb-[38dvh]">
+    <Folder size={256} bare />
+    <!-- Same type as the index paragraph: Inter, text-sm, leading-normal, gray-12 -->
+    <div class="inline-icon text-sm leading-normal text-pretty text-[#202020]">
+      <Folder bare inline size={36} />Lorem Ipsum
+    </div>
+    <Folder size={256} />
+    <div class="inline-icon text-sm leading-normal text-pretty text-[#202020]">
+      <Folder inline size={20} />Lorem Ipsum
+    </div>
+    <script>
+      import "./_dials";
+    </script>
+  </body>
+</html>
