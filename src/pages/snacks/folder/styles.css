@@ -172,7 +172,7 @@ body {
 
 /*
  * Tooltip with the tool's name above the hovered card, upright whatever the card's tilt (--a). Same
- * look as the site's email tooltip (src/components/tooltip-styles.ts), copied so the snack stays
+ * look and motion as the site's tooltips (src/components/tooltip-styles.ts), copied so the snack stays
  * self-contained. Its corner sits on the card's centre: it turns back by -a around that point, then
  * moves up by half the tilted card's height (--reach) plus a 4px gap.
  */
@@ -185,13 +185,22 @@ body {
   top: 50%;
   transform-origin: 0 0;
   transform: rotate(calc(-1 * var(--a))) translate(-50%, calc(-100% - var(--reach) - 4px));
-  opacity: 0;
   pointer-events: none;
-  transition: opacity 200ms ease-out;
 }
 
-.card:hover .tip {
+/*
+ * Shows only once the cards have finished opening (data-settled, set by _tips.ts): until then a card
+ * is still turning and the tooltip, straightened for the final angle, would sit crooked.
+ */
+.folder[data-settled] .card:hover .tip-bubble {
   opacity: 1;
+  scale: 1;
+}
+
+/* Hidden at once when the folder closes, and shown at once when moving straight from another card. */
+.folder:not([data-settled]) .tip-bubble,
+.card[data-instant] .tip-bubble {
+  transition-duration: 0ms;
 }
 
 /* bg-foreground text-background rounded px-2 py-1 text-xs shadow-xs */
@@ -207,6 +216,13 @@ body {
   line-height: 16px;
   box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
   user-select: none;
+  /* Hidden: faded and at 97%, growing from the arrow. tooltipMotion: 150ms on a strong ease-out. */
+  opacity: 0;
+  scale: 0.97;
+  transform-origin: 50% 100%;
+  transition-property: opacity, scale;
+  transition-duration: 150ms;
+  transition-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
 }
 
 .tip-arrow {

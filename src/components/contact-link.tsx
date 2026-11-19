@@ -1,6 +1,6 @@
 import { Tooltip } from "@base-ui/react/tooltip";
 import { useEffect, useState } from "react";
-import { tooltipArrow, tooltipPopup } from "./tooltip-styles";
+import { tooltipArrow, tooltipMotion, tooltipPopup } from "./tooltip-styles";
 
 const EMAIL = "danielpallares@email.cz";
 
@@ -53,7 +53,7 @@ export function ContactLink() {
           collisionAvoidance={{ side: "none", align: "none" }}
         >
           <Tooltip.Popup
-            className={`${tooltipPopup} transition-opacity duration-200 ease-out data-ending-style:opacity-0 data-starting-style:opacity-0`}
+            className={`${tooltipPopup} ${tooltipMotion} origin-(--transform-origin) data-ending-style:scale-97 data-ending-style:opacity-0 data-starting-style:scale-97 data-starting-style:opacity-0`}
           >
             Copied!
             <Tooltip.Arrow className={`${tooltipArrow} -bottom-0.5`} />

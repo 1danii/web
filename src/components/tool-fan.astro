@@ -21,36 +21,76 @@ interface Tool {
 }
 
 const { tools } = Astro.props;
-const [left, center, right] = tools.length === 3 ? tools : [tools[0], undefined, tools[1]];
 
-// Positions in cqw of the 512px design frame (design px / 5.12). Centre is last so it sits on top.
-const cards = [
-  { name: "left", x: 16.41, y: 7.81, rotate: -18, tool: left },
-  { name: "right", x: 50.39, y: 5.47, rotate: 14, tool: right },
-  ...(center ? [{ name: "center", x: 33.4, y: 2.73, rotate: -2, tool: center }] : []),
-];
+/*
+ * Card layouts in cqw of the 512px design frame (design px / 5.12): resting position (x, y = top-left
+ * corner) and tilt, then where the card moves when open (lift, multiplied by --lift). The last card
+ * sits on top.
+ */
+interface Card {
+  name: "left" | "center" | "right";
+  x: number;
+  y: number;
+  rotate: number;
+  lift: { x: number; y: number; rotate: number };
+  tool: Tool;
+}
+
+const cards: Card[] =
+  tools.length === 3
+    ? [
+        { name: "left", x: 16.41, y: 7.81, rotate: -18, lift: { x: -5.08, y: -18.75, rotate: -9 }, tool: tools[0] },
+        { name: "right", x: 50.39, y: 5.47, rotate: 14, lift: { x: 5.08, y: -21.09, rotate: 9 }, tool: tools[2] },
+        { name: "center", x: 33.4, y: 2.73, rotate: -2, lift: { x: 0, y: -25.78, rotate: 2 }, tool: tools[1] },
+      ]
+    : // Two logos: closer than the three-card fan's outer pair so they just touch, centred on the same spot.
+      [
+        { name: "left", x: 20.66, y: 7, rotate: -14, lift: { x: -3, y: -21, rotate: -6 }, tool: tools[0] },
+        { name: "right", x: 46.15, y: 5, rotate: 11, lift: { x: 3, y: -23, rotate: 6 }, tool: tools[1] },
+      ];
+
+/*
+ * The resting group's bounds, for the stage margins that trim the frame to it (see .stage). A card is
+ * 33.2cqw square, and 28.13cqw drops the group to the frame's centre (there is no folder under it).
+ */
+const HALF = 16.6;
+const DROP = 28.13;
+const bounds = cards.map((card) => {
+  const a = (card.rotate * Math.PI) / 180;
+  const reach = HALF * (Math.abs(Math.cos(a)) + Math.abs(Math.sin(a)));
+  const cx = card.x + HALF;
+  const cy = card.y + HALF + DROP;
+  return { left: cx - reach, right: cx + reach, top: cy - reach, bottom: cy + reach };
+});
+const trimLeft = Math.min(...bounds.map((b) => b.left)) / 100;
+const trimRight = 1 - Math.max(...bounds.map((b) => b.right)) / 100;
+const middle = (Math.min(...bounds.map((b) => b.top)) + Math.max(...bounds.map((b) => b.bottom))) / 200;
+const fanStyle = `--trim-left: ${trimLeft.toFixed(4)}; --trim-right: ${trimRight.toFixed(4)}; --middle: ${middle.toFixed(4)}`;
 
 // The logos are decorative; screen readers get the names after the phrase: "… (Next.js, Astro and TanStack)".
 const names = tools.map((t) => t.name);
 const spoken = `${names.slice(0, -1).join(", ")} and ${names.at(-1)}`;
 
-// Trimmed so the only space between the logos and the phrase is the 6px gap, as in the snack.
+// Trimmed so the only space between the logos and the phrase is the gap after the logos (2px, set on .stage).
 const phrase = (await Astro.slots.render("default")).trim();
 
 // Each card's centre offset from the fan's anchor (group centre, roughly the lifted fan's bottom), in cqw.
 const fanAnchor = { x: 50, y: 11 };
-const style = (card: (typeof cards)[number]) =>
+const style = (card: Card) =>
   [
     `left: ${card.x}cqw`,
     `top: ${card.y}cqw`,
     `--r: ${card.rotate}deg`,
     `--fan-dx: ${(card.x + 16.6 - fanAnchor.x).toFixed(2)}cqw`,
     `--fan-dy: ${(card.y + 16.6 - fanAnchor.y).toFixed(2)}cqw`,
+    `--open-x: ${card.lift.x}cqw`,
+    `--open-y: ${card.lift.y}cqw`,
+    `--open-r: ${card.lift.rotate}deg`,
     `--bg: ${card.tool.bg}`,
   ].join("; ");
 ---
 
-<span class="tool-fan"
+<span class="tool-fan" style={fanStyle}
   ><span class="stage" aria-hidden="true"
     ><span class="fan">
       {
@@ -67,6 +107,54 @@ const style = (card: (typeof cards)[number]) =>
     </span></span
   ><Fragment set:html={phrase} /><span class="sr-only"> ({spoken})</span></span
 >
+
+<script>
+  /*
+   * Tooltip timing, like Base UI's Tooltip.Provider:
+   * - data-settled on the fan once every card's opening transition has finished, cleared on leave.
+   * - data-instant on a card entered within 400ms of leaving another card's shown tooltip, so moving
+   *   along the fan swaps tooltips without fading each one in again.
+   */
+  const INSTANT_TIMEOUT = 400;
+
+  for (const fan of document.querySelectorAll<HTMLElement>(".tool-fan")) {
+    const cards = [...fan.querySelectorAll<HTMLElement>(".card")];
+    let opening = 0;
+    let lastTipClosed = -Infinity;
+
+    fan.addEventListener("pointerenter", () => {
+      const run = ++opening;
+      // Next frame, so the :hover transitions have started. With reduced motion there are none.
+      requestAnimationFrame(() => {
+        const transitions = cards.flatMap((card) => card.getAnimations());
+        Promise.all(transitions.map((t) => t.finished)).then(
+          () => {
+            if (run === opening) fan.dataset.settled = "";
+          },
+          () => {}, // Interrupted by leaving; the next enter starts over.
+        );
+      });
+    });
+
+    fan.addEventListener("pointerleave", () => {
+      opening++;
+      lastTipClosed = -Infinity;
+      delete fan.dataset.settled;
+    });
+
+    for (const card of cards) {
+      card.addEventListener("pointerenter", () => {
+        const recent = performance.now() - lastTipClosed < INSTANT_TIMEOUT;
+        card.toggleAttribute("data-instant", recent);
+      });
+      card.addEventListener("pointerleave", () => {
+        // Removed now, so this tooltip still fades out normally.
+        card.removeAttribute("data-instant");
+        if ("settled" in fan.dataset) lastTipClosed = performance.now();
+      });
+    }
+  }
+</script>
 
 <style>
   .tool-fan {
@@ -97,16 +185,19 @@ const style = (card: (typeof cards)[number]) =>
 
   /*
    * Sized in cqw of .stage: 100cqw = the 512px design frame. Like an image in running text, negative
-   * margins trim the frame to the resting card group (x 62–446, y 154–376) and collapse its height to
-   * zero at the group's centre, so the line box never grows.
+   * margins trim the frame to the resting card group (bounds computed from the layout above) and
+   * collapse its height to zero at the group's centre, so the line box never grows.
    */
   .stage {
     container-type: inline-size;
     display: inline-block;
     vertical-align: middle;
     width: var(--size);
-    margin: calc(var(--size) * -0.5176) calc(var(--size) * -0.1289 + 6px) calc(var(--size) * -0.4824)
-      calc(var(--size) * -0.1211);
+    /* --trim-left/right and --middle (fractions of the frame) come from the card layout. */
+    margin: calc(var(--size) * -1 * var(--middle))
+      calc(var(--size) * -1 * var(--trim-right) + 2px)
+      calc(var(--size) * -1 * (1 - var(--middle)))
+      calc(var(--size) * -1 * var(--trim-left));
   }
 
   /* Keep the grown cards above the surrounding text. */
@@ -209,13 +300,28 @@ const style = (card: (typeof cards)[number]) =>
     top: 50%;
     transform-origin: 0 0;
     transform: rotate(calc(-1 * var(--a))) translate(-50%, calc(-100% - var(--reach) - 4px));
-    opacity: 0;
     pointer-events: none;
-    transition: opacity 200ms ease-out;
   }
 
-  .card:hover .tip {
+  /* The bubble (tooltip.astro) fades and grows with the shared tooltip motion. */
+  .tip > :global(*) {
+    opacity: 0;
+    scale: 0.97;
+  }
+
+  /*
+   * It shows only once the fan has finished opening (data-settled, set by the script below). Until
+   * then the card is still turning and the tooltip, straightened for the final angle, would sit crooked.
+   */
+  .tool-fan[data-settled] .card:hover .tip > :global(*) {
     opacity: 1;
+    scale: 1;
+  }
+
+  /* Hidden at once when the fan closes, and shown at once when moving straight from another card. */
+  .tool-fan:not([data-settled]) .tip > :global(*),
+  .card[data-instant] .tip > :global(*) {
+    transition-duration: 0ms;
   }
 
   [data-card="right"] {
@@ -233,29 +339,23 @@ const style = (card: (typeof cards)[number]) =>
   /* Opening: spring, centre first. */
   .tool-fan:hover .card {
     --s: var(--k);
+    --lift-x: var(--open-x);
+    --lift-y: var(--open-y);
+    --lift-r: var(--open-r);
 
     transition-duration: var(--spring-duration);
     transition-timing-function: var(--spring);
   }
 
   .tool-fan:hover [data-card="left"] {
-    --lift-x: -5.08cqw;
-    --lift-y: -18.75cqw;
-    --lift-r: -9deg;
     transition-delay: 70ms;
   }
 
   .tool-fan:hover [data-card="center"] {
-    --lift-x: 0cqw;
-    --lift-y: -25.78cqw;
-    --lift-r: 2deg;
     transition-delay: 30ms;
   }
 
   .tool-fan:hover [data-card="right"] {
-    --lift-x: 5.08cqw;
-    --lift-y: -21.09cqw;
-    --lift-r: 9deg;
     transition-delay: 110ms;
   }
 
