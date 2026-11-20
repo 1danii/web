@@ -6,6 +6,7 @@ import HoverList from "@/components/hover-list.astro";
 import RoughNotation from "@/components/rough-notation.astro";
 import RoughStar from "@/components/rough-star.astro";
 import ToolFan from "@/components/tool-fan.astro";
+import ToolIcon from "@/components/tool-icon.astro";
 import { FrameCarousel } from "@/components/frame-carousel";
 ---
 
@@ -14,7 +15,7 @@ import { FrameCarousel } from "@/components/frame-carousel";
     <section class="animate-fade-up-mount flex flex-col gap-y-0">
       <h1 class="text-base font-[450]">
         Daniel Pallares
-        <RoughStar class="ml-1.5" color="var(--color-primary)" delay={800} />
+        <RoughStar class="ml-1.5" color="var(--color-primary)" />
       </h1>
       <p class="text-muted text-sm">web developer</p>
     </section>
@@ -25,6 +26,7 @@ import { FrameCarousel } from "@/components/frame-carousel";
           type="underline"
           color="var(--color-primary)"
           padding={0}
+          delay={700}
         >
           with care
         </RoughNotation>{" "}
@@ -32,7 +34,9 @@ import { FrameCarousel } from "@/components/frame-carousel";
         on a product at a SaaS company, and on client projects at a web agency.
         <br />
         <br />
-        My main stack is TypeScript and React, plus{" "}
+        My main stack is{" "}
+        <ToolIcon icon="typescript" fill>TypeScript</ToolIcon> and{" "}
+        <ToolIcon icon="react" bg="#fff">React</ToolIcon>, plus{" "}
         <ToolFan
           tools={[
             { name: "Next.js", icon: "nextjs", bg: "#000" },

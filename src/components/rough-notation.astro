@@ -14,7 +14,16 @@ type Props = RoughAnnotationConfig & {
 const { delay = 0, ...config } = Astro.props;
 ---
 
-<span data-rough-notation={JSON.stringify(config)} data-rough-delay={delay}>
+{/*
+  Kept on one line unless the annotation is multiline: rough-notation draws around the element's
+  whole bounding box, so a phrase broken across two lines would get an underline (or box) spanning
+  both lines' full width.
+*/}
+<span
+  class:list={{ "whitespace-nowrap": !config.multiline }}
+  data-rough-notation={JSON.stringify(config)}
+  data-rough-delay={delay}
+>
   <slot />
 </span>
 

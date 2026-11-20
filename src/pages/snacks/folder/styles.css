@@ -165,8 +165,11 @@ body {
   transition-timing-function: var(--close-ease, var(--ease-out));
 }
 
-/* The hovered card comes to the front so its tooltip isn't covered by its neighbours. */
-.card:hover {
+/*
+ * The hovered card comes to the front so its tooltip isn't covered by its neighbours, but only once
+ * the cards have finished opening (as the tooltip), so they don't jump in front of each other mid-flight.
+ */
+.folder[data-settled] .card:hover {
   z-index: 1;
 }
 

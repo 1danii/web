@@ -1,0 +1,47 @@
+---
+/*
+ * A tool name in running text with one small logo card in front of it. The card matches a resting
+ * card of tool-fan.astro (12px, same radius and shadow) but sits upright and centred on the line,
+ * with no hover motion. The name is already in the text, so the logo is decorative.
+ */
+interface Props {
+  /** File in /public/tools without .svg. */
+  icon: string;
+  /** Card background, chosen per logo. */
+  bg?: "#fff" | "#000";
+  /** For logos that are already a filled square (TypeScript): the logo fills the whole card. */
+  fill?: boolean;
+}
+
+const { icon, bg = "#fff", fill = false } = Astro.props;
+
+// Trimmed so the only space between the logo and the name is the 2px gap, as in tool-fan.astro.
+const name = (await Astro.slots.render("default")).trim();
+---
+
+{/*
+  The card has no in-flow content (the logo is absolute), so its baseline is its bottom edge, and
+  calc(0.5cap - 6px) centres it on the capitals: half the cap height up, minus half the card.
+  vertical-align: middle would centre it on the lowercase letters, which looks low next to a name.
+*/}
+<span class="whitespace-nowrap">
+  <span
+    class:list={[
+      "relative mr-0.5 inline-block size-3 rounded-[2.5px] align-[calc(0.5cap-6px)]",
+      "shadow-[0_0.52px_0.78px_0.1px_rgb(0_0_0/0.1),0_0.21px_0.31px_-0.21px_rgb(0_0_0/0.1)]",
+      fill ? "overflow-hidden" : bg === "#000" ? "bg-black" : "bg-white",
+    ]}
+    aria-hidden="true"
+  >
+    <img
+      src={`/tools/${icon}.svg`}
+      alt=""
+      draggable="false"
+      class:list={[
+        "absolute object-contain select-none",
+        fill ? "inset-0 size-full" : "top-[18%] left-[18%] size-[64%]",
+      ]}
+    />
+  </span>
+  <Fragment set:html={name} />
+</span>

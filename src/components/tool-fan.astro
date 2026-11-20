@@ -23,9 +23,20 @@ interface Tool {
 const { tools } = Astro.props;
 
 /*
- * Card layouts in cqw of the 512px design frame (design px / 5.12): resting position (x, y = top-left
- * corner) and tilt, then where the card moves when open (lift, multiplied by --lift). The last card
- * sits on top.
+ * Sizes: a resting card is 12px (as tool-icon.astro), an open one 32px, and open cards fly 1.6× as far
+ * as designed. The layout below is in the snack's design units (hundredths of its 512px frame, where a
+ * card is 33.2), converted to px with U.
+ */
+const CARD = 12;
+const OPEN = 32;
+const LIFT = 1.6;
+const U = CARD / 33.2;
+const HALF = 16.6;
+const K = OPEN / CARD;
+
+/*
+ * Resting position (x, y = top-left corner) and tilt, then the extra move and turn when open. The
+ * last card sits on top.
  */
 interface Card {
   name: "left" | "center" | "right";
@@ -49,53 +60,54 @@ const cards: Card[] =
         { name: "right", x: 46.15, y: 5, rotate: 11, lift: { x: 3, y: -23, rotate: 6 }, tool: tools[1] },
       ];
 
+// Half the width (and height) of a square tilted by `deg`: how far it reaches from its centre.
+const reach = (half: number, deg: number) => {
+  const a = (deg * Math.PI) / 180;
+  return half * (Math.abs(Math.cos(a)) + Math.abs(Math.sin(a)));
+};
+
+// The resting group's bounds. The stage is exactly this wide, with zero height at its middle.
+const centres = cards.map((card) => ({ x: card.x + HALF, y: card.y + HALF, r: reach(HALF, card.rotate) }));
+const left = Math.min(...centres.map((c) => c.x - c.r));
+const right = Math.max(...centres.map((c) => c.x + c.r));
+const middle = (Math.min(...centres.map((c) => c.y - c.r)) + Math.max(...centres.map((c) => c.y + c.r))) / 2;
+const stageWidth = (right - left) * U;
+
 /*
- * The resting group's bounds, for the stage margins that trim the frame to it (see .stage). A card is
- * 33.2cqw square, and 28.13cqw drops the group to the frame's centre (there is no folder under it).
+ * Opening grows the whole fan by K around an anchor near its bottom centre: each card moves by its
+ * lift (×1.6, growing with the card) and away from the anchor by (K - 1) × its offset from it.
  */
-const HALF = 16.6;
-const DROP = 28.13;
-const bounds = cards.map((card) => {
-  const a = (card.rotate * Math.PI) / 180;
-  const reach = HALF * (Math.abs(Math.cos(a)) + Math.abs(Math.sin(a)));
-  const cx = card.x + HALF;
-  const cy = card.y + HALF + DROP;
-  return { left: cx - reach, right: cx + reach, top: cy - reach, bottom: cy + reach };
-});
-const trimLeft = Math.min(...bounds.map((b) => b.left)) / 100;
-const trimRight = 1 - Math.max(...bounds.map((b) => b.right)) / 100;
-const middle = (Math.min(...bounds.map((b) => b.top)) + Math.max(...bounds.map((b) => b.bottom))) / 200;
-const fanStyle = `--trim-left: ${trimLeft.toFixed(4)}; --trim-right: ${trimRight.toFixed(4)}; --middle: ${middle.toFixed(4)}`;
+const anchor = { x: 50, y: 11 };
+const px = (n: number) => `${n.toFixed(2)}px`;
+const style = (card: Card, i: number) => {
+  const c = centres[i];
+  const openRotate = card.rotate + card.lift.rotate;
+  return [
+    `left: ${px((c.x - left) * U - OPEN / 2)}`,
+    `top: ${px((c.y - middle) * U - OPEN / 2)}`,
+    `--r: ${card.rotate}deg`,
+    `--open-x: ${px((card.lift.x * LIFT * K + (c.x - anchor.x) * (K - 1)) * U)}`,
+    `--open-y: ${px((card.lift.y * LIFT * K + (c.y - anchor.y) * (K - 1)) * U)}`,
+    `--open-r: ${openRotate}deg`,
+    // Half the open, tilted card's height: how far above its centre the tooltip must sit.
+    `--tip-reach: ${px(reach(OPEN / 2, openRotate))}`,
+    `--bg: ${card.tool.bg}`,
+  ].join("; ");
+};
 
 // The logos are decorative; screen readers get the names after the phrase: "… (Next.js, Astro and TanStack)".
 const names = tools.map((t) => t.name);
 const spoken = `${names.slice(0, -1).join(", ")} and ${names.at(-1)}`;
 
-// Trimmed so the only space between the logos and the phrase is the gap after the logos (2px, set on .stage).
+// Trimmed so the only space between the logos and the phrase is the 2px gap after the stage.
 const phrase = (await Astro.slots.render("default")).trim();
-
-// Each card's centre offset from the fan's anchor (group centre, roughly the lifted fan's bottom), in cqw.
-const fanAnchor = { x: 50, y: 11 };
-const style = (card: Card) =>
-  [
-    `left: ${card.x}cqw`,
-    `top: ${card.y}cqw`,
-    `--r: ${card.rotate}deg`,
-    `--fan-dx: ${(card.x + 16.6 - fanAnchor.x).toFixed(2)}cqw`,
-    `--fan-dy: ${(card.y + 16.6 - fanAnchor.y).toFixed(2)}cqw`,
-    `--open-x: ${card.lift.x}cqw`,
-    `--open-y: ${card.lift.y}cqw`,
-    `--open-r: ${card.lift.rotate}deg`,
-    `--bg: ${card.tool.bg}`,
-  ].join("; ");
 ---
 
-<span class="tool-fan" style={fanStyle}
-  ><span class="stage" aria-hidden="true"
-    ><span class="fan">
-      {
-        cards.map((card) => (
-          <span class="card" data-card={card.name} style={style(card)}>
+<span class="tool-fan"
+  ><span class="stage" style={`width: ${px(stageWidth)}`} aria-hidden="true"
+    >{
+        cards.map((card, i) => (
+          <span class="card" data-card={card.name} style={style(card, i)}>
             <img src={`/tools/${card.tool.icon}.svg`} alt="" draggable="false" />
             {/* Screen readers already get the names after the phrase. */}
             <span class="tip" aria-hidden="true">
@@ -103,8 +115,7 @@ const style = (card: Card) =>
             </span>
           </span>
         ))
-      }
-    </span></span
+      }</span
   ><Fragment set:html={phrase} /><span class="sr-only"> ({spoken})</span></span
 >
 
@@ -158,13 +169,6 @@ const style = (card: Card) =>
 
 <style>
   .tool-fan {
-    /* Icon size in the line, the open card size, and how much further than designed the cards fly. */
-    --size: 36px;
-    --card-size: 32px;
-    --lift: 1.6;
-    /* A card is 33.2% of the stage, so this is the open card's scale against its resting size. */
-    --k: calc(32 / (36 * 0.332));
-
     --ease-out: cubic-bezier(0.215, 0.61, 0.355, 1);
     /* Spring (stiffness 151, damping 19, mass 1.2) sampled into linear(), lasting 858ms. */
     --spring: linear(
@@ -184,87 +188,60 @@ const style = (card: Card) =>
   }
 
   /*
-   * Sized in cqw of .stage: 100cqw = the 512px design frame. Like an image in running text, negative
-   * margins trim the frame to the resting card group (bounds computed from the layout above) and
-   * collapse its height to zero at the group's centre, so the line box never grows.
+   * As wide as the resting cards and zero high, so like an image in running text it takes their width
+   * in the line but never grows the line box. vertical-align: middle centres the cards on the line.
    */
   .stage {
-    container-type: inline-size;
+    position: relative;
     display: inline-block;
     vertical-align: middle;
-    width: var(--size);
-    /* --trim-left/right and --middle (fractions of the frame) come from the card layout. */
-    margin: calc(var(--size) * -1 * var(--middle))
-      calc(var(--size) * -1 * var(--trim-right) + 2px)
-      calc(var(--size) * -1 * (1 - var(--middle)))
-      calc(var(--size) * -1 * var(--trim-left));
+    margin-right: 2px;
   }
 
   /* Keep the grown cards above the surrounding text. */
   .tool-fan:hover .stage {
-    position: relative;
     z-index: 1;
-  }
-
-  .fan {
-    position: relative;
-    display: block;
-    aspect-ratio: 1;
   }
 
   /*
    * Once open, a static invisible box around the whole fan keeps it hovered while the cursor crosses
-   * the gaps between cards. It only catches the pointer while open. Sized in open-card widths.
+   * the gaps between cards. It only catches the pointer while open. 3.5 × 3 open cards, mostly above.
    */
-  .fan::before {
-    --c: calc(33.2cqw * var(--k));
-
+  .stage::before {
     content: "";
     position: absolute;
-    left: calc(50% - var(--c) * 1.75);
-    top: calc(50% - var(--c) * 2);
-    width: calc(var(--c) * 3.5);
-    height: calc(var(--c) * 3);
+    left: calc(50% - 56px);
+    top: -64px;
+    width: 112px;
+    height: 96px;
     pointer-events: none;
   }
 
-  .tool-fan:hover .fan::before {
+  .tool-fan:hover .stage::before {
     pointer-events: auto;
   }
 
   /*
-   * Card: 170px with a 36px radius in the design frame. Its layout box is the open size (k×) and it
-   * rests scaled down by 1/k, so the logo is rasterised at full resolution and stays sharp while growing.
-   * translate → rotate → scale are separate properties, which CSS applies in that order.
+   * Card: laid out at its open size and scaled down to 12px at rest (12 / 32), so the logo is
+   * rasterised at full resolution and stays sharp while growing. The radius and shadow are the
+   * Wonder design's (36px radius on 170px; shadow-lg with +2px spread on 230px) at 32px.
    */
   .card {
-    --lift-x: 0cqw;
-    --lift-y: 0cqw;
-    --lift-r: 0deg;
-    /* How far the fan has spread: 1 at rest, k when open. */
-    --s: 1;
-
     position: absolute;
-    width: calc(33.2cqw * var(--k));
-    aspect-ratio: 1;
-    margin-left: calc(16.6cqw * (1 - var(--k)));
-    /* 28.13cqw drops the group to the frame's centre (there is no folder under it). */
-    margin-top: calc(28.13cqw + 16.6cqw * (1 - var(--k)));
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: calc(7.03cqw * var(--k));
+    width: 32px;
+    height: 32px;
+    border-radius: 6.78px;
     background: var(--bg);
-    /* Tailwind shadow-lg with the big layer's spread at +2px (designed on a 230px card in Wonder). */
     box-shadow:
-      0 calc(1.4435cqw * var(--k)) calc(2.1652cqw * var(--k)) calc(0.2887cqw * var(--k)) rgb(0 0 0 / 0.1),
-      0 calc(0.5774cqw * var(--k)) calc(0.8661cqw * var(--k)) calc(-0.5774cqw * var(--k)) rgb(0 0 0 / 0.1);
+      0 1.39px 2.09px 0.28px rgb(0 0 0 / 0.1),
+      0 0.56px 0.83px -0.56px rgb(0 0 0 / 0.1);
 
-    /* The whole fan scales by --s around its anchor: lift and spread grow with the cards. */
-    translate: calc(var(--lift-x) * var(--lift) * var(--s) + var(--fan-dx) * (var(--s) - 1))
-      calc(var(--lift-y) * var(--lift) * var(--s) + var(--fan-dy) * (var(--s) - 1));
-    rotate: calc(var(--r) + var(--lift-r));
-    scale: calc(var(--s) / var(--k));
+    translate: 0 0;
+    rotate: var(--r);
+    scale: 0.375;
 
     /* Closing: one plain ease-out, the opening order reversed with the same gaps. */
     transition-property: translate, rotate, scale;
@@ -279,27 +256,25 @@ const style = (card: Card) =>
     user-select: none;
   }
 
-  /* The hovered card comes to the front so its tooltip isn't covered by its neighbours. */
-  .card:hover {
+  /*
+   * The hovered card comes to the front so its tooltip isn't covered by its neighbours, but only once
+   * the fan has finished opening (as the tooltip), so cards don't jump in front of each other mid-flight.
+   */
+  .tool-fan[data-settled] .card:hover {
     z-index: 1;
   }
 
   /*
-   * Tooltip with the tool's name above the hovered card, upright whatever the card's tilt (--a).
-   * Its corner sits on the card's centre: it turns back by -a around that point, then moves up
-   * by half the tilted card's height (--reach) plus a 4px gap, like the email tooltip's offset.
+   * Tooltip with the tool's name above the hovered open card, upright whatever the card's tilt. Its
+   * corner sits on the card's centre: it turns back by the open tilt around that point, then moves up
+   * by half the tilted card's height (--tip-reach) plus a 4px gap, like the email tooltip's offset.
    */
   .tip {
-    --a: calc(var(--r) + var(--lift-r));
-    --reach: calc(
-      16.6cqw * var(--k) * (cos(var(--a)) + max(sin(var(--a)), -1 * sin(var(--a))))
-    );
-
     position: absolute;
     left: 50%;
     top: 50%;
     transform-origin: 0 0;
-    transform: rotate(calc(-1 * var(--a))) translate(-50%, calc(-100% - var(--reach) - 4px));
+    transform: rotate(calc(-1 * var(--open-r))) translate(-50%, calc(-100% - var(--tip-reach) - 4px));
     pointer-events: none;
   }
 
@@ -310,7 +285,7 @@ const style = (card: Card) =>
   }
 
   /*
-   * It shows only once the fan has finished opening (data-settled, set by the script below). Until
+   * It shows only once the fan has finished opening (data-settled, set by the script above). Until
    * then the card is still turning and the tooltip, straightened for the final angle, would sit crooked.
    */
   .tool-fan[data-settled] .card:hover .tip > :global(*) {
@@ -338,11 +313,9 @@ const style = (card: Card) =>
 
   /* Opening: spring, centre first. */
   .tool-fan:hover .card {
-    --s: var(--k);
-    --lift-x: var(--open-x);
-    --lift-y: var(--open-y);
-    --lift-r: var(--open-r);
-
+    translate: var(--open-x) var(--open-y);
+    rotate: var(--open-r);
+    scale: 1;
     transition-duration: var(--spring-duration);
     transition-timing-function: var(--spring);
   }
